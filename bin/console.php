@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Kernel;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;

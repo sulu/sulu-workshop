@@ -17,8 +17,6 @@
 /.web-server-pid
 ###< symfony/web-server-bundle ###
 
-
-
 # bin
 /bin/*
 !/bin/console
@@ -38,7 +36,6 @@
 
 # composer
 /composer.phar
-composer.lock
 /vendor
 
 # npm
@@ -47,6 +44,7 @@ node_modules
 
 # phpunit
 .phpunit
+.phpunit.result.cache
 /phpunit.xml
 
 # IDEs
@@ -57,3 +55,8 @@ node_modules
 
 # System files
 .DS_Store
+
+###> friendsofphp/php-cs-fixer ###
+/.php_cs
+/.php_cs.cache
+###< friendsofphp/php-cs-fixer ###
