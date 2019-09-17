@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 // default locale for maintenance translations
 define('DEFAULT_LOCALE', 'en');
 
 // allow acces for following ips
 $allowedIPs = [
-  '127.0.0.1',
+    '127.0.0.1',
 ];
 
 // translations for maintenance
@@ -22,7 +22,7 @@ $translations = [
 ];
 
 // check if ip is within allowed range
-if (in_array($_SERVER['REMOTE_ADDR'], $allowedIPs)) {
+if (in_array($_SERVER['REMOTE_ADDR'], $allowedIPs, true)) {
     return false;
 }
 
