@@ -5,12 +5,16 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Sulu\Component\Persistence\Model\AuditableInterface;
+use Sulu\Component\Persistence\Model\AuditableTrait;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EventTranslationRepository")
  */
-class EventTranslation
+class EventTranslation implements AuditableInterface
 {
+    use AuditableTrait;
+
     /**
      * @var int|null
      *
