@@ -101,10 +101,8 @@ class EventController extends RestController implements ClassResourceInterface
     public function postAction(Request $request): Response
     {
         $event = $this->repository->create($request->query->get('locale'));
-        $event->setTitle($request->request->get('title'));
-        $event->setStartDate(new \DateTimeImmutable($request->request->get('startDate')));
-        $event->setEndDate(new \DateTimeImmutable($request->request->get('endDate')));
-        $event->setDescription($request->request->get('description'));
+
+        $this->mapDataToEvent($request->request->all(), $event);
 
         $this->repository->save();
 
@@ -118,10 +116,7 @@ class EventController extends RestController implements ClassResourceInterface
             throw new NotFoundHttpException();
         }
 
-        $event->setTitle($request->request->get('title'));
-        $event->setStartDate(new \DateTimeImmutable($request->request->get('startDate')));
-        $event->setEndDate(new \DateTimeImmutable($request->request->get('endDate')));
-        $event->setDescription($request->request->get('description'));
+        $this->mapDataToEvent($request->request->all(), $event);
 
         $this->repository->save();
 
@@ -162,5 +157,25 @@ class EventController extends RestController implements ClassResourceInterface
         $this->repository->remove($event);
 
         return $this->handleView($this->view());
+    }
+
+    /**
+     * @param string[] $data
+     */
+    protected function mapDataToEvent(array $data, Event $event): void
+    {
+        $event->setTitle($data['title']);
+
+        if ($description = $data['description'] ?? null) {
+            $event->setDescription($description);
+        }
+
+        if ($startDate = $data['startDate'] ?? null) {
+            $event->setStartDate(new \DateTimeImmutable($startDate));
+        }
+
+        if ($endDate = $data['endDate'] ?? null) {
+            $event->setEndDate(new \DateTimeImmutable($endDate));
+        }
     }
 }

@@ -17,6 +17,7 @@ composer:
         - composer config -g cache-dir "$(pwd)/.composer-cache"
     script:
         - composer install -n --prefer-dist --no-scripts
+        - composer test install
         - curl --show-error --silent https://getcomposer.org/installer | php
     artifacts:
         name: composer-dependencies

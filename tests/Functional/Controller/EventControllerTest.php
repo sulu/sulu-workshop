@@ -101,6 +101,41 @@ class EventControllerTest extends SuluTestCase
         $this->assertSame('Sulu is awesome', $result->getDescription());
     }
 
+    public function testPostNullValues(): void
+    {
+        $client = $this->createAuthenticatedClient();
+
+        $client->request(
+            'POST',
+            '/admin/api/events?locale=de',
+            [
+                'title' => 'Sulu',
+            ]
+        );
+
+        $response = $client->getResponse();
+        $this->assertInstanceOf(Response::class, $response);
+        $result = json_decode($response->getContent(), true);
+        $this->assertHttpStatusCode(200, $response);
+
+        $this->assertArrayHasKey('id', $result);
+        $this->assertNotNull($result['id']);
+        $this->assertFalse($result['enabled']);
+        $this->assertSame('Sulu', $result['title']);
+        $this->assertNull($result['startDate']);
+        $this->assertNull($result['endDate']);
+        $this->assertNull($result['description']);
+
+        $result = $this->findEventById($result['id'], 'de');
+
+        $this->assertNotNull($result);
+        $this->assertFalse($result->isEnabled());
+        $this->assertSame('Sulu', $result->getTitle());
+        $this->assertNull($result->getStartDate());
+        $this->assertNull($result->getEndDate());
+        $this->assertNull($result->getDescription());
+    }
+
     public function testPut(): void
     {
         $client = $this->createAuthenticatedClient();
@@ -141,6 +176,43 @@ class EventControllerTest extends SuluTestCase
         $this->assertNotNull($result->getEndDate());
         $this->assertSame('2019-01-02T12:00:00', $result->getEndDate()->format('Y-m-d\TH:i:s'));
         $this->assertSame('Symfony Live is awesome', $result->getDescription());
+    }
+
+    public function testPutNullValues(): void
+    {
+        $client = $this->createAuthenticatedClient();
+
+        $event = $this->createEvent('Symfony', 'de');
+
+        $client->request(
+            'PUT',
+            '/admin/api/events/' . $event->getId() . '?locale=de',
+            [
+                'title' => 'Symfony Live',
+            ]
+        );
+
+        $response = $client->getResponse();
+        $this->assertInstanceOf(Response::class, $response);
+        $result = json_decode($response->getContent(), true);
+        $this->assertHttpStatusCode(200, $response);
+
+        $this->assertArrayHasKey('id', $result);
+        $this->assertNotNull($result['id']);
+        $this->assertFalse($result['enabled']);
+        $this->assertSame('Symfony Live', $result['title']);
+        $this->assertNull($result['startDate']);
+        $this->assertNull($result['endDate']);
+        $this->assertNull($result['description']);
+
+        $result = $this->findEventById($result['id'], 'de');
+
+        $this->assertNotNull($result);
+        $this->assertFalse($result->isEnabled());
+        $this->assertSame('Symfony Live', $result->getTitle());
+        $this->assertNull($result->getStartDate());
+        $this->assertNull($result->getEndDate());
+        $this->assertNull($result->getDescription());
     }
 
     public function testEnable(): void

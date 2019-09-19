@@ -47,9 +47,9 @@ class EventOverviewTest extends SuluTestCase
         $this->assertInstanceOf(Response::class, $response);
         $this->assertSame(Response::HTTP_OK, $response->getStatusCode());
         $this->assertStringContainsString('Symfony Live', $crawler->filter('h1')->html());
-        $this->assertNotNull($content = $crawler->filter('ul.events li')->eq(0)->html());
+        $this->assertNotNull($content = $crawler->filter('.event-title')->eq(0)->html());
         $this->assertStringContainsString($event1->getTitle() ?: '', $content);
-        $this->assertNotNull($content = $crawler->filter('ul.events li')->eq(1)->html());
+        $this->assertNotNull($content = $crawler->filter('.event-title')->eq(1)->html());
         $this->assertStringContainsString($event2->getTitle() ?: '', $content);
     }
 

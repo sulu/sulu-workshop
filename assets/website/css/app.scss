@@ -1,0 +1,13 @@
+// customize some Bootstrap variables
+$primary: darken(#428bca, 20%);
+
+// the ~ allows you to reference things in node_modules
+@import "~bootstrap/scss/bootstrap";
+
+.jumbotron {
+    margin-top: 56px;
+}
+
+.footer {
+    background-color: #f5f5f5;
+}

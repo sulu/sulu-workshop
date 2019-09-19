@@ -39,7 +39,7 @@
 /vendor
 
 # npm
-package-lock.json
+assets/admin/package-lock.json
 node_modules
 
 # phpunit
@@ -60,3 +60,9 @@ node_modules
 /.php_cs
 /.php_cs.cache
 ###< friendsofphp/php-cs-fixer ###
+
+###> symfony/webpack-encore-bundle ###
+/node_modules/
+npm-debug.log
+yarn-error.log
+###< symfony/webpack-encore-bundle ###

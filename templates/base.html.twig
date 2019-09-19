@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ app.request.locale|split('_')[0] }}">
+<html lang="{{ app.request.locale|split('_')[0] }}" class="h-100">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,47 +15,54 @@
         } %}
     {% endblock %}
 
-    {% block style %}{% endblock %}
+    {% block style %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
 </head>
-<body>
+<body class="d-flex flex-column h-100">
     <header>
-        {% block header %}
-            <nav>
-                <ul>
-                    <li>
-                        <a href="{{ sulu_content_root_path() }}">Homepage</a>
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <a class="navbar-brand" href="{{ sulu_content_root_path() }}">Symfony Live</a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ sulu_content_root_path() }}">Home</a>
                     </li>
 
                     {% for item in sulu_navigation_root_tree('main') %}
-                        <li>
-                            <a href="{{ sulu_content_path(item.url) }}"
-                               title="{{ item.title }}">{{ item.title }}</a>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ sulu_content_path(item.url) }}">{{ item.title }}</a>
+                        </li>
                         </li>
                     {% endfor %}
                 </ul>
-            </nav>
-        {% endblock %}
+            </div>
+        </nav>
     </header>
 
-    <form action="{{ path('sulu_search.website_search') }}" method="GET">
-        <input name="q" type="text" placeholder="Search"/>
-        <input type="submit" value="Go"/>
-    </form>
-
-    <section id="content">
+    <main role="main" id="content" class="flex-shrink-0">
         {% block content %}{% endblock %}
-    </section>
+    </main>
 
     <aside>
         {% block aside %}{% endblock %}
     </aside>
 
-    <footer>
+    <footer class="footer mt-auto py-3">
         {% block footer %}
-            <p>Copyright {{ 'now'|date('Y') }} SULU</p>
+            <div class="container">
+                <span class="text-muted">Copyright {{ 'now'|date('Y') }} SULU</span>
+            </div>
         {% endblock %}
     </footer>
 
-    {% block javascripts %}{% endblock %}
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
 </body>
 </html>

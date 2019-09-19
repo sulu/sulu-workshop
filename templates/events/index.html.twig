@@ -1,7 +1,11 @@
 {% extends "base.html.twig" %}
 
 {% block content %}
-    <h1>{{ event.title }}</h1>
-
-    {{ event.description|raw }}
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading">{{ event.title }}</h1>
+            <div class="lead text-muted">{{ event.description|raw }}</div>
+            <p class="lead text-muted">{{ event.startDate|date('Y-m-d h:i') }} - {{ event.endDate|date('Y-m-d h:i') }}</p>
+        </div>
+    </section>
 {% endblock %}
