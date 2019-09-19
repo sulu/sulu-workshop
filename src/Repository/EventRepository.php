@@ -21,6 +21,39 @@ class EventRepository extends ServiceEntityRepository
         parent::__construct($registry, Event::class);
     }
 
+    public function create(string $locale): Event
+    {
+        $event = new Event();
+        $event->setLocale($locale);
+
+        $this->getEntityManager()->persist($event);
+
+        return $event;
+    }
+
+    public function remove(Event $event): void
+    {
+        $this->getEntityManager()->remove($event);
+        $this->getEntityManager()->flush();
+    }
+
+    public function save(): void
+    {
+        $this->getEntityManager()->flush();
+    }
+
+    public function findById(int $id, string $locale): ?Event
+    {
+        $event = $this->find($id);
+        if (!$event) {
+            return null;
+        }
+
+        $event->setLocale($locale);
+
+        return $event;
+    }
+
     // /**
     //  * @return Event[] Returns an array of Event objects
     //  */

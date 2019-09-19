@@ -1,0 +1,65 @@
+<?xml version="1.0" ?>
+<list xmlns="http://schemas.sulu.io/list-builder/list">
+    <key>events</key>
+
+    <joins name="translation">
+        <join>
+            <entity-name>App\Entity\EventTranslation</entity-name>
+            <field-name>App\Entity\Event.translations</field-name>
+            <condition>App\Entity\EventTranslation.locale = :locale</condition>
+        </join>
+    </joins>
+
+    <properties>
+        <property
+            name="id"
+            visibility="no"
+            translation="sulu_admin.id"
+        >
+            <field-name>id</field-name>
+            <entity-name>App\Entity\Event</entity-name>
+        </property>
+
+        <property
+                name="enabled"
+                visibility="always"
+                translation="app.enabled"
+                type="bool"
+        >
+            <field-name>enabled</field-name>
+            <entity-name>App\Entity\Event</entity-name>
+        </property>
+
+        <property
+                name="title"
+                visibility="always"
+                searchability="yes"
+                translation="sulu_admin.title"
+        >
+            <field-name>title</field-name>
+            <entity-name>App\Entity\EventTranslation</entity-name>
+
+            <joins ref="translation"/>
+        </property>
+
+        <property
+            name="startDate"
+            visibility="always"
+            translation="app.start_date"
+            type="datetime"
+        >
+            <field-name>startDate</field-name>
+            <entity-name>App\Entity\Event</entity-name>
+        </property>
+
+        <property
+            name="endDate"
+            visibility="always"
+            translation="app.end_date"
+            type="datetime"
+        >
+            <field-name>endDate</field-name>
+            <entity-name>App\Entity\Event</entity-name>
+        </property>
+    </properties>
+</list>
