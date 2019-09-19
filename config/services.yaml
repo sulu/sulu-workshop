@@ -27,5 +27,13 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
+    App\Content\EventDataProvider:
+        tags: [{name: 'sulu.smart_content.data_provider', alias: 'event'}]
+        bind:
+            $repository: '@App\Repository\EventRepository'
+
+    App\Content\EventSelectionContentType:
+        tags: [{name: 'sulu.content.type', alias: 'event_selection'}]
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
