@@ -7,6 +7,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EventRepository")
@@ -47,6 +48,8 @@ class Event
      * @var EventTranslation[]|Collection
      *
      * @ORM\OneToMany(targetEntity="App\Entity\EventTranslation", mappedBy="event", cascade={"ALL"}, indexBy="locale")
+     *
+     * @Serializer\Exclude
      */
     private $translations;
 
@@ -102,6 +105,9 @@ class Event
         return $this;
     }
 
+    /**
+     * @Serializer\VirtualProperty(name="title")
+     */
     public function getTitle(): ?string
     {
         $translation = $this->getTranslation($this->locale);
@@ -124,6 +130,9 @@ class Event
         return $this;
     }
 
+    /**
+     * @Serializer\VirtualProperty(name="description")
+     */
     public function getDescription(): ?string
     {
         $translation = $this->getTranslation($this->locale);

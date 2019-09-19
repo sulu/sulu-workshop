@@ -413,6 +413,9 @@
     "symfony/asset": {
         "version": "v4.3.4"
     },
+    "symfony/browser-kit": {
+        "version": "v4.3.4"
+    },
     "symfony/cache": {
         "version": "v4.3.4"
     },
