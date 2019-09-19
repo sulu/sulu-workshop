@@ -43,10 +43,17 @@
             </meta>
         </property>
 
+        <property name="eventOverviewPage" type="single_page_selection">
+            <meta>
+                <title lang="en">Event Overview Page</title>
+                <title lang="de">Veranstaltungsübersicht</title>
+            </meta>
+        </property>
+
         <property name="events" type="event_selection">
             <meta>
-                <title lang="en">Events</title>
-                <title lang="de">Veranstaltungen</title>
+                <title lang="en">Event Highlights</title>
+                <title lang="de">Veranstaltungs Highlights</title>
             </meta>
         </property>
     </properties>

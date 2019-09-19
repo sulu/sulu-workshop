@@ -6,7 +6,7 @@
     <key>event_details</key>
 
     <properties>
-        <property name="title" type="text_line">
+        <property name="title" type="text_line" mandatory="true">
             <meta>
                 <title>sulu_admin.title</title>
             </meta>
