@@ -3,15 +3,15 @@
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://schemas.sulu.io/template/template http://schemas.sulu.io/template/template-1.0.xsd">
 
-    <key>homepage</key>
+    <key>event_overview</key>
 
-    <view>pages/homepage</view>
+    <view>pages/event_overview</view>
     <controller>Sulu\Bundle\WebsiteBundle\Controller\DefaultController::indexAction</controller>
     <cacheLifetime>86400</cacheLifetime>
 
     <meta>
-        <title lang="en">Homepage</title>
-        <title lang="de">Startseite</title>
+        <title lang="en">Event Overview</title>
+        <title lang="de">Veranstaltungsübersicht</title>
     </meta>
 
     <properties>
@@ -43,11 +43,15 @@
             </meta>
         </property>
 
-        <property name="events" type="event_selection">
+        <property name="events" type="smart_content">
             <meta>
                 <title lang="en">Events</title>
                 <title lang="de">Veranstaltungen</title>
             </meta>
+
+            <params>
+                <param name="provider" value="event"/>
+            </params>
         </property>
     </properties>
 </template>

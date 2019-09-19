@@ -1,0 +1,5 @@
+# Define your website routes here
+
+app.event:
+    path: /event/{id}
+    controller: App\Controller\EventWebsiteController::indexAction
