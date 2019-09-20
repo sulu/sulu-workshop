@@ -1,5 +1,6 @@
 {
     "app.events": "Events",
+    "app.teaser": "Teaser",
     "app.start_date": "Start",
     "app.end_date": "Ende",
     "app.enable_event": "Enable event",

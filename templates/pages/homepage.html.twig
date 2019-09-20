@@ -5,11 +5,6 @@
         <div class="container">
             <h1 class="jumbotron-heading">{{ content.title }}</h1>
             <p class="lead text-muted">{{ content.article|raw }}</p>
-            {% if content.eventOverviewPage|default %}
-                <p>
-                    <sulu-link provider="page" href="{{ content.eventOverviewPage }}" class="btn btn-primary my-2"/>
-                </p>
-            {% endif %}
         </div>
     </section>
 
@@ -18,7 +13,7 @@
             {% for event in content.events %}
                 <div class="col-lg-4 text-center">
                     <h2 class="event-title">{{ event.title }}</h2>
-                    <p>{{ event.description|striptags|slice(0, 100) }}</p>
+                    <p>{{ event.description }}</p>
                     <p>
                         <a class="btn btn-secondary" href="{{ path('app.event', {id: event.id}) }}" role="button">
                             View details »

@@ -50,6 +50,13 @@ class EventTranslation implements AuditableInterface
      *
      * @ORM\Column(type="text", nullable=true)
      */
+    private $teaser;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(type="text", nullable=true)
+     */
     private $description;
 
     public function __construct(Event $event, string $locale)
@@ -81,6 +88,18 @@ class EventTranslation implements AuditableInterface
     public function setTitle(?string $title): self
     {
         $this->title = $title;
+
+        return $this;
+    }
+
+    public function getTeaser(): ?string
+    {
+        return $this->teaser;
+    }
+
+    public function setTeaser(?string $teaser): self
+    {
+        $this->teaser = $teaser;
 
         return $this;
     }

@@ -42,16 +42,13 @@ class DocumentFixture implements DocumentFixtureInterface, ContainerAwareInterfa
     {
         $faker = Factory::create(AppFixtures::LOCALE);
 
-        $pages = $this->loadPages($faker, $documentManager);
-        $this->loadHomepage($faker, $documentManager, $pages['Events']);
+        $this->loadPages($faker, $documentManager);
+        $this->loadHomepage($faker, $documentManager);
 
         $documentManager->flush();
     }
 
-    /**
-     * @return PageDocument[]
-     */
-    private function loadPages(Generator $faker, DocumentManager $documentManager): array
+    private function loadPages(Generator $faker, DocumentManager $documentManager): void
     {
         $pageDataList = [
             [
@@ -67,15 +64,10 @@ class DocumentFixture implements DocumentFixtureInterface, ContainerAwareInterfa
         foreach ($pageDataList as $pageData) {
             $pages[$pageData['title']] = $this->createPage($documentManager, $pageData);
         }
-
-        return $pages;
     }
 
-    private function loadHomepage(
-        Generator $faker,
-        DocumentManager $documentManager,
-        PageDocument $eventOverviewPage
-    ): void {
+    private function loadHomepage(Generator $faker, DocumentManager $documentManager): void
+    {
         $repository = $this->getEntityManager()->getRepository(Event::class);
         $events = $repository->findBy(['enabled' => true]);
 
@@ -95,7 +87,6 @@ class DocumentFixture implements DocumentFixtureInterface, ContainerAwareInterfa
                     $events[rand(0, \count($events) - 1)]->getId(),
                     $events[rand(0, \count($events) - 1)]->getId(),
                 ],
-                'eventOverviewPage' => $eventOverviewPage->getUuid(),
             ]
         );
 

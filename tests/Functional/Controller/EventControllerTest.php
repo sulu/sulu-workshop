@@ -70,9 +70,10 @@ class EventControllerTest extends SuluTestCase
             '/admin/api/events?locale=de',
             [
                 'title' => 'Sulu',
+                'teaser' => 'Sulu is awesome',
                 'startDate' => '2019-01-01 12:00',
                 'endDate' => '2019-01-02 12:00',
-                'description' => 'Sulu is awesome',
+                'description' => 'Sulu is really awesome',
             ]
         );
 
@@ -85,20 +86,22 @@ class EventControllerTest extends SuluTestCase
         $this->assertNotNull($result['id']);
         $this->assertFalse($result['enabled']);
         $this->assertSame('Sulu', $result['title']);
+        $this->assertSame('Sulu is awesome', $result['teaser']);
         $this->assertSame('2019-01-01T12:00:00', $result['startDate']);
         $this->assertSame('2019-01-02T12:00:00', $result['endDate']);
-        $this->assertSame('Sulu is awesome', $result['description']);
+        $this->assertSame('Sulu is really awesome', $result['description']);
 
         $result = $this->findEventById($result['id'], 'de');
 
         $this->assertNotNull($result);
         $this->assertFalse($result->isEnabled());
         $this->assertSame('Sulu', $result->getTitle());
+        $this->assertSame('Sulu is awesome', $result->getTeaser());
         $this->assertNotNull($result->getStartDate());
         $this->assertSame('2019-01-01T12:00:00', $result->getStartDate()->format('Y-m-d\TH:i:s'));
         $this->assertNotNull($result->getEndDate());
         $this->assertSame('2019-01-02T12:00:00', $result->getEndDate()->format('Y-m-d\TH:i:s'));
-        $this->assertSame('Sulu is awesome', $result->getDescription());
+        $this->assertSame('Sulu is really awesome', $result->getDescription());
     }
 
     public function testPostNullValues(): void
@@ -122,6 +125,7 @@ class EventControllerTest extends SuluTestCase
         $this->assertNotNull($result['id']);
         $this->assertFalse($result['enabled']);
         $this->assertSame('Sulu', $result['title']);
+        $this->assertNull($result['teaser']);
         $this->assertNull($result['startDate']);
         $this->assertNull($result['endDate']);
         $this->assertNull($result['description']);
@@ -131,6 +135,7 @@ class EventControllerTest extends SuluTestCase
         $this->assertNotNull($result);
         $this->assertFalse($result->isEnabled());
         $this->assertSame('Sulu', $result->getTitle());
+        $this->assertNull($result->getTeaser());
         $this->assertNull($result->getStartDate());
         $this->assertNull($result->getEndDate());
         $this->assertNull($result->getDescription());
@@ -147,9 +152,10 @@ class EventControllerTest extends SuluTestCase
             '/admin/api/events/' . $event->getId() . '?locale=de',
             [
                 'title' => 'Symfony Live',
+                'teaser' => 'Symfony Live is awesome',
                 'startDate' => '2019-01-01 12:00',
                 'endDate' => '2019-01-02 12:00',
-                'description' => 'Symfony Live is awesome',
+                'description' => 'Symfony Live is really awesome',
             ]
         );
 
@@ -162,20 +168,22 @@ class EventControllerTest extends SuluTestCase
         $this->assertNotNull($result['id']);
         $this->assertFalse($result['enabled']);
         $this->assertSame('Symfony Live', $result['title']);
+        $this->assertSame('Symfony Live is awesome', $result['teaser']);
         $this->assertSame('2019-01-01T12:00:00', $result['startDate']);
         $this->assertSame('2019-01-02T12:00:00', $result['endDate']);
-        $this->assertSame('Symfony Live is awesome', $result['description']);
+        $this->assertSame('Symfony Live is really awesome', $result['description']);
 
         $result = $this->findEventById($result['id'], 'de');
 
         $this->assertNotNull($result);
         $this->assertFalse($result->isEnabled());
         $this->assertSame('Symfony Live', $result->getTitle());
+        $this->assertSame('Symfony Live is awesome', $result->getTeaser());
         $this->assertNotNull($result->getStartDate());
         $this->assertSame('2019-01-01T12:00:00', $result->getStartDate()->format('Y-m-d\TH:i:s'));
         $this->assertNotNull($result->getEndDate());
         $this->assertSame('2019-01-02T12:00:00', $result->getEndDate()->format('Y-m-d\TH:i:s'));
-        $this->assertSame('Symfony Live is awesome', $result->getDescription());
+        $this->assertSame('Symfony Live is really awesome', $result->getDescription());
     }
 
     public function testPutNullValues(): void
@@ -201,6 +209,7 @@ class EventControllerTest extends SuluTestCase
         $this->assertNotNull($result['id']);
         $this->assertFalse($result['enabled']);
         $this->assertSame('Symfony Live', $result['title']);
+        $this->assertNull($result['teaser']);
         $this->assertNull($result['startDate']);
         $this->assertNull($result['endDate']);
         $this->assertNull($result['description']);
@@ -210,6 +219,7 @@ class EventControllerTest extends SuluTestCase
         $this->assertNotNull($result);
         $this->assertFalse($result->isEnabled());
         $this->assertSame('Symfony Live', $result->getTitle());
+        $this->assertNull($result->getTeaser());
         $this->assertNull($result->getStartDate());
         $this->assertNull($result->getEndDate());
         $this->assertNull($result->getDescription());

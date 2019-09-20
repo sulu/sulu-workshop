@@ -4,8 +4,11 @@
     <section class="jumbotron text-center">
         <div class="container">
             <h1 class="jumbotron-heading">{{ event.title }}</h1>
-            <div class="lead text-muted">{{ event.description|raw }}</div>
-            <p class="lead text-muted">{{ event.startDate|date('Y-m-d h:i') }} - {{ event.endDate|date('Y-m-d h:i') }}</p>
+            <p class="lead text-muted">{{ event.startDate|date('Y-m-d') }} - {{ event.endDate|date('Y-m-d') }}</p>
         </div>
     </section>
+
+    <div class="container">
+        {{ event.description|raw }}
+    </div>
 {% endblock %}

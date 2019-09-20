@@ -12,6 +12,12 @@
             </meta>
         </property>
 
+        <property name="teaser" type="text_area">
+            <meta>
+                <title>app.teaser</title>
+            </meta>
+        </property>
+
         <property name="startDate" type="datetime" colspan="6">
             <meta>
                 <title>app.start_date</title>
