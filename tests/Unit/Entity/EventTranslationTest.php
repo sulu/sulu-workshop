@@ -44,6 +44,13 @@ class EventTranslationTest extends TestCase
         $this->assertSame('Sulu is awesome', $this->translation->getTitle());
     }
 
+    public function testTeaser(): void
+    {
+        $this->assertNull($this->translation->getTeaser());
+        $this->assertSame($this->translation, $this->translation->setTeaser('Sulu is awesome'));
+        $this->assertSame('Sulu is awesome', $this->translation->getTeaser());
+    }
+
     public function testDescription(): void
     {
         $this->assertNull($this->translation->getDescription());

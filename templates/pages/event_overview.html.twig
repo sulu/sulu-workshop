@@ -13,7 +13,7 @@
             {% for event in content.events %}
                 <div class="col-lg-4 text-center">
                     <h2 class="event-title">{{ event.title }}</h2>
-                    <p>{{ event.description|striptags|slice(0, 100) }}</p>
+                    <p>{{ event.teaser }}</p>
                     <p>
                         <a class="btn btn-secondary" href="{{ path('app.event', {id: event.id}) }}" role="button">
                             View details »

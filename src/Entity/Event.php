@@ -131,6 +131,31 @@ class Event
     }
 
     /**
+     * @Serializer\VirtualProperty(name="teaser")
+     */
+    public function getTeaser(): ?string
+    {
+        $translation = $this->getTranslation($this->locale);
+        if (!$translation) {
+            return null;
+        }
+
+        return $translation->getTeaser();
+    }
+
+    public function setTeaser(string $teaser): self
+    {
+        $translation = $this->getTranslation($this->locale);
+        if (!$translation) {
+            $translation = $this->createTranslation($this->locale);
+        }
+
+        $translation->setTeaser($teaser);
+
+        return $this;
+    }
+
+    /**
      * @Serializer\VirtualProperty(name="description")
      */
     public function getDescription(): ?string

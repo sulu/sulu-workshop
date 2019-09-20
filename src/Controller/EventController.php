@@ -166,6 +166,10 @@ class EventController extends RestController implements ClassResourceInterface
     {
         $event->setTitle($data['title']);
 
+        if ($teaser = $data['teaser'] ?? null) {
+            $event->setTeaser($teaser);
+        }
+
         if ($description = $data['description'] ?? null) {
             $event->setDescription($description);
         }

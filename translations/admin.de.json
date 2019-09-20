@@ -1,5 +1,6 @@
 {
     "app.events": "Veranstaltungen",
+    "app.teaser": "Kurzbeschreibung",
     "app.start_date": "Start",
     "app.end_date": "Ende",
     "app.enable_event": "Veranstaltungen aktivieren",
