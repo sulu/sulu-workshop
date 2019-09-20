@@ -28,6 +28,7 @@
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.15",
+        "fzaninotto/faker": "^1.8",
         "jangregor/phpstan-prophecy": "^0.4.2",
         "phpcr/phpcr-shell": "^1.0",
         "phpstan/phpstan": "^0.11.15",
@@ -56,6 +57,7 @@
             "App\\Tests\\": "tests/"
         },
         "exclude-from-classmap": [
+            "/src/DataFixtures/",
             "/src/Migrations/"
         ]
     },
