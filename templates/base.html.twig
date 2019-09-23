@@ -57,7 +57,13 @@
     <footer class="footer mt-auto py-3">
         {% block footer %}
             <div class="container">
-                <span class="text-muted">Copyright {{ 'now'|date('Y') }} SULU</span>
+                {% for item in sulu_navigation_root_flat('footer') %}
+                    <a href="{{ sulu_content_path(item.url) }}">{{ item.title }}</a>
+
+                    {% if not loop.last %}&nbsp;|&nbsp;{% endif %}
+                {% endfor %}
+
+                <span class="text-muted float-right">Copyright {{ 'now'|date('Y') }} SULU</span>
             </div>
         {% endblock %}
     </footer>
