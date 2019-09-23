@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Functional\Controller;
+namespace App\Tests\Functional\Controller\Admin;
 
 use App\Tests\Functional\Traits\EventTrait;
 use Sulu\Bundle\TestBundle\Testing\SuluTestCase;
@@ -74,6 +74,7 @@ class EventControllerTest extends SuluTestCase
                 'startDate' => '2019-01-01 12:00',
                 'endDate' => '2019-01-02 12:00',
                 'description' => 'Sulu is really awesome',
+                'location' => 'Dornbirn',
             ]
         );
 
@@ -90,6 +91,7 @@ class EventControllerTest extends SuluTestCase
         $this->assertSame('2019-01-01T12:00:00', $result['startDate']);
         $this->assertSame('2019-01-02T12:00:00', $result['endDate']);
         $this->assertSame('Sulu is really awesome', $result['description']);
+        $this->assertSame('Dornbirn', $result['location']);
 
         $result = $this->findEventById($result['id'], 'de');
 
@@ -102,6 +104,7 @@ class EventControllerTest extends SuluTestCase
         $this->assertNotNull($result->getEndDate());
         $this->assertSame('2019-01-02T12:00:00', $result->getEndDate()->format('Y-m-d\TH:i:s'));
         $this->assertSame('Sulu is really awesome', $result->getDescription());
+        $this->assertSame('Dornbirn', $result->getLocation());
     }
 
     public function testPostNullValues(): void
@@ -129,6 +132,7 @@ class EventControllerTest extends SuluTestCase
         $this->assertNull($result['startDate']);
         $this->assertNull($result['endDate']);
         $this->assertNull($result['description']);
+        $this->assertNull($result['location']);
 
         $result = $this->findEventById($result['id'], 'de');
 
@@ -139,6 +143,7 @@ class EventControllerTest extends SuluTestCase
         $this->assertNull($result->getStartDate());
         $this->assertNull($result->getEndDate());
         $this->assertNull($result->getDescription());
+        $this->assertNull($result->getLocation());
     }
 
     public function testPut(): void
@@ -156,6 +161,7 @@ class EventControllerTest extends SuluTestCase
                 'startDate' => '2019-01-01 12:00',
                 'endDate' => '2019-01-02 12:00',
                 'description' => 'Symfony Live is really awesome',
+                'location' => 'Dornbirn',
             ]
         );
 
@@ -172,6 +178,7 @@ class EventControllerTest extends SuluTestCase
         $this->assertSame('2019-01-01T12:00:00', $result['startDate']);
         $this->assertSame('2019-01-02T12:00:00', $result['endDate']);
         $this->assertSame('Symfony Live is really awesome', $result['description']);
+        $this->assertSame('Dornbirn', $result['location']);
 
         $result = $this->findEventById($result['id'], 'de');
 
@@ -184,6 +191,7 @@ class EventControllerTest extends SuluTestCase
         $this->assertNotNull($result->getEndDate());
         $this->assertSame('2019-01-02T12:00:00', $result->getEndDate()->format('Y-m-d\TH:i:s'));
         $this->assertSame('Symfony Live is really awesome', $result->getDescription());
+        $this->assertSame('Dornbirn', $result->getLocation());
     }
 
     public function testPutNullValues(): void
@@ -213,6 +221,7 @@ class EventControllerTest extends SuluTestCase
         $this->assertNull($result['startDate']);
         $this->assertNull($result['endDate']);
         $this->assertNull($result['description']);
+        $this->assertNull($result['location']);
 
         $result = $this->findEventById($result['id'], 'de');
 
@@ -223,6 +232,7 @@ class EventControllerTest extends SuluTestCase
         $this->assertNull($result->getStartDate());
         $this->assertNull($result->getEndDate());
         $this->assertNull($result->getDescription());
+        $this->assertNull($result->getLocation());
     }
 
     public function testEnable(): void

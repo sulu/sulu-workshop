@@ -6,9 +6,15 @@
     <key>event_details</key>
 
     <properties>
-        <property name="title" type="text_line" mandatory="true">
+        <property name="title" type="text_line" mandatory="true" colspan="9">
             <meta>
                 <title>sulu_admin.title</title>
+            </meta>
+        </property>
+
+        <property name="location" type="text_line" colspan="3">
+            <meta>
+                <title>app.location</title>
             </meta>
         </property>
 
