@@ -48,10 +48,10 @@ class DocumentFixture implements DocumentFixtureInterface, ContainerAwareInterfa
     {
         $pageDataList = [
             [
-                'title' => 'Impress',
+                'title' => 'Imprint',
                 'navigationContexts' => ['main'],
                 'structureType' => 'default',
-                'article' => '<p>This is a very good impress :)</p>',
+                'article' => '<p>This is a very good imprint :)</p>',
             ],
         ];
 
