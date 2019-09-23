@@ -1,0 +1,9 @@
+# Define your admin routes here
+
+app_events:
+    type: rest
+    resource: App\Controller\Admin\EventController
+    prefix: /admin/api
+    name_prefix: app.
+    options:
+        expose: true

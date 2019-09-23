@@ -87,11 +87,3 @@ sulu_preview:
 sulu_search:
     resource: "@SuluSearchBundle/Resources/config/routing.yml"
     prefix: /admin/search
-
-app_events:
-    type: rest
-    resource: App\Controller\Admin\EventController
-    prefix: /admin/api
-    name_prefix: app.
-    options:
-        expose: true
