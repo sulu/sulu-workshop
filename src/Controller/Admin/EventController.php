@@ -37,7 +37,11 @@ class EventController extends RestController implements ClassResourceInterface
     public function cgetAction(Request $request): Response
     {
         $locale = $request->query->get('locale');
-        $listRepresentation = $this->doctrineListRepresentationFactory->createDoctrineListRepresentation(Event::RESOURCE_KEY, [], $locale);
+        $listRepresentation = $this->doctrineListRepresentationFactory->createDoctrineListRepresentation(
+            Event::RESOURCE_KEY,
+            [],
+            ['locale' => $locale]
+        );
 
         return $this->handleView($this->view($listRepresentation));
     }

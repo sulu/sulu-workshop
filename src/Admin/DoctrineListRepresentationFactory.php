@@ -43,15 +43,16 @@ class DoctrineListRepresentationFactory
     public function createDoctrineListRepresentation(
         string $resourceKey,
         array $filters = [],
-        ?string $locale = null
+        array $parameters = []
     ): PaginatedRepresentation {
         /** @var DoctrineFieldDescriptor[] $fieldDescriptors */
         $fieldDescriptors = $this->fieldDescriptorFactory->getFieldDescriptors($resourceKey);
 
         $listBuilder = $this->listBuilderFactory->create($fieldDescriptors['id']->getEntityName());
         $this->restHelper->initializeListBuilder($listBuilder, $fieldDescriptors);
-        if ($locale) {
-            $listBuilder->setParameter('locale', $locale);
+
+        foreach ($parameters as $key => $value) {
+            $listBuilder->setParameter($key, $value);
         }
 
         foreach ($filters as $key => $value) {
