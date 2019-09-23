@@ -6,3 +6,26 @@ sulu_admin:
     lists:
         directories:
             - "%kernel.project_dir%/config/lists"
+
+    # Registering Sulu Resources in this section
+    resources:
+        events:
+            routes:
+                list: app.get_events
+                detail: app.get_event
+
+    # Registering Selection Field Types in this section
+    field_type_options:
+        selection:
+            event_selection:
+                default_type: list_overlay
+                resource_key: events
+                types:
+                    list_overlay:
+                        adapter: table
+                        list_key: events
+                        display_properties:
+                            - title
+                        icon: fa-calendar
+                        label: 'app.events'
+                        overlay_title: 'app.events'
