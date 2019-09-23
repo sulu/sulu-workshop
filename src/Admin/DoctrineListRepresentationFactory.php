@@ -39,6 +39,7 @@ class DoctrineListRepresentationFactory
 
     /**
      * @param mixed[] $filters
+     * @param mixed[] $parameters
      */
     public function createDoctrineListRepresentation(
         string $resourceKey,
