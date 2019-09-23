@@ -1,0 +1,8 @@
+{% for block in content.blocks %}
+    <section class="container mt-5 clearfix">
+        {% include "includes/block-types/#{block.type}.html.twig" with {
+            content: block,
+            view: view.blocks[loop.index0],
+        } only %}
+    </section>
+{% endfor %}

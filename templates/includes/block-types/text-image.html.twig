@@ -1,0 +1,23 @@
+<div class="row">
+    {% set imageContainer %}
+        {%- if content.image %}
+            <div class="col-3">
+                <img src="{{ content.image.formats['200x'] }}" class="img-fluid rounded" alt="{{ content.image.title }}">
+            </div>
+        {% endif -%}
+    {% endset %}
+
+    {% if view.image.displayOption == 'left' %}
+        {{ imageContainer|raw }}
+    {% endif %}
+
+    <div class="{{ imageContainer ? 'col-9' : 'col-12'}}">
+        <h3>{{ content.title }}</h3>
+
+        {{ content.article|raw }}
+    </div>
+
+    {% if view.image.displayOption == 'right' %}
+        {{ imageContainer|raw }}
+    {% endif %}
+</div>

@@ -26,4 +26,9 @@
             {% endfor %}
         </div>
     </div>
+
+    {% include 'includes/blocks.html.twig' with {
+        content: {blocks: content.blocks},
+        view: {blocks: view.blocks},
+    } only %}
 {% endblock %}
