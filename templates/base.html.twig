@@ -41,6 +41,12 @@
                             </li>
                         {% endfor %}
                     </ul>
+
+                    <div class="navbar-nav">
+                        {% for locale, url in urls %}
+                            <a class="nav-link" href="{{ sulu_content_path(url, null, locale) }}">{{ locale }}</a>
+                        {% endfor %}
+                    </div>
                 </div>
             </nav>
         </div>

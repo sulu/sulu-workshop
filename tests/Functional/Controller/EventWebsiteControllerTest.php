@@ -26,7 +26,7 @@ class EventWebsiteControllerTest extends SuluTestCase
 
         $event = $this->createEvent('Sulu is awesome', 'en');
 
-        $crawler = $client->request('GET', '/event/' . $event->getId());
+        $crawler = $client->request('GET', '/en/event/' . $event->getId());
 
         $response = $client->getResponse();
         $this->assertInstanceOf(Response::class, $response);
