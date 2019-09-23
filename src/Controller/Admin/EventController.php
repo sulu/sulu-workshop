@@ -134,6 +134,10 @@ class EventController extends RestController implements ClassResourceInterface
         if ($endDate = $data['endDate'] ?? null) {
             $entity->setEndDate(new \DateTimeImmutable($endDate));
         }
+
+        if ($location = $data['location'] ?? null) {
+            $entity->setLocation($location);
+        }
     }
 
     protected function load(int $id, Request $request): ?Event

@@ -47,6 +47,13 @@ class Event
     private $endDate;
 
     /**
+     * @var string|null
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $location;
+
+    /**
      * @var EventTranslation[]|Collection
      *
      * @ORM\OneToMany(targetEntity="App\Entity\EventTranslation", mappedBy="event", cascade={"ALL"}, indexBy="locale")
@@ -103,6 +110,18 @@ class Event
     public function setEndDate(?\DateTimeImmutable $endDate): self
     {
         $this->endDate = $endDate;
+
+        return $this;
+    }
+
+    public function getLocation(): ?string
+    {
+        return $this->location;
+    }
+
+    public function setLocation(?string $location): self
+    {
+        $this->location = $location;
 
         return $this;
     }

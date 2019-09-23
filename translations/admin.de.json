@@ -4,5 +4,6 @@
     "app.start_date": "Start",
     "app.end_date": "Ende",
     "app.enable_event": "Veranstaltungen aktivieren",
-    "app.enabled": "Aktiviert"
+    "app.enabled": "Aktiviert",
+    "app.location": "Standort"
 }
