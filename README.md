@@ -17,13 +17,46 @@ The assignments can be found in the folder [assignments](/assignments).
 
 ## Getting started
 
-If you are using docker as service provider run `docker-compose up` to start the database engine.
+### Setting up database
 
-Else create a `.env.local` in the root directory and adapt the database credentials to your needs.
+If you are using docker as service provider run the following command to start the database engine:
 
-Run `composer install -o` to install all the dependencies.
+```bash
+docker-compose up
+```
 
-Run `bin/console sulu:build dev --destroy` to initialize Sulu.
+Else create a `.env.local` in the root directory and adapt the database credentials to your needs:
 
-Run `bin/console server:run` to use the PHP built-in web server or run `symfony server:start --daemon` 
-if you have the Symfony CLI Tools installed.
+```dotenv
+DATABASE_URL=mysql://DB_USER:DB_PASSWORD@127.0.0.1:3306/DB_NAME
+```
+
+### Install the dependencies
+
+Use [composer](https://getcomposer.org/) to install all dependencies:
+
+```bash
+composer install --optimize-autoloader
+```
+
+### Initialize Sulu Database
+
+Run the following command to initialize Sulu:
+
+```bash
+bin/console sulu:build dev --destroy
+```
+
+### Run Webserver
+
+Use the PHP built-in web-server with:
+
+```bash
+bin/console server:run
+```
+
+or if you have the SYMFONY CLI Tools installed run:
+
+```bash
+symfony server:start
+```
