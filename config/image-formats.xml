@@ -14,6 +14,15 @@
         <scale y="400"/>
     </format>
 
+    <format key="200x">
+        <meta>
+            <title lang="en">Block Image</title>
+            <title lang="de">Block Bild</title>
+        </meta>
+
+        <scale x="200"/>
+    </format>
+
     <!--
     Render an image from the media_selection in a specific format the following way:
 
