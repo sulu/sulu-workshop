@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9f1b03c19c4849c1177188a6b95f0f47",
+    "content-hash": "a5a30f112c1734196b652fc0852834b0",
     "packages": [
         {
             "name": "aferrandini/urlizer",
@@ -1280,16 +1280,16 @@
         },
         {
             "name": "doctrine/orm",
-            "version": "v2.6.3",
+            "version": "v2.6.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/orm.git",
-                "reference": "434820973cadf2da2d66e7184be370084cc32ca8"
+                "reference": "b52ef5a1002f99ab506a5a2d6dba5a2c236c5f43"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/orm/zipball/434820973cadf2da2d66e7184be370084cc32ca8",
-                "reference": "434820973cadf2da2d66e7184be370084cc32ca8",
+                "url": "https://api.github.com/repos/doctrine/orm/zipball/b52ef5a1002f99ab506a5a2d6dba5a2c236c5f43",
+                "reference": "b52ef5a1002f99ab506a5a2d6dba5a2c236c5f43",
                 "shasum": ""
             },
             "require": {
@@ -1304,9 +1304,8 @@
                 "symfony/console": "~3.0|~4.0"
             },
             "require-dev": {
-                "doctrine/coding-standard": "^1.0",
-                "phpunit/phpunit": "^6.5",
-                "squizlabs/php_codesniffer": "^3.2",
+                "doctrine/coding-standard": "^5.0",
+                "phpunit/phpunit": "^7.5",
                 "symfony/yaml": "~3.4|~4.0"
             },
             "suggest": {
@@ -1332,16 +1331,16 @@
             ],
             "authors": [
                 {
+                    "name": "Guilherme Blanco",
+                    "email": "guilhermeblanco@gmail.com"
+                },
+                {
                     "name": "Roman Borschel",
                     "email": "roman@code-factory.org"
                 },
                 {
                     "name": "Benjamin Eberlei",
                     "email": "kontakt@beberlei.de"
-                },
-                {
-                    "name": "Guilherme Blanco",
-                    "email": "guilhermeblanco@gmail.com"
                 },
                 {
                     "name": "Jonathan Wage",
@@ -1358,7 +1357,7 @@
                 "database",
                 "orm"
             ],
-            "time": "2018-11-20T23:46:46+00:00"
+            "time": "2019-09-20T14:30:26+00:00"
         },
         {
             "name": "doctrine/persistence",
@@ -4752,12 +4751,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sulu/sulu.git",
-                "reference": "02a96922508cea5201fc48aa93b087b91ed3b593"
+                "reference": "d3066a5b1f0dd283b12cf718a0a689cffbb00fa1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sulu/sulu/zipball/02a96922508cea5201fc48aa93b087b91ed3b593",
-                "reference": "02a96922508cea5201fc48aa93b087b91ed3b593",
+                "url": "https://api.github.com/repos/sulu/sulu/zipball/d3066a5b1f0dd283b12cf718a0a689cffbb00fa1",
+                "reference": "d3066a5b1f0dd283b12cf718a0a689cffbb00fa1",
                 "shasum": ""
             },
             "require": {
@@ -4930,7 +4929,7 @@
                 "core",
                 "sulu"
             ],
-            "time": "2019-09-23T06:18:11+00:00"
+            "time": "2019-09-23T12:49:48+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
