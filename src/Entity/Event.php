@@ -14,6 +14,8 @@ use JMS\Serializer\Annotation as Serializer;
  */
 class Event
 {
+    const RESOURCE_KEY = 'events';
+
     /**
      * @var int|null
      *

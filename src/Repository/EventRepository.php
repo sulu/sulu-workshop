@@ -34,19 +34,23 @@ class EventRepository extends ServiceEntityRepository implements DataProviderRep
         $event = new Event();
         $event->setLocale($locale);
 
-        $this->getEntityManager()->persist($event);
-
         return $event;
     }
 
-    public function remove(Event $event): void
+    public function remove(int $id): void
     {
-        $this->getEntityManager()->remove($event);
+        $this->getEntityManager()->remove(
+            $this->getEntityManager()->getReference(
+                $this->getClassName(),
+                $id
+            )
+        );
         $this->getEntityManager()->flush();
     }
 
-    public function save(): void
+    public function save(Event $event): void
     {
+        $this->getEntityManager()->persist($event);
         $this->getEntityManager()->flush();
     }
 
