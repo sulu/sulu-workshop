@@ -2,37 +2,65 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Admin;
 
+use App\Admin\DoctrineListRepresentationFactory;
 use App\Entity\Event;
 use App\Repository\EventRepository;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Routing\ClassResourceInterface;
-use FOS\RestBundle\View\ViewHandlerInterface;
-use Sulu\Component\Rest\ListBuilder\Doctrine\DoctrineListBuilderFactory;
-use Sulu\Component\Rest\ListBuilder\Metadata\FieldDescriptorFactoryInterface;
-use Sulu\Component\Rest\RestHelperInterface;
+use Sulu\Component\Rest\RestController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class EventController extends BaseRestController implements ClassResourceInterface
+class EventController extends RestController implements ClassResourceInterface
 {
     /**
      * @var EventRepository
      */
     private $repository;
 
+    /**
+     * @var DoctrineListRepresentationFactory
+     */
+    private $doctrineListRepresentationFactory;
+
     public function __construct(
         EventRepository $repository,
-        ViewHandlerInterface $viewHandler,
-        RestHelperInterface $restHelper,
-        DoctrineListBuilderFactory $listBuilderFactory,
-        ?FieldDescriptorFactoryInterface $fieldDescriptorFactory
+        DoctrineListRepresentationFactory $doctrineListRepresentationFactory
     ) {
-        parent::__construct($viewHandler, $restHelper, $listBuilderFactory, $fieldDescriptorFactory);
-
         $this->repository = $repository;
+        $this->doctrineListRepresentationFactory = $doctrineListRepresentationFactory;
+    }
+
+    public function cgetAction(Request $request): Response
+    {
+        $locale = $request->query->get('locale');
+        $listRepresentation = $this->doctrineListRepresentationFactory->createDoctrineListRepresentation(Event::RESOURCE_KEY, [], $locale);
+
+        return $this->handleView($this->view($listRepresentation));
+    }
+
+    public function getAction(int $id, Request $request): Response
+    {
+        $entity = $this->load($id, $request);
+        if (!$entity) {
+            throw new NotFoundHttpException();
+        }
+
+        return $this->handleView($this->view($entity));
+    }
+
+    public function postAction(Request $request): Response
+    {
+        $entity = $this->create($request);
+
+        $this->mapDataToEntity($request->request->all(), $entity);
+
+        $this->save($entity);
+
+        return $this->handleView($this->view($entity));
     }
 
     /**
@@ -59,16 +87,31 @@ class EventController extends BaseRestController implements ClassResourceInterfa
         return $this->handleView($this->view($event));
     }
 
-    protected function getResourceKey(): string
+    public function putAction(int $id, Request $request): Response
     {
-        return Event::RESOURCE_KEY;
+        $entity = $this->load($id, $request);
+        if (!$entity) {
+            throw new NotFoundHttpException();
+        }
+
+        $this->mapDataToEntity($request->request->all(), $entity);
+
+        $this->save($entity);
+
+        return $this->handleView($this->view($entity));
+    }
+
+    public function deleteAction(int $id): Response
+    {
+        $this->remove($id);
+
+        return $this->handleView($this->view());
     }
 
     /**
-     * @param Event $entity
      * @param string[] $data
      */
-    protected function mapDataToEntity(array $data, object $entity): void
+    protected function mapDataToEntity(array $data, Event $entity): void
     {
         $entity->setTitle($data['title']);
 
@@ -89,20 +132,17 @@ class EventController extends BaseRestController implements ClassResourceInterfa
         }
     }
 
-    protected function load(int $id, Request $request): ?object
+    protected function load(int $id, Request $request): ?Event
     {
         return $this->repository->findById($id, $request->query->get('locale'));
     }
 
-    protected function create(Request $request): object
+    protected function create(Request $request): Event
     {
         return $this->repository->create($request->query->get('locale'));
     }
 
-    /**
-     * @param Event $entity
-     */
-    protected function save(object $entity): void
+    protected function save(Event $entity): void
     {
         $this->repository->save($entity);
     }

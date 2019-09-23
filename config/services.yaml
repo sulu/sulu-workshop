@@ -27,13 +27,22 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+
+    App\Content\EventSelectionContentType:
+        tags: [{name: 'sulu.content.type', alias: 'event_selection'}]
+
     App\Content\EventDataProvider:
         tags: [{name: 'sulu.smart_content.data_provider', alias: 'event'}]
         bind:
             $repository: '@App\Repository\EventRepository'
 
-    App\Content\EventSelectionContentType:
-        tags: [{name: 'sulu.content.type', alias: 'event_selection'}]
+    # following service definitions will be removed in the website context of sulu
+    App\Admin\:
+        resource: '../src/Admin'
+        tags: [{name: 'sulu.context', context: 'admin'}]
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+    App\Controller\Admin\:
+        resource: '../src/Controller/Admin'
+        tags: [{name: 'sulu.context', context: 'admin'}]
