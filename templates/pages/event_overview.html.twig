@@ -1,0 +1,26 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading">{{ content.title }}</h1>
+            <p class="lead text-muted">{{ content.article|raw }}</p>
+        </div>
+    </section>
+
+    <div class="container marketing">
+        <div class="row">
+            {% for event in content.events %}
+                <div class="col-lg-4 text-center">
+                    <h2 class="event-title">{{ event.title }}</h2>
+                    <p>{{ event.teaser }}</p>
+                    <p>
+                        <a class="btn btn-secondary" href="{{ path('app.event', {id: event.id}) }}" role="button">
+                            View details »
+                        </a>
+                    </p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
