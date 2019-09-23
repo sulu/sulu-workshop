@@ -1,5 +1,5 @@
 # Define your website routes here
 
 app.event:
-    path: /event/{id}
+    path: /{_locale}/event/{id}
     controller: App\Controller\Website\EventWebsiteController::indexAction

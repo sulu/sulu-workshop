@@ -50,7 +50,7 @@ class HomepageTest extends SuluTestCase
             ]
         );
 
-        $crawler = $this->client->request(Request::METHOD_GET, '/homepage');
+        $crawler = $this->client->request(Request::METHOD_GET, '/en/homepage');
 
         $response = $this->client->getResponse();
         $this->assertInstanceOf(Response::class, $response);
