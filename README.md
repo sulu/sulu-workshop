@@ -60,3 +60,36 @@ or if you have the SYMFONY CLI Tools installed run:
 ```bash
 symfony server:start
 ```
+
+## Development
+
+For development the repository provides following tools:
+
+### PHPUnit
+
+To run phpunit use following commands:
+
+```bash
+bin/adminconsole doctrine:database:create -e test
+bin/adminconsole doctrine:schema:update --force -e test
+
+composer test
+```
+
+You can can also pass phpunit arguments by adding `-- --stop-on-fail` to the `composer test` command.
+
+### PHP-CS-Fixer
+
+To fix your local code style use following command:
+
+```bash
+composer php-cs-fix
+```
+
+### PHPStan
+
+PHPStan is a Static Analysis Tool to inspect your code. Use following command to run it:
+
+```bash
+composer phpstan
+```
