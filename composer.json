@@ -118,7 +118,10 @@
         }
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "platform":{
+            "php": "7.2.21"
+        }
     },
     "extra": {
         "symfony": {
