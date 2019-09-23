@@ -7,8 +7,6 @@ namespace App\DataFixtures\Document;
 use App\DataFixtures\ORM\AppFixtures;
 use App\Entity\Event;
 use Doctrine\ORM\EntityManagerInterface;
-use Faker\Factory;
-use Faker\Generator;
 use Sulu\Bundle\DocumentManagerBundle\DataFixtures\DocumentFixtureInterface;
 use Sulu\Bundle\PageBundle\Document\HomeDocument;
 use Sulu\Bundle\PageBundle\Document\PageDocument;
@@ -40,22 +38,20 @@ class DocumentFixture implements DocumentFixtureInterface, ContainerAwareInterfa
 
     public function load(DocumentManager $documentManager)
     {
-        $faker = Factory::create(AppFixtures::LOCALE);
-
-        $this->loadPages($faker, $documentManager);
-        $this->loadHomepage($faker, $documentManager);
+        $this->loadPages($documentManager);
+        $this->loadHomepage($documentManager);
 
         $documentManager->flush();
     }
 
-    private function loadPages(Generator $faker, DocumentManager $documentManager): void
+    private function loadPages(DocumentManager $documentManager): void
     {
         $pageDataList = [
             [
-                'title' => 'Events',
+                'title' => 'Impress',
                 'navigationContexts' => ['main'],
-                'structureType' => 'event_overview',
-                'article' => '<p>' . implode('</p><p>', (array) $faker->sentences()) . '</p>',
+                'structureType' => 'default',
+                'article' => '<p>This is a very good impress :)</p>',
             ],
         ];
 
@@ -66,7 +62,7 @@ class DocumentFixture implements DocumentFixtureInterface, ContainerAwareInterfa
         }
     }
 
-    private function loadHomepage(Generator $faker, DocumentManager $documentManager): void
+    private function loadHomepage(DocumentManager $documentManager): void
     {
         $repository = $this->getEntityManager()->getRepository(Event::class);
         $events = $repository->findBy(['enabled' => true]);
@@ -74,14 +70,12 @@ class DocumentFixture implements DocumentFixtureInterface, ContainerAwareInterfa
         /** @var HomeDocument $homeDocument */
         $homeDocument = $documentManager->find('/cmf/example/contents', AppFixtures::LOCALE);
 
-        $title = $faker->sentence(5);
-
-        $homeDocument->setTitle(substr($title, 0, \strlen($title) - 1));
+        $homeDocument->setTitle('Symfony official conferences');
         $homeDocument->getStructure()->bind(
             [
                 'title' => $homeDocument->getTitle(),
                 'url' => '/',
-                'article' => '<p>' . implode('</p><p>', (array) $faker->sentences()) . '</p>',
+                'article' => '<p>Symfony official conference events.</p>',
                 'events' => [
                     $events[rand(0, \count($events) - 1)]->getId(),
                     $events[rand(0, \count($events) - 1)]->getId(),
