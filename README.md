@@ -7,7 +7,7 @@ The assignments can be found in the folder [assignments](/assignments).
 
 ## Requirements
 
-- PHP 7.2 or higher
+- PHP 7.3 or higher
 - Relational Database like MySQL, MariaDB or PostgreSQL
 
 #### Optional requirements
