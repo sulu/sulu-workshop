@@ -76,7 +76,11 @@ bin/adminconsole doctrine:schema:update --force -e test
 composer test
 ```
 
-You can can also pass phpunit arguments by adding `-- --stop-on-fail` to the `composer test` command.
+You can can also pass phpunit arguments by adding `-- <arguments>` to the `composer test` command.
+
+```bash
+composer test -- --stop-on-fail
+```
 
 ### PHP-CS-Fixer
 
