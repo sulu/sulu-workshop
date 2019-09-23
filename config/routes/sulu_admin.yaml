@@ -90,7 +90,7 @@ sulu_search:
 
 app_events:
     type: rest
-    resource: App\Controller\EventController
+    resource: App\Controller\Admin\EventController
     prefix: /admin/api
     name_prefix: app.
     options:
