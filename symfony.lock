@@ -774,12 +774,6 @@
     "twig/twig": {
         "version": "v2.11.3"
     },
-    "willdurand/hateoas": {
-        "version": "2.12.0"
-    },
-    "willdurand/hateoas-bundle": {
-        "version": "1.4.0"
-    },
     "willdurand/jsonp-callback-validator": {
         "version": "v1.1.0"
     },

@@ -4,16 +4,23 @@ declare(strict_types=1);
 
 namespace App\Admin;
 
+use App\Entity\Event;
 use Sulu\Bundle\AdminBundle\Admin\Admin;
 use Sulu\Bundle\AdminBundle\Admin\Navigation\NavigationItem;
 use Sulu\Bundle\AdminBundle\Admin\Navigation\NavigationItemCollection;
 use Sulu\Bundle\AdminBundle\Admin\Routing\RouteBuilderFactoryInterface;
 use Sulu\Bundle\AdminBundle\Admin\Routing\RouteCollection;
+use Sulu\Bundle\AdminBundle\Admin\Routing\TogglerToolbarAction;
+use Sulu\Bundle\AdminBundle\Admin\Routing\ToolbarAction;
 use Sulu\Component\Webspace\Manager\WebspaceManagerInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 class AppAdmin extends Admin
 {
+    const EVENT_LIST_KEY = 'events';
+
+    const EVENT_FORM_KEY = 'event_details';
+
     const EVENT_LIST_ROUTE = 'app.events_list';
 
     const EVENT_ADD_FORM_ROUTE = 'app.event_add_form';
@@ -64,10 +71,10 @@ class AppAdmin extends Admin
     {
         $locales = $this->webspaceManager->getAllLocales();
 
-        $listToolbarActions = ['sulu_admin.add', 'sulu_admin.delete'];
+        $listToolbarActions = [new ToolbarAction('sulu_admin.add'), new ToolbarAction('sulu_admin.delete')];
         $listRoute = $this->routeBuilderFactory->createListRouteBuilder(self::EVENT_LIST_ROUTE, '/events/:locale')
-            ->setResourceKey('events')
-            ->setListKey('events')
+            ->setResourceKey(Event::RESOURCE_KEY)
+            ->setListKey(self::EVENT_LIST_KEY)
             ->setTitle('app.events')
             ->addListAdapters(['table'])
             ->addLocales($locales)
@@ -78,41 +85,40 @@ class AppAdmin extends Admin
         $routeCollection->add($listRoute);
 
         $addFormRoute = $this->routeBuilderFactory->createResourceTabRouteBuilder(self::EVENT_ADD_FORM_ROUTE, '/events/:locale/add')
-            ->setResourceKey('events')
+            ->setResourceKey(Event::RESOURCE_KEY)
             ->setBackRoute(static::EVENT_LIST_ROUTE)
             ->addLocales($locales);
         $routeCollection->add($addFormRoute);
 
         $addDetailsFormRoute = $this->routeBuilderFactory->createFormRouteBuilder(self::EVENT_ADD_FORM_ROUTE . '.details', '/details')
-            ->setResourceKey('events')
-            ->setFormKey('event_details')
+            ->setResourceKey(Event::RESOURCE_KEY)
+            ->setFormKey(self::EVENT_FORM_KEY)
             ->setTabTitle('sulu_admin.details')
             ->setEditRoute(static::EVENT_EDIT_FORM_ROUTE)
-            ->addToolbarActions(['sulu_admin.save'])
+            ->addToolbarActions([new ToolbarAction('sulu_admin.save')])
             ->setParent(static::EVENT_ADD_FORM_ROUTE);
         $routeCollection->add($addDetailsFormRoute);
 
         $editFormRoute = $this->routeBuilderFactory->createResourceTabRouteBuilder(static::EVENT_EDIT_FORM_ROUTE, '/events/:locale/:id')
-            ->setResourceKey('events')
+            ->setResourceKey(Event::RESOURCE_KEY)
             ->setBackRoute(static::EVENT_LIST_ROUTE)
             ->setTitleProperty('title')
             ->addLocales($locales);
         $routeCollection->add($editFormRoute);
 
-        /** @var string[] $formToolbarActions */
         $formToolbarActions = [
-            'sulu_admin.save',
-            'sulu_admin.delete',
-            'sulu_admin.toggler' => [
-                'label' => $this->translator->trans('app.enable_event', [], 'admin'),
-                'property' => 'enabled',
-                'activate' => 'enable',
-                'deactivate' => 'disable',
-            ],
+            new ToolbarAction('sulu_admin.save'),
+            new ToolbarAction('sulu_admin.delete'),
+            new TogglerToolbarAction(
+                'app.enable_event',
+                'enabled',
+                'enable',
+                'disable'
+            ),
         ];
         $editDetailsFormRoute = $this->routeBuilderFactory->createFormRouteBuilder(static::EVENT_EDIT_FORM_ROUTE . '.details', '/details')
-            ->setResourceKey('events')
-            ->setFormKey('event_details')
+            ->setResourceKey(Event::RESOURCE_KEY)
+            ->setFormKey(self::EVENT_FORM_KEY)
             ->setTabTitle('sulu_admin.details')
             ->addToolbarActions($formToolbarActions)
             ->setParent(static::EVENT_EDIT_FORM_ROUTE);
