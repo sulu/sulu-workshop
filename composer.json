@@ -100,7 +100,7 @@
         "test": [
             "@phpunit"
         ],
-        "phpunit": "SYMFONY_PHPUNIT_VERSION=8.2 vendor/bin/simple-phpunit",
+        "phpunit": "bin/phpunit",
         "schemavalidate": "bin/adminconsole doctrine:schema:validate --skip-mapping",
         "security-check": "bin/websiteconsole security:check",
         "phpstan": [

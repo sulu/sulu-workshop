@@ -13,7 +13,6 @@ use Sulu\Bundle\AdminBundle\Admin\Routing\RouteCollection;
 use Sulu\Bundle\AdminBundle\Admin\Routing\TogglerToolbarAction;
 use Sulu\Bundle\AdminBundle\Admin\Routing\ToolbarAction;
 use Sulu\Component\Webspace\Manager\WebspaceManagerInterface;
-use Symfony\Component\Translation\TranslatorInterface;
 
 class EventAdmin extends Admin
 {
@@ -37,19 +36,12 @@ class EventAdmin extends Admin
      */
     private $webspaceManager;
 
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
     public function __construct(
         RouteBuilderFactoryInterface $routeBuilderFactory,
-        WebspaceManagerInterface $webspaceManager,
-        TranslatorInterface $translator
+        WebspaceManagerInterface $webspaceManager
     ) {
         $this->routeBuilderFactory = $routeBuilderFactory;
         $this->webspaceManager = $webspaceManager;
-        $this->translator = $translator;
     }
 
     public function configureNavigationItems(NavigationItemCollection $navigationItemCollection): void
