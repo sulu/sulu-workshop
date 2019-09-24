@@ -20,7 +20,7 @@ class EventWebsiteControllerTest extends SuluTestCase
         $this->initPhpcr();
     }
 
-    public function testCGet(): void
+    public function testIndexAction(): void
     {
         $client = $this->createWebsiteClient();
 
