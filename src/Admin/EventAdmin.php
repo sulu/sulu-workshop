@@ -13,9 +13,8 @@ use Sulu\Bundle\AdminBundle\Admin\Routing\RouteCollection;
 use Sulu\Bundle\AdminBundle\Admin\Routing\TogglerToolbarAction;
 use Sulu\Bundle\AdminBundle\Admin\Routing\ToolbarAction;
 use Sulu\Component\Webspace\Manager\WebspaceManagerInterface;
-use Symfony\Component\Translation\TranslatorInterface;
 
-class AppAdmin extends Admin
+class EventAdmin extends Admin
 {
     const EVENT_LIST_KEY = 'events';
 
@@ -37,27 +36,22 @@ class AppAdmin extends Admin
      */
     private $webspaceManager;
 
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
     public function __construct(
         RouteBuilderFactoryInterface $routeBuilderFactory,
-        WebspaceManagerInterface $webspaceManager,
-        TranslatorInterface $translator
+        WebspaceManagerInterface $webspaceManager
     ) {
         $this->routeBuilderFactory = $routeBuilderFactory;
         $this->webspaceManager = $webspaceManager;
-        $this->translator = $translator;
     }
 
     public function configureNavigationItems(NavigationItemCollection $navigationItemCollection): void
     {
+        // Configure a NavigationItem without a Route
         $module = new NavigationItem('app.events');
         $module->setPosition(40);
         $module->setIcon('fa-calendar');
 
+        // Configure a NavigationItem with a Route
         $events = new NavigationItem('app.events');
         $events->setPosition(10);
         $events->setMainRoute(static::EVENT_LIST_ROUTE);
@@ -71,6 +65,7 @@ class AppAdmin extends Admin
     {
         $locales = $this->webspaceManager->getAllLocales();
 
+        // Configure Event List View
         $listToolbarActions = [new ToolbarAction('sulu_admin.add'), new ToolbarAction('sulu_admin.delete')];
         $listRoute = $this->routeBuilderFactory->createListRouteBuilder(self::EVENT_LIST_ROUTE, '/events/:locale')
             ->setResourceKey(Event::RESOURCE_KEY)
@@ -84,6 +79,7 @@ class AppAdmin extends Admin
             ->addToolbarActions($listToolbarActions);
         $routeCollection->add($listRoute);
 
+        // Configure Event Add View
         $addFormRoute = $this->routeBuilderFactory->createResourceTabRouteBuilder(self::EVENT_ADD_FORM_ROUTE, '/events/:locale/add')
             ->setResourceKey(Event::RESOURCE_KEY)
             ->setBackRoute(static::EVENT_LIST_ROUTE)
@@ -99,6 +95,7 @@ class AppAdmin extends Admin
             ->setParent(static::EVENT_ADD_FORM_ROUTE);
         $routeCollection->add($addDetailsFormRoute);
 
+        // Configure Event Edit View
         $editFormRoute = $this->routeBuilderFactory->createResourceTabRouteBuilder(static::EVENT_EDIT_FORM_ROUTE, '/events/:locale/:id')
             ->setResourceKey(Event::RESOURCE_KEY)
             ->setBackRoute(static::EVENT_LIST_ROUTE)
