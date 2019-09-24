@@ -34,7 +34,7 @@ services:
         tags: [{name: 'sulu.content.type', alias: 'event_selection'}]
 
     App\Content\EventDataProvider:
-        tags: [{name: 'sulu.smart_content.data_provider', alias: 'event'}]
+        tags: [{name: 'sulu.smart_content.data_provider', alias: 'events'}]
         bind:
             $repository: '@App\Repository\EventRepository'
 
