@@ -1,8 +1,12 @@
 <?php
 
+$header = <<<EOF
+EOF;
+
 return PhpCsFixer\Config::create()
     ->setRiskyAllowed(true)
     ->setRules([
+        'header_comment' => ['header' => $header],
         '@Symfony' => true,
         '@Symfony:risky' => true,
         'ordered_imports' => true,
