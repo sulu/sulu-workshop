@@ -1,9 +1,9 @@
 # Symfony Live Berlin 2019 Workshop
 
-This is the repository of the Sulu workshop at the Symfony Live Berlin 2019. The repository is based on 
-the [sulu/skeleton](https://github.com/sulu/skeleton) with small additions such as Bootstrap or Symfony Encore.
+This repository contains the project structure for the Sulu workshop at the Symfony Live Berlin 2019. The repository builds upon 
+the [sulu/skeleton](https://github.com/sulu/skeleton) repository and adds some project specific libraries such as Bootstrap or Symfony Encore.
 
-The assignments can be found in the folder [assignments](/assignments).
+The assignments of the workshop are located in the [assignments](/assignments) folder.
 
 ## Requirements
 
@@ -17,31 +17,31 @@ The assignments can be found in the folder [assignments](/assignments).
 
 ## Getting started
 
-### Setting up database
+### Setting up your database
 
-If you are using docker as service provider run the following command to start the database engine:
+If you choose to run your services with docker you can startup your database by executing the following command:
 
 ```bash
 docker-compose up
 ```
 
-Else create a `.env.local` in the root directory and adapt the database credentials to your needs:
+If you prefer to use your local database you can configure your credentials in a `.env.local` file in the root directory of the project:
 
 ```dotenv
 DATABASE_URL=mysql://DB_USER:DB_PASSWORD@127.0.0.1:3306/DB_NAME
 ```
 
-### Install the dependencies
+### Installing the dependencies
 
-Use [composer](https://getcomposer.org/) to install all dependencies:
+Use [composer](https://getcomposer.org/) to install the dependencies of the project:
 
 ```bash
 composer install --optimize-autoloader
 ```
 
-### Initialize Sulu Database
+### Initialize the Sulu Database
 
-Run the following command to initialize Sulu:
+Run the following command to initialize the database that will be used by Sulu:
 
 ```bash
 bin/console sulu:build dev --destroy
@@ -49,13 +49,13 @@ bin/console sulu:build dev --destroy
 
 ### Run Webserver
 
-Use the PHP built-in web-server with:
+You can startup the built-in PHP web-server with:
 
 ```bash
 bin/console server:run
 ```
 
-or if you have the SYMFONY CLI Tools installed run:
+If you have the SYMFONY CLI Tools installed and want to increase your performace you can also use the following command to startup the SYMFONY webserver:
 
 ```bash
 symfony server:start
@@ -63,20 +63,22 @@ symfony server:start
 
 ## Development
 
-For development the repository provides following tools:
+The project setup in the repository includes several development tools that help you to improve the quality of your code
 
 ### PHPUnit
 
-To run phpunit use following commands:
+The project already contains some unit tests and functional tests. They can be executed with the following commands:
 
 ```bash
+# create and update test database
 bin/adminconsole doctrine:database:create -e test
 bin/adminconsole doctrine:schema:update --force -e test
 
+# execute all test cases
 composer test
 ```
 
-You can can also pass phpunit arguments by adding `-- <arguments>` to the `composer test` command.
+You can can pass additional phpunit arguments by appending `-- <arguments>` to the `composer test` command.
 
 ```bash
 composer test -- --stop-on-fail
@@ -84,7 +86,7 @@ composer test -- --stop-on-fail
 
 ### PHP-CS-Fixer
 
-To fix your local code style use following command:
+To keep your code consistent you can automatically reformat your code with the following command:
 
 ```bash
 composer php-cs-fix
@@ -92,7 +94,7 @@ composer php-cs-fix
 
 ### PHPStan
 
-PHPStan is a Static Analysis Tool to inspect your code. Use following command to run it:
+PHPStan helps you to catch bugs before they actually occur by statically analyzing your code. Use following command to run it:
 
 ```bash
 composer phpstan
