@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b870d5ee37d0f562509e3e948742e8d4",
+    "content-hash": "8e56a3d12044b09f249c8c534021d87d",
     "packages": [
         {
             "name": "aferrandini/urlizer",
@@ -4746,16 +4746,16 @@
         },
         {
             "name": "sulu/sulu",
-            "version": "dev-develop",
+            "version": "2.0.0-RC3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sulu/sulu.git",
-                "reference": "d3066a5b1f0dd283b12cf718a0a689cffbb00fa1"
+                "reference": "bb1db54b955f67733f99f1002a8302236e804153"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sulu/sulu/zipball/d3066a5b1f0dd283b12cf718a0a689cffbb00fa1",
-                "reference": "d3066a5b1f0dd283b12cf718a0a689cffbb00fa1",
+                "url": "https://api.github.com/repos/sulu/sulu/zipball/bb1db54b955f67733f99f1002a8302236e804153",
+                "reference": "bb1db54b955f67733f99f1002a8302236e804153",
                 "shasum": ""
             },
             "require": {
@@ -4928,7 +4928,7 @@
                 "core",
                 "sulu"
             ],
-            "time": "2019-09-23T12:49:48+00:00"
+            "time": "2019-09-24T12:02:01+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -11363,7 +11363,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "sulu/sulu": 20,
+        "sulu/sulu": 5,
         "zendframework/zendsearch": 5
     },
     "prefer-stable": false,

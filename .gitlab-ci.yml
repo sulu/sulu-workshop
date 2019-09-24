@@ -24,6 +24,7 @@ composer:
         expire_in: 8 hours
         paths:
             - vendor
+            - bin/.phpunit
             - composer.phar
     cache:
         key: composer
@@ -51,23 +52,6 @@ lint:
         - php bin/adminconsole doctrine:schema:update --force
     script:
         - php composer.phar lint
-
-#js-css:
-#    stage: test
-#    image: node:12
-#    dependencies: []
-#    variables:
-#        NODE_OPTIONS: --max-old-space-size=2048
-#    before_script:
-#        - npm config set cache "$(pwd)/.npm-cache"
-#    script:
-#        - cd assets/website
-#        - npm install --ignore-optional
-#        - npm run lint
-#    cache:
-#        key: npm
-#        paths:
-#            - .npm-cache/
 
 security-check:
     stage: test

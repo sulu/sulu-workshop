@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([["app"],{"5Dqr":function(n,o,p){},wXKj:function(n,o,p){p("5Dqr");var e=p("EVdn");p("SYky"),e(document).ready((function(){e('[data-toggle="popover"]').popover()}))}},[["wXKj","runtime",0]]]);
