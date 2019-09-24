@@ -7,7 +7,7 @@ The assignments of the workshop are located in the [assignments](/assignments) f
 
 ## Requirements
 
-- PHP 7.3 or higher
+- PHP 7.2 or higher
 - Relational Database like MySQL, MariaDB or PostgreSQL
 
 #### Optional requirements
