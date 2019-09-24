@@ -1,0 +1,53 @@
+<?xml version="1.0" ?>
+<form xmlns="http://schemas.sulu.io/template/template"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://schemas.sulu.io/template/template http://schemas.sulu.io/template/form-1.0.xsd"
+>
+    <key>location_details</key>
+
+    <properties>
+        <property name="name" type="text_line" mandatory="true">
+            <meta>
+                <title>sulu_admin.name</title>
+            </meta>
+        </property>
+
+        <property name="street" type="text_line" colspan="9">
+            <meta>
+                <title>sulu_contact.street</title>
+            </meta>
+        </property>
+
+        <property name="number" type="text_line" colspan="3">
+            <meta>
+                <title>sulu_contact.number</title>
+            </meta>
+        </property>
+
+        <property name="postalCode" type="text_line" colspan="3">
+            <meta>
+                <title>sulu_contact.zip</title>
+            </meta>
+        </property>
+
+        <property name="city" type="text_line" colspan="6">
+            <meta>
+                <title>sulu_contact.city</title>
+            </meta>
+        </property>
+
+        <property name="countryCode" type="single_select" colspan="3">
+            <meta>
+                <title>sulu_contact.country</title>
+            </meta>
+
+            <params>
+                <param
+                        name="values"
+                        type="expression"
+                        value="service('app.country_select').getValues()"
+                />
+            </params>
+        </property>
+    </properties>
+</form>

@@ -21,6 +21,7 @@ sulu_admin:
         locations:
             routes:
                 list: app.get_locations
+                detail: app.get_location
 
     # Registering Selection Field Types in this section
     field_type_options:

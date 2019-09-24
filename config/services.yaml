@@ -49,6 +49,10 @@ services:
         bind:
             $repository: '@App\Repository\EventRepository'
 
+    app.country_select:
+        class: App\Service\CountryCodeSelect
+        public: true
+
     # following service definitions will be removed in the website context of sulu
     App\Admin\:
         resource: '../src/Admin'
