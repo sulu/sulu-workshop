@@ -26,6 +26,11 @@ trait LocationTrait
         return $location;
     }
 
+    public function findLocationById(int $id): ?Location
+    {
+        return $this->getLocationRepository()->findById($id);
+    }
+
     protected function getLocationRepository(): LocationRepository
     {
         return static::getEntityManager()->getRepository(Location::class);

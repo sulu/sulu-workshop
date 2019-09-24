@@ -36,3 +36,6 @@ services:
         tags: [{name: 'sulu.smart_content.data_provider', alias: 'events'}]
         bind:
             $repository: '@App\Repository\EventRepository'
+
+    App\Service\CountryCodeSelect:
+        public: true
