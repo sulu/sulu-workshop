@@ -7,3 +7,11 @@ app_events:
     name_prefix: app.
     options:
         expose: true
+
+app_event_registrationss:
+    type: rest
+    resource: App\Controller\Admin\EventRegistrationController
+    prefix: /admin/api
+    name_prefix: app.
+    options:
+        expose: true

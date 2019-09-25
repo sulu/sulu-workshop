@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Admin;
 
 use App\Entity\Event;
+use App\Entity\EventRegistration;
 use Sulu\Bundle\AdminBundle\Admin\Admin;
 use Sulu\Bundle\AdminBundle\Admin\Navigation\NavigationItem;
 use Sulu\Bundle\AdminBundle\Admin\Navigation\NavigationItemCollection;
@@ -19,6 +20,8 @@ class EventAdmin extends Admin
     const EVENT_LIST_KEY = 'events';
 
     const EVENT_FORM_KEY = 'event_details';
+
+    const EVENT_REGISTRATION_LIST_KEY = 'event_registrations';
 
     const EVENT_LIST_ROUTE = 'app.events_list';
 
@@ -118,6 +121,17 @@ class EventAdmin extends Admin
             ->setFormKey(self::EVENT_FORM_KEY)
             ->setTabTitle('sulu_admin.details')
             ->addToolbarActions($formToolbarActions)
+            ->setParent(static::EVENT_EDIT_FORM_ROUTE);
+        $routeCollection->add($editDetailsFormRoute);
+
+        $editDetailsFormRoute = $this->routeBuilderFactory->createListRouteBuilder(static::EVENT_EDIT_FORM_ROUTE . '.registrations', '/registrations')
+            ->setResourceKey(EventRegistration::RESOURCE_KEY)
+            ->setListKey(self::EVENT_REGISTRATION_LIST_KEY)
+            ->setTabTitle('app.registrations')
+            ->addRouterAttributesToListStore(['id' => 'eventId'])
+            ->addListAdapters(['table'])
+            ->addToolbarActions([])
+            ->setUserSettingsKey('event_registrations')
             ->setParent(static::EVENT_EDIT_FORM_ROUTE);
         $routeCollection->add($editDetailsFormRoute);
     }

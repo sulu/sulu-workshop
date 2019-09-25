@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<list xmlns="http://schemas.sulu.io/list-builder/list">
+    <key>event_registrations</key>
+
+    <properties>
+        <property name="id" visibility="no" translation="sulu_admin.id">
+            <field-name>id</field-name>
+            <entity-name>App\Entity\EventRegistration</entity-name>
+        </property>
+
+        <property name="firstName" visibility="always" searchability="yes" translation="sulu_contact.first_name">
+            <field-name>firstName</field-name>
+            <entity-name>App\Entity\EventRegistration</entity-name>
+        </property>
+
+        <property name="lastName" visibility="always" searchability="yes" translation="sulu_contact.last_name">
+            <field-name>lastName</field-name>
+            <entity-name>App\Entity\EventRegistration</entity-name>
+        </property>
+
+        <property name="email" visibility="always" searchability="yes" translation="sulu_contact.email">
+            <field-name>email</field-name>
+            <entity-name>App\Entity\EventRegistration</entity-name>
+        </property>
+
+        <identity-property name="eventId" visibility="never">
+            <field-name>event</field-name>
+            <entity-name>App\Entity\EventRegistration</entity-name>
+        </identity-property>
+    </properties>
+</list>
