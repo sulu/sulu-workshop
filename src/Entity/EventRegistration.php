@@ -12,6 +12,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class EventRegistration
 {
+    const RESOURCE_KEY = 'event_registrations';
+
     /**
      * @var int|null
      *

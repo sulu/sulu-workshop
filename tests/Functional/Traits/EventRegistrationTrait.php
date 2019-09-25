@@ -11,6 +11,20 @@ use Doctrine\ORM\EntityManagerInterface;
 
 trait EventRegistrationTrait
 {
+    public function createEventRegistration(Event $event, string $firstName, string $lastName): EventRegistration
+    {
+        $event = $this->getEventRegistrationRepository()->create($event);
+        $event->setFirstName($firstName);
+        $event->setLastName($lastName);
+        $event->setEmail($firstName . '@' . $lastName . '.at');
+        $event->setMessage('');
+
+        $this->getEntityManager()->persist($event);
+        $this->getEntityManager()->flush();
+
+        return $event;
+    }
+
     /**
      * @return EventRegistration[]
      */

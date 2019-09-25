@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Admin;
 
 use App\Entity\Event;
+use App\Entity\EventRegistration;
 use Sulu\Bundle\AdminBundle\Admin\Admin;
 use Sulu\Bundle\AdminBundle\Admin\Navigation\NavigationItem;
 use Sulu\Bundle\AdminBundle\Admin\Navigation\NavigationItemCollection;
@@ -21,6 +22,8 @@ class EventAdmin extends Admin
     const EVENT_FORM_KEY = 'event_details';
 
     const EVENT_LIST_VIEW = 'app.events_list';
+
+    const EVENT_REGISTRATION_LIST_KEY = 'event_registrations';
 
     const EVENT_ADD_FORM_VIEW = 'app.event_add_form';
 
@@ -117,6 +120,17 @@ class EventAdmin extends Admin
             ->setFormKey(self::EVENT_FORM_KEY)
             ->setTabTitle('sulu_admin.details')
             ->addToolbarActions($formToolbarActions)
+            ->setParent(static::EVENT_EDIT_FORM_VIEW);
+        $viewCollection->add($editDetailsFormView);
+
+        $editDetailsFormView = $this->viewBuilderFactory->createListViewBuilder(static::EVENT_EDIT_FORM_VIEW . '.registrations', '/registrations')
+            ->setResourceKey(EventRegistration::RESOURCE_KEY)
+            ->setListKey(self::EVENT_REGISTRATION_LIST_KEY)
+            ->setTabTitle('app.registrations')
+            ->addRouterAttributesToListRequest(['id' => 'eventId'])
+            ->addListAdapters(['table'])
+            ->addToolbarActions([])
+            ->setUserSettingsKey(EventRegistration::RESOURCE_KEY)
             ->setParent(static::EVENT_EDIT_FORM_VIEW);
         $viewCollection->add($editDetailsFormView);
     }
