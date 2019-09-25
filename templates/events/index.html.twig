@@ -1,5 +1,7 @@
 {% extends "base.html.twig" %}
 
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
 {% block content %}
     <section class="jumbotron text-center">
         <div class="container">
@@ -10,5 +12,17 @@
 
     <div class="container">
         {{ event.description|raw }}
+    </div>
+
+    <div class="container">
+        {% if success %}
+            <div class="success">
+                <b>Thanks for your registration.</b>
+            </div>
+        {% else %}
+            <h2>Register for this event:</h2>
+
+            {{ form(form) }}
+        {% endif %}
     </div>
 {% endblock %}
