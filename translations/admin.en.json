@@ -8,5 +8,6 @@
     "app.enable_event": "Enable event",
     "app.enabled": "Enabled",
     "app.location": "Location",
-    "app.locations": "Locations"
+    "app.locations": "Locations",
+    "app.location.no_selections": "No location selected"
 }

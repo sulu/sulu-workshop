@@ -7,6 +7,7 @@ namespace App\Controller\Admin;
 use App\Common\DoctrineListRepresentationFactory;
 use App\Entity\Event;
 use App\Repository\EventRepository;
+use App\Repository\LocationRepository;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Routing\ClassResourceInterface;
@@ -24,6 +25,11 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 class EventController extends AbstractRestController implements ClassResourceInterface
 {
     /**
+     * @var DoctrineListRepresentationFactory
+     */
+    private $doctrineListRepresentationFactory;
+
+    /**
      * @var EventRepository
      */
     private $repository;
@@ -34,20 +40,22 @@ class EventController extends AbstractRestController implements ClassResourceInt
     private $mediaRepository;
 
     /**
-     * @var DoctrineListRepresentationFactory
+     * @var LocationRepository
      */
-    private $doctrineListRepresentationFactory;
+    private $locationRepository;
 
     public function __construct(
+        DoctrineListRepresentationFactory $doctrineListRepresentationFactory,
         EventRepository $repository,
         MediaRepositoryInterface $mediaRepository,
-        DoctrineListRepresentationFactory $doctrineListRepresentationFactory,
+        LocationRepository $locationRepository,
         ViewHandlerInterface $viewHandler,
         ?TokenStorageInterface $tokenStorage = null
     ) {
+        $this->doctrineListRepresentationFactory = $doctrineListRepresentationFactory;
         $this->repository = $repository;
         $this->mediaRepository = $mediaRepository;
-        $this->doctrineListRepresentationFactory = $doctrineListRepresentationFactory;
+        $this->locationRepository = $locationRepository;
 
         parent::__construct($viewHandler, $tokenStorage);
     }
@@ -159,8 +167,10 @@ class EventController extends AbstractRestController implements ClassResourceInt
             $entity->setEndDate(new \DateTimeImmutable($endDate));
         }
 
-        if ($location = $data['location'] ?? null) {
-            $entity->setLocation($location);
+        if ($locationId = $data['locationId'] ?? null) {
+            $entity->setLocation(
+                $this->locationRepository->findById((int) $locationId)
+            );
         }
     }
 

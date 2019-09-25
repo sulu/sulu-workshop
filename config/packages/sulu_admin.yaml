@@ -38,3 +38,17 @@ sulu_admin:
                         icon: fa-calendar
                         label: 'app.events'
                         overlay_title: 'app.events'
+
+        single_selection:
+            single_location_selection:
+                default_type: list_overlay
+                resource_key: locations
+                types:
+                    list_overlay:
+                        adapter: table
+                        list_key: locations
+                        display_properties:
+                            - name
+                        icon: fa-home
+                        empty_text: 'app.location.no_selections'
+                        overlay_title: 'app.locations'

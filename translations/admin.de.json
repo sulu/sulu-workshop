@@ -8,5 +8,6 @@
     "app.enable_event": "Veranstaltungen aktivieren",
     "app.enabled": "Aktiviert",
     "app.location": "Standort",
-    "app.locations": "Standorte"
+    "app.locations": "Standorte",
+    "app.location.no_selections": "Kein Standord ausgewählt"
 }

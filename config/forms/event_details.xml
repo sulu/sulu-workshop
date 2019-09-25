@@ -24,7 +24,7 @@
             </params>
         </property>
 
-        <property name="location" type="text_line" colspan="6">
+        <property name="locationId" type="single_location_selection" mandatory="true" colspan="6">
             <meta>
                 <title>app.location</title>
             </meta>

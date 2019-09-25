@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\DataFixtures\ORM;
 
 use App\Entity\Event;
+use App\Entity\Location;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -56,7 +57,8 @@ class AppFixtures extends Fixture implements OrderedFixtureInterface
      */
     private function loadEvents(ObjectManager $manager, array $images): void
     {
-        $repository = $manager->getRepository(Event::class);
+        $eventRepository = $manager->getRepository(Event::class);
+        $locationRepository = $manager->getRepository(Location::class);
 
         $data = [
             [
@@ -132,18 +134,30 @@ class AppFixtures extends Fixture implements OrderedFixtureInterface
         ];
 
         foreach ($data as $item) {
-            $event = $repository->create(self::LOCALE);
+            $location = null;
+            if ($item['location']) {
+                $location = $locationRepository->create();
+                $location->setName($item['location']);
+                $location->setStreet('');
+                $location->setNumber('');
+                $location->setCity('');
+                $location->setCountryCode('');
+                $location->setPostalCode('');
+                $locationRepository->save($location);
+            }
+
+            $event = $eventRepository->create(self::LOCALE);
 
             $event->setTitle($item['title']);
             $event->setImage($images[$item['image']] ?? null);
-            $event->setLocation($item['location']);
+            $event->setLocation($location);
             $event->setTeaser($item['teaser']);
             $event->setDescription('<p>' . $item['description'] . '</p>');
             $event->setStartDate(new \DateTimeImmutable($item['startDate']));
             $event->setEndDate(new \DateTimeImmutable($item['endDate']));
             $event->setEnabled($item['enabled']);
 
-            $repository->save($event);
+            $eventRepository->save($event);
         }
     }
 

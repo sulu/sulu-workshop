@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Functional\Controller\Admin;
 
 use App\Tests\Functional\Traits\EventTrait;
+use App\Tests\Functional\Traits\LocationTrait;
 use Sulu\Bundle\TestBundle\Testing\SuluTestCase;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 class EventControllerTest extends SuluTestCase
 {
     use EventTrait;
+    use LocationTrait;
 
     /**
      * @var KernelBrowser
@@ -64,6 +66,8 @@ class EventControllerTest extends SuluTestCase
 
     public function testPost(): void
     {
+        $location = $this->createLocation('Sulu HQ');
+
         $this->client->request(
             'POST',
             '/admin/api/events?locale=de',
@@ -73,7 +77,7 @@ class EventControllerTest extends SuluTestCase
                 'startDate' => '2019-01-01 12:00',
                 'endDate' => '2019-01-02 12:00',
                 'description' => 'Sulu is really awesome',
-                'location' => 'Dornbirn',
+                'locationId' => $location->getId(),
             ]
         );
 
@@ -90,7 +94,7 @@ class EventControllerTest extends SuluTestCase
         $this->assertSame('2019-01-01T12:00:00', $result['startDate']);
         $this->assertSame('2019-01-02T12:00:00', $result['endDate']);
         $this->assertSame('Sulu is really awesome', $result['description']);
-        $this->assertSame('Dornbirn', $result['location']);
+        $this->assertSame($location->getId(), $result['locationId']);
 
         $result = $this->findEventById($result['id'], 'de');
 
@@ -103,7 +107,7 @@ class EventControllerTest extends SuluTestCase
         $this->assertNotNull($result->getEndDate());
         $this->assertSame('2019-01-02T12:00:00', $result->getEndDate()->format('Y-m-d\TH:i:s'));
         $this->assertSame('Sulu is really awesome', $result->getDescription());
-        $this->assertSame('Dornbirn', $result->getLocation());
+        $this->assertSame($location->getId(), $result->getLocationId());
     }
 
     public function testPostNullValues(): void
@@ -146,6 +150,7 @@ class EventControllerTest extends SuluTestCase
     public function testPut(): void
     {
         $event = $this->createEvent('Symfony', 'de');
+        $location = $this->createLocation('Sulu HQ');
 
         $this->client->request(
             'PUT',
@@ -156,7 +161,7 @@ class EventControllerTest extends SuluTestCase
                 'startDate' => '2019-01-01 12:00',
                 'endDate' => '2019-01-02 12:00',
                 'description' => 'Symfony Live is really awesome',
-                'location' => 'Dornbirn',
+                'locationId' => $location->getId(),
             ]
         );
 
@@ -173,7 +178,7 @@ class EventControllerTest extends SuluTestCase
         $this->assertSame('2019-01-01T12:00:00', $result['startDate']);
         $this->assertSame('2019-01-02T12:00:00', $result['endDate']);
         $this->assertSame('Symfony Live is really awesome', $result['description']);
-        $this->assertSame('Dornbirn', $result['location']);
+        $this->assertSame($location->getId(), $result['locationId']);
 
         $result = $this->findEventById($result['id'], 'de');
 
@@ -186,7 +191,7 @@ class EventControllerTest extends SuluTestCase
         $this->assertNotNull($result->getEndDate());
         $this->assertSame('2019-01-02T12:00:00', $result->getEndDate()->format('Y-m-d\TH:i:s'));
         $this->assertSame('Symfony Live is really awesome', $result->getDescription());
-        $this->assertSame('Dornbirn', $result->getLocation());
+        $this->assertSame($location->getId(), $result->getLocationId());
     }
 
     public function testPutNullValues(): void

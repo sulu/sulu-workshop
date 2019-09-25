@@ -48,9 +48,10 @@ class Event
     private $endDate;
 
     /**
-     * @var string|null
+     * @var Location|null
      *
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Location")
+     * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $location;
 
@@ -124,16 +125,28 @@ class Event
         return $this;
     }
 
-    public function getLocation(): ?string
+    public function getLocation(): ?Location
     {
         return $this->location;
     }
 
-    public function setLocation(?string $location): self
+    public function setLocation(?Location $location): self
     {
         $this->location = $location;
 
         return $this;
+    }
+
+    /**
+     * @Serializer\VirtualProperty
+     */
+    public function getLocationId(): ?int
+    {
+        if (!$this->location) {
+            return null;
+        }
+
+        return $this->location->getId();
     }
 
     public function getImage(): ?MediaInterface
