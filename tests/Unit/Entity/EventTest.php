@@ -6,19 +6,28 @@ namespace App\Tests\Unit\Entity;
 
 use App\Entity\Event;
 use App\Entity\EventTranslation;
+use App\Entity\Location;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sulu\Bundle\MediaBundle\Entity\MediaInterface;
 
 class EventTest extends TestCase
 {
     use ProphecyTrait;
 
+    /**
+     * @var ObjectProphecy<Location>
+     */
+    private ObjectProphecy $location;
+
     private Event $event;
 
     protected function setUp(): void
     {
+        $this->location = $this->prophesize(Location::class);
+
         $this->event = new Event();
         $this->event->setLocale('de');
     }
@@ -52,9 +61,12 @@ class EventTest extends TestCase
 
     public function testLocation(): void
     {
+        $this->location->getId()->willReturn(42);
+
         $this->assertNull($this->event->getLocation());
-        $this->assertSame($this->event, $this->event->setLocation('Amsterdam'));
-        $this->assertSame('Amsterdam', $this->event->getLocation());
+        $this->assertSame($this->event, $this->event->setLocation($this->location->reveal()));
+        $this->assertNotNull($this->event->getLocation());
+        $this->assertSame($this->location->reveal(), $this->event->getLocation());
     }
 
     public function testImage(): void
