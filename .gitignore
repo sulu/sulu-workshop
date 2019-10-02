@@ -17,6 +17,17 @@
 /.web-server-pid
 ###< symfony/web-server-bundle ###
 
+###> friendsofphp/php-cs-fixer ###
+/.php_cs
+/.php_cs.cache
+###< friendsofphp/php-cs-fixer ###
+
+###> symfony/webpack-encore-bundle ###
+/node_modules/
+npm-debug.log
+yarn-error.log
+###< symfony/webpack-encore-bundle ###
+
 # var
 /var/*
 !/var/.gitkeep
@@ -47,14 +58,3 @@ node_modules
 
 # System files
 .DS_Store
-
-###> friendsofphp/php-cs-fixer ###
-/.php_cs
-/.php_cs.cache
-###< friendsofphp/php-cs-fixer ###
-
-###> symfony/webpack-encore-bundle ###
-/node_modules/
-npm-debug.log
-yarn-error.log
-###< symfony/webpack-encore-bundle ###
