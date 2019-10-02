@@ -8,10 +8,10 @@ use App\Entity\Event;
 use Sulu\Bundle\AdminBundle\Admin\Admin;
 use Sulu\Bundle\AdminBundle\Admin\Navigation\NavigationItem;
 use Sulu\Bundle\AdminBundle\Admin\Navigation\NavigationItemCollection;
-use Sulu\Bundle\AdminBundle\Admin\Routing\RouteBuilderFactoryInterface;
-use Sulu\Bundle\AdminBundle\Admin\Routing\RouteCollection;
-use Sulu\Bundle\AdminBundle\Admin\Routing\TogglerToolbarAction;
-use Sulu\Bundle\AdminBundle\Admin\Routing\ToolbarAction;
+use Sulu\Bundle\AdminBundle\Admin\View\TogglerToolbarAction;
+use Sulu\Bundle\AdminBundle\Admin\View\ToolbarAction;
+use Sulu\Bundle\AdminBundle\Admin\View\ViewBuilderFactoryInterface;
+use Sulu\Bundle\AdminBundle\Admin\View\ViewCollection;
 use Sulu\Component\Webspace\Manager\WebspaceManagerInterface;
 
 class EventAdmin extends Admin
@@ -20,16 +20,16 @@ class EventAdmin extends Admin
 
     const EVENT_FORM_KEY = 'event_details';
 
-    const EVENT_LIST_ROUTE = 'app.events_list';
+    const EVENT_LIST_VIEW = 'app.events_list';
 
-    const EVENT_ADD_FORM_ROUTE = 'app.event_add_form';
+    const EVENT_ADD_FORM_VIEW = 'app.event_add_form';
 
-    const EVENT_EDIT_FORM_ROUTE = 'app.event_edit_form';
+    const EVENT_EDIT_FORM_VIEW = 'app.event_edit_form';
 
     /**
-     * @var RouteBuilderFactoryInterface
+     * @var ViewBuilderFactoryInterface
      */
-    private $routeBuilderFactory;
+    private $viewBuilderFactory;
 
     /**
      * @var WebspaceManagerInterface
@@ -37,71 +37,70 @@ class EventAdmin extends Admin
     private $webspaceManager;
 
     public function __construct(
-        RouteBuilderFactoryInterface $routeBuilderFactory,
+        ViewBuilderFactoryInterface $viewBuilderFactory,
         WebspaceManagerInterface $webspaceManager
     ) {
-        $this->routeBuilderFactory = $routeBuilderFactory;
+        $this->viewBuilderFactory = $viewBuilderFactory;
         $this->webspaceManager = $webspaceManager;
     }
 
     public function configureNavigationItems(NavigationItemCollection $navigationItemCollection): void
     {
-        // Configure a NavigationItem without a Route
         $module = new NavigationItem('app.events');
         $module->setPosition(40);
         $module->setIcon('fa-calendar');
 
-        // Configure a NavigationItem with a Route
+        // Configure a NavigationItem with a View
         $events = new NavigationItem('app.events');
         $events->setPosition(10);
-        $events->setMainRoute(static::EVENT_LIST_ROUTE);
+        $events->setView(static::EVENT_LIST_VIEW);
 
         $module->addChild($events);
 
         $navigationItemCollection->add($module);
     }
 
-    public function configureRoutes(RouteCollection $routeCollection): void
+    public function configureViews(ViewCollection $viewCollection): void
     {
         $locales = $this->webspaceManager->getAllLocales();
 
         // Configure Event List View
         $listToolbarActions = [new ToolbarAction('sulu_admin.add'), new ToolbarAction('sulu_admin.delete')];
-        $listRoute = $this->routeBuilderFactory->createListRouteBuilder(self::EVENT_LIST_ROUTE, '/events/:locale')
+        $listView = $this->viewBuilderFactory->createListViewBuilder(self::EVENT_LIST_VIEW, '/events/:locale')
             ->setResourceKey(Event::RESOURCE_KEY)
             ->setListKey(self::EVENT_LIST_KEY)
             ->setTitle('app.events')
             ->addListAdapters(['table'])
             ->addLocales($locales)
             ->setDefaultLocale($locales[0])
-            ->setAddRoute(static::EVENT_ADD_FORM_ROUTE)
-            ->setEditRoute(static::EVENT_EDIT_FORM_ROUTE)
+            ->setAddView(static::EVENT_ADD_FORM_VIEW)
+            ->setEditView(static::EVENT_EDIT_FORM_VIEW)
             ->addToolbarActions($listToolbarActions);
-        $routeCollection->add($listRoute);
+        $viewCollection->add($listView);
 
         // Configure Event Add View
-        $addFormRoute = $this->routeBuilderFactory->createResourceTabRouteBuilder(self::EVENT_ADD_FORM_ROUTE, '/events/:locale/add')
+        $addFormView = $this->viewBuilderFactory->createResourceTabViewBuilder(self::EVENT_ADD_FORM_VIEW, '/events/:locale/add')
             ->setResourceKey(Event::RESOURCE_KEY)
-            ->setBackRoute(static::EVENT_LIST_ROUTE)
+            ->setBackView(static::EVENT_LIST_VIEW)
             ->addLocales($locales);
-        $routeCollection->add($addFormRoute);
+        $viewCollection->add($addFormView);
 
-        $addDetailsFormRoute = $this->routeBuilderFactory->createFormRouteBuilder(self::EVENT_ADD_FORM_ROUTE . '.details', '/details')
+        $addDetailsFormView = $this->viewBuilderFactory->createFormViewBuilder(self::EVENT_ADD_FORM_VIEW . '.details', '/details')
             ->setResourceKey(Event::RESOURCE_KEY)
             ->setFormKey(self::EVENT_FORM_KEY)
             ->setTabTitle('sulu_admin.details')
-            ->setEditRoute(static::EVENT_EDIT_FORM_ROUTE)
+            ->setEditView(static::EVENT_EDIT_FORM_VIEW)
             ->addToolbarActions([new ToolbarAction('sulu_admin.save')])
-            ->setParent(static::EVENT_ADD_FORM_ROUTE);
-        $routeCollection->add($addDetailsFormRoute);
+            ->setParent(static::EVENT_ADD_FORM_VIEW);
+        $viewCollection->add($addDetailsFormView);
 
         // Configure Event Edit View
-        $editFormRoute = $this->routeBuilderFactory->createResourceTabRouteBuilder(static::EVENT_EDIT_FORM_ROUTE, '/events/:locale/:id')
+        $editFormView = $this->viewBuilderFactory->createResourceTabViewBuilder(static::EVENT_EDIT_FORM_VIEW, '/events/:locale/:id')
             ->setResourceKey(Event::RESOURCE_KEY)
-            ->setBackRoute(static::EVENT_LIST_ROUTE)
+            ->setBackView(static::EVENT_LIST_VIEW)
             ->setTitleProperty('title')
             ->addLocales($locales);
-        $routeCollection->add($editFormRoute);
+        $viewCollection->add($editFormView);
 
         $formToolbarActions = [
             new ToolbarAction('sulu_admin.save'),
@@ -113,12 +112,12 @@ class EventAdmin extends Admin
                 'disable'
             ),
         ];
-        $editDetailsFormRoute = $this->routeBuilderFactory->createFormRouteBuilder(static::EVENT_EDIT_FORM_ROUTE . '.details', '/details')
+        $editDetailsFormView = $this->viewBuilderFactory->createFormViewBuilder(static::EVENT_EDIT_FORM_VIEW . '.details', '/details')
             ->setResourceKey(Event::RESOURCE_KEY)
             ->setFormKey(self::EVENT_FORM_KEY)
             ->setTabTitle('sulu_admin.details')
             ->addToolbarActions($formToolbarActions)
-            ->setParent(static::EVENT_EDIT_FORM_ROUTE);
-        $routeCollection->add($editDetailsFormRoute);
+            ->setParent(static::EVENT_EDIT_FORM_VIEW);
+        $viewCollection->add($editDetailsFormView);
     }
 }

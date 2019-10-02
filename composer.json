@@ -13,7 +13,7 @@
         "doctrine/doctrine-migrations-bundle": "^2.0",
         "friendsofsymfony/http-cache-bundle": "~2.3",
         "jackalope/jackalope-doctrine-dbal": "^1.3.0",
-        "sulu/sulu": "^2.0.0@rc",
+        "sulu/sulu": "^2.0",
         "symfony/config": "^4.2",
         "symfony/dotenv": "^4.2",
         "symfony/flex": "^1.2",
@@ -119,7 +119,7 @@
     },
     "config": {
         "sort-packages": true,
-        "platform":{
+        "platform": {
             "php": "7.2.21"
         }
     },
