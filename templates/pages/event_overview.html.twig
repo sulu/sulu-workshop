@@ -10,7 +10,28 @@
 
     <div class="container marketing">
         <div class="row">
-            {% for event in content.events %}
+            <form action="{{ sulu_content_path(content.url) }}" method="get" class="col-3">
+                <div class="form-group">
+                    <label for="location">Location</label>
+                    <select id="location" name="location" class="form-control">
+                        <option value>All ...</option>
+                        {% for location in locations %}
+                            <option value="{{ location.id }}"
+                                    {% if app.request.get('location') == location.id %}selected{% endif %}>
+                                {{ location.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <button type="submit" id="location_submit" class="btn btn-primary">Filter</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="container marketing mt-5">
+        <div class="row">
+            {% for event in events %}
                 <div class="col-lg-4 text-center">
                     <h2 class="event-title">{{ event.title }}</h2>
                     <p>{{ event.teaser }}</p>

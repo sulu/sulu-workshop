@@ -70,6 +70,24 @@ class EventRepository extends ServiceEntityRepository implements DataProviderRep
     }
 
     /**
+     * @return Event[]
+     */
+    public function filterByLocationId(?int $locationId, string $locale): array
+    {
+        $criteria = ['enabled' => true];
+        if ($locationId) {
+            $criteria['location'] = $locationId;
+        }
+
+        $events = $this->findBy($criteria);
+        foreach ($events as $event) {
+            $event->setLocale($locale);
+        }
+
+        return $events;
+    }
+
+    /**
      * @param mixed[] $filters
      */
     public function findByFilters($filters, $page, $pageSize, $limit, $locale, $options = [])

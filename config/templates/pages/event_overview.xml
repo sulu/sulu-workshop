@@ -6,7 +6,7 @@
     <key>event_overview</key>
 
     <view>pages/event_overview</view>
-    <controller>Sulu\Bundle\WebsiteBundle\Controller\DefaultController::indexAction</controller>
+    <controller>App\Controller\EventOverviewController:indexAction</controller>
     <cacheLifetime>86400</cacheLifetime>
 
     <meta>
@@ -41,17 +41,6 @@
                 <title lang="en">Article</title>
                 <title lang="de">Artikel</title>
             </meta>
-        </property>
-
-        <property name="events" type="smart_content">
-            <meta>
-                <title lang="en">Events</title>
-                <title lang="de">Veranstaltungen</title>
-            </meta>
-
-            <params>
-                <param name="provider" value="events"/>
-            </params>
         </property>
     </properties>
 </template>
