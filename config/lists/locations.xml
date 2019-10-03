@@ -1,0 +1,41 @@
+<?xml version="1.0" ?>
+<list xmlns="http://schemas.sulu.io/list-builder/list">
+    <key>locations</key>
+
+    <properties>
+        <property name="id" visibility="no" translation="sulu_admin.id">
+            <field-name>id</field-name>
+            <entity-name>App\Entity\Location</entity-name>
+        </property>
+
+        <property name="name" visibility="always" searchability="yes" translation="sulu_admin.name">
+            <field-name>name</field-name>
+            <entity-name>App\Entity\Location</entity-name>
+        </property>
+
+        <property name="street" visibility="yes" searchability="yes" translation="sulu_contact.street">
+            <field-name>street</field-name>
+            <entity-name>App\Entity\Location</entity-name>
+        </property>
+
+        <property name="number" visibility="yes" searchability="yes" translation="sulu_contact.number">
+            <field-name>number</field-name>
+            <entity-name>App\Entity\Location</entity-name>
+        </property>
+
+        <property name="postalCode" visibility="yes" searchability="yes" translation="sulu_contact.zip">
+            <field-name>postalCode</field-name>
+            <entity-name>App\Entity\Location</entity-name>
+        </property>
+
+        <property name="city" visibility="yes" searchability="yes" translation="sulu_contact.city">
+            <field-name>city</field-name>
+            <entity-name>App\Entity\Location</entity-name>
+        </property>
+
+        <property name="countryCode" visibility="yes" searchability="yes" translation="sulu_contact.country">
+            <field-name>countryCode</field-name>
+            <entity-name>App\Entity\Location</entity-name>
+        </property>
+    </properties>
+</list>

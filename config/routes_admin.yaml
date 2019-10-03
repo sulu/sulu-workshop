@@ -10,3 +10,9 @@ app.event_registration_api:
     resource: App\Controller\Admin\EventRegistrationController
     prefix: /admin/api
     name_prefix: app.
+
+app.location_api:
+    type: rest
+    resource: App\Controller\Admin\LocationController
+    prefix: /admin/api
+    name_prefix: app.

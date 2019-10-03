@@ -11,6 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Location
 {
+    const RESOURCE_KEY = 'locations';
+
     /**
      * @var int|null
      *
