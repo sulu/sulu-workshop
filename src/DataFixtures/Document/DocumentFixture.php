@@ -45,6 +45,12 @@ class DocumentFixture implements DocumentFixtureInterface
                 'structureType' => 'default',
                 'article' => '<p>This is a very good imprint :)</p>',
             ],
+            [
+                'title' => 'Events',
+                'navigationContexts' => ['main'],
+                'structureType' => 'event_overview',
+                'article' => '',
+            ],
         ];
 
         $pages = [];
