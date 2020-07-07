@@ -25,7 +25,10 @@ class EventDataProvider extends BaseDataProvider
         return parent::getConfiguration();
     }
 
-    protected function decorateDataItems(array $data)
+    /**
+     * @param mixed[] $data
+     */
+    protected function decorateDataItems(array $data): array
     {
         return array_map(
             function ($item) {

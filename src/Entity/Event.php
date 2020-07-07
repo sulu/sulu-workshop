@@ -54,7 +54,7 @@ class Event
     private $location;
 
     /**
-     * @var EventTranslation[]|Collection
+     * @var Collection<string, EventTranslation>
      *
      * @ORM\OneToMany(targetEntity="App\Entity\EventTranslation", mappedBy="event", cascade={"ALL"}, indexBy="locale")
      *

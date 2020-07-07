@@ -8,6 +8,7 @@ use App\Tests\Functional\Traits\EventTrait;
 use App\Tests\Functional\Traits\PageTrait;
 use Sulu\Bundle\TestBundle\Testing\SuluTestCase;
 use Sulu\Component\DocumentManager\DocumentManagerInterface;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -16,9 +17,14 @@ class HomepageTest extends SuluTestCase
     use EventTrait;
     use PageTrait;
 
+    /**
+     * @var KernelBrowser
+     */
+    private $client;
+
     public function setUp(): void
     {
-        parent::setUp();
+        $this->client = $this->createWebsiteClient();
         $this->initPhpcr();
     }
 
@@ -44,10 +50,9 @@ class HomepageTest extends SuluTestCase
             ]
         );
 
-        $client = $this->createWebsiteClient();
-        $crawler = $client->request(Request::METHOD_GET, '/homepage');
+        $crawler = $this->client->request(Request::METHOD_GET, '/homepage');
 
-        $response = $client->getResponse();
+        $response = $this->client->getResponse();
         $this->assertInstanceOf(Response::class, $response);
         $this->assertSame(Response::HTTP_OK, $response->getStatusCode());
         $this->assertStringContainsString('Symfony Live', $crawler->filter('h1')->html());

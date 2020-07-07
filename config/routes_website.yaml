@@ -2,4 +2,4 @@
 
 app.event:
     path: /event/{id}
-    controller: App\Controller\EventWebsiteController::indexAction
+    controller: App\Controller\Website\EventWebsiteController::indexAction
