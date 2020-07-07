@@ -28,6 +28,7 @@ class EventTranslation implements AuditableInterface
      * @var Event
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Event", inversedBy="translations")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $event;
 

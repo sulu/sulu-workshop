@@ -4,6 +4,15 @@ declare(strict_types=1);
 
 namespace App;
 
+/*
+ * This file is part of Sulu.
+ *
+ * (c) Sulu GmbH
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 use FOS\HttpCache\SymfonyCache\HttpCacheProvider;
 use Sulu\Bundle\HttpCacheBundle\Cache\SuluHttpCache;
 use Sulu\Component\HttpKernel\SuluKernel;
@@ -18,16 +27,8 @@ class Kernel extends SuluKernel implements HttpCacheProvider
      */
     private $httpCache;
 
-    public function __construct(string $environment, bool $debug, string $suluContext = self::CONTEXT_ADMIN)
+    protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader): void
     {
-        parent::__construct($environment, $debug, $suluContext);
-    }
-
-    protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader)
-    {
-        // Feel free to remove the "container.autowiring.strict_mode" parameter
-        // if you are using symfony/dependency-injection 4.0+ as it's the default behavior
-        $container->setParameter('container.autowiring.strict_mode', true);
         $container->setParameter('container.dumper.inline_class_loader', true);
 
         parent::configureContainer($container, $loader);

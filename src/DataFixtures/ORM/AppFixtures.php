@@ -6,13 +6,13 @@ namespace App\DataFixtures\ORM;
 
 use App\Entity\Event;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 
 class AppFixtures extends Fixture
 {
     const LOCALE = 'en';
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $repository = $manager->getRepository(Event::class);
 

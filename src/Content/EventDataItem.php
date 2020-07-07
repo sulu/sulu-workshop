@@ -27,7 +27,7 @@ class EventDataItem implements ItemInterface
      */
     public function getId()
     {
-        return $this->entity->getId();
+        return (string) $this->entity->getId();
     }
 
     /**
@@ -35,18 +35,20 @@ class EventDataItem implements ItemInterface
      */
     public function getTitle()
     {
-        return $this->entity->getTitle();
+        return (string) $this->entity->getTitle();
     }
 
     /**
      * @Serializer\VirtualProperty
+     *
+     * @return string|null
      */
     public function getImage()
     {
         return null;
     }
 
-    public function getResource()
+    public function getResource(): Event
     {
         return $this->entity;
     }

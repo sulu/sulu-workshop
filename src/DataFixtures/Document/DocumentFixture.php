@@ -13,16 +13,12 @@ use Sulu\Bundle\PageBundle\Document\PageDocument;
 use Sulu\Component\Content\Document\RedirectType;
 use Sulu\Component\Content\Document\WorkflowStage;
 use Sulu\Component\DocumentManager\DocumentManager;
-use Sulu\Component\PHPCR\PathCleanup;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Sulu\Component\PHPCR\PathCleanupInterface;
 
-class DocumentFixture implements DocumentFixtureInterface, ContainerAwareInterface
+class DocumentFixture implements DocumentFixtureInterface
 {
-    use ContainerAwareTrait;
-
     /**
-     * @var PathCleanup
+     * @var PathCleanupInterface
      */
     private $pathCleanup;
 
@@ -31,12 +27,18 @@ class DocumentFixture implements DocumentFixtureInterface, ContainerAwareInterfa
      */
     private $entityManager;
 
+    public function __construct(PathCleanupInterface $pathCleanup, EntityManagerInterface $entityManager)
+    {
+        $this->pathCleanup = $pathCleanup;
+        $this->entityManager = $entityManager;
+    }
+
     public function getOrder()
     {
         return 10;
     }
 
-    public function load(DocumentManager $documentManager)
+    public function load(DocumentManager $documentManager): void
     {
         $this->loadPages($documentManager);
         $this->loadHomepage($documentManager);
@@ -64,7 +66,7 @@ class DocumentFixture implements DocumentFixtureInterface, ContainerAwareInterfa
 
     private function loadHomepage(DocumentManager $documentManager): void
     {
-        $repository = $this->getEntityManager()->getRepository(Event::class);
+        $repository = $this->entityManager->getRepository(Event::class);
         $events = $repository->findBy(['enabled' => true]);
 
         /** @var HomeDocument $homeDocument */
@@ -76,11 +78,7 @@ class DocumentFixture implements DocumentFixtureInterface, ContainerAwareInterfa
                 'title' => $homeDocument->getTitle(),
                 'url' => '/',
                 'article' => '<p>Symfony official conference events.</p>',
-                'events' => [
-                    $events[rand(0, \count($events) - 1)]->getId(),
-                    $events[rand(0, \count($events) - 1)]->getId(),
-                    $events[rand(0, \count($events) - 1)]->getId(),
-                ],
+                'events' => $this->getRandomEventIds($events, 3),
             ]
         );
 
@@ -89,12 +87,29 @@ class DocumentFixture implements DocumentFixtureInterface, ContainerAwareInterfa
     }
 
     /**
+     * @param Event[] $events
+     *
+     * @return int[]
+     */
+    private function getRandomEventIds(array $events, int $count): array
+    {
+        $eventIds = [];
+        while (\count($eventIds) < $count) {
+            /** @var int $id */
+            $id = $events[rand(0, \count($events) - 1)]->getId();
+            $eventIds[$id] = $id;
+        }
+
+        return array_values($eventIds);
+    }
+
+    /**
      * @param mixed[] $data
      */
     private function createPage(DocumentManager $documentManager, array $data): PageDocument
     {
         if (!isset($data['url'])) {
-            $url = $this->getPathCleanup()->cleanup('/' . $data['title']);
+            $url = $this->pathCleanup->cleanup('/' . $data['title']);
             if (isset($data['parent_path'])) {
                 $url = mb_substr($data['parent_path'], mb_strlen('/cmf/example/contents')) . $url;
             }
@@ -156,23 +171,5 @@ class DocumentFixture implements DocumentFixtureInterface, ContainerAwareInterfa
         $documentManager->publish($pageDocument, AppFixtures::LOCALE);
 
         return $pageDocument;
-    }
-
-    private function getPathCleanup(): PathCleanup
-    {
-        if (null === $this->pathCleanup) {
-            $this->pathCleanup = $this->container->get('sulu.content.path_cleaner');
-        }
-
-        return $this->pathCleanup;
-    }
-
-    private function getEntityManager(): EntityManagerInterface
-    {
-        if (null === $this->entityManager) {
-            $this->entityManager = $this->container->get('doctrine.orm.entity_manager');
-        }
-
-        return $this->entityManager;
     }
 }

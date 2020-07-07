@@ -13,6 +13,8 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  * @method EventTranslation|null findOneBy(array $criteria, array $orderBy = null)
  * @method EventTranslation[]    findAll()
  * @method EventTranslation[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ *
+ * @extends ServiceEntityRepository<EventTranslation>
  */
 class EventTranslationRepository extends ServiceEntityRepository
 {

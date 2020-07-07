@@ -17,6 +17,8 @@ use Sulu\Component\SmartContent\Orm\DataProviderRepositoryTrait;
  * @method Event|null findOneBy(array $criteria, array $orderBy = null)
  * @method Event[]    findAll()
  * @method Event[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ *
+ * @extends ServiceEntityRepository<Event>
  */
 class EventRepository extends ServiceEntityRepository implements DataProviderRepositoryInterface
 {
@@ -39,12 +41,13 @@ class EventRepository extends ServiceEntityRepository implements DataProviderRep
 
     public function remove(int $id): void
     {
-        $this->getEntityManager()->remove(
-            $this->getEntityManager()->getReference(
-                $this->getClassName(),
-                $id
-            )
+        /** @var object $event */
+        $event = $this->getEntityManager()->getReference(
+            $this->getClassName(),
+            $id
         );
+
+        $this->getEntityManager()->remove($event);
         $this->getEntityManager()->flush();
     }
 
@@ -66,6 +69,9 @@ class EventRepository extends ServiceEntityRepository implements DataProviderRep
         return $event;
     }
 
+    /**
+     * @param mixed[] $filters
+     */
     public function findByFilters($filters, $page, $pageSize, $limit, $locale, $options = [])
     {
         $entities = $this->parentFindByFilters($filters, $page, $pageSize, $limit, $locale, $options);

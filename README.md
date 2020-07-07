@@ -58,7 +58,7 @@ bin/console sulu:build dev --destroy
 You can startup the built-in PHP web-server with:
 
 ```bash
-bin/console server:run
+php -S localhost:8009 -t public config/router.php
 ```
 
 If you have the SYMFONY CLI Tools installed and want to increase your performace you can also use the following command to startup the SYMFONY webserver:

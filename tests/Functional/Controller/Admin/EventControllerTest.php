@@ -6,31 +6,34 @@ namespace App\Tests\Functional\Controller\Admin;
 
 use App\Tests\Functional\Traits\EventTrait;
 use Sulu\Bundle\TestBundle\Testing\SuluTestCase;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\HttpFoundation\Response;
 
 class EventControllerTest extends SuluTestCase
 {
     use EventTrait;
 
+    /**
+     * @var KernelBrowser
+     */
+    private $client;
+
     public function setUp(): void
     {
-        parent::setUp();
-
+        $this->client = $this->createAuthenticatedClient();
         $this->purgeDatabase();
     }
 
     public function testCGet(): void
     {
-        $client = $this->createAuthenticatedClient();
-
         $event1 = $this->createEvent('Sulu is awesome', 'de');
         $event2 = $this->createEvent('Symfony live is awesome', 'de');
 
-        $client->request('GET', '/admin/api/events?locale=de');
+        $this->client->request('GET', '/admin/api/events?locale=de');
 
-        $response = $client->getResponse();
+        $response = $this->client->getResponse();
         $this->assertInstanceOf(Response::class, $response);
-        $result = json_decode($response->getContent(), true);
+        $result = json_decode($response->getContent() ?: '', true);
         $this->assertHttpStatusCode(200, $response);
 
         $this->assertSame(2, $result['total']);
@@ -46,15 +49,13 @@ class EventControllerTest extends SuluTestCase
 
     public function testGet(): void
     {
-        $client = $this->createAuthenticatedClient();
-
         $event = $this->createEvent('Sulu is awesome', 'de');
 
-        $client->request('GET', '/admin/api/events/' . $event->getId() . '?locale=de');
+        $this->client->request('GET', '/admin/api/events/' . $event->getId() . '?locale=de');
 
-        $response = $client->getResponse();
+        $response = $this->client->getResponse();
         $this->assertInstanceOf(Response::class, $response);
-        $result = json_decode($response->getContent(), true);
+        $result = json_decode($response->getContent() ?: '', true);
         $this->assertHttpStatusCode(200, $response);
 
         $this->assertSame($event->getId(), $result['id']);
@@ -63,9 +64,7 @@ class EventControllerTest extends SuluTestCase
 
     public function testPost(): void
     {
-        $client = $this->createAuthenticatedClient();
-
-        $client->request(
+        $this->client->request(
             'POST',
             '/admin/api/events?locale=de',
             [
@@ -78,9 +77,9 @@ class EventControllerTest extends SuluTestCase
             ]
         );
 
-        $response = $client->getResponse();
+        $response = $this->client->getResponse();
         $this->assertInstanceOf(Response::class, $response);
-        $result = json_decode($response->getContent(), true);
+        $result = json_decode($response->getContent() ?: '', true);
         $this->assertHttpStatusCode(200, $response);
 
         $this->assertArrayHasKey('id', $result);
@@ -109,9 +108,7 @@ class EventControllerTest extends SuluTestCase
 
     public function testPostNullValues(): void
     {
-        $client = $this->createAuthenticatedClient();
-
-        $client->request(
+        $this->client->request(
             'POST',
             '/admin/api/events?locale=de',
             [
@@ -119,9 +116,9 @@ class EventControllerTest extends SuluTestCase
             ]
         );
 
-        $response = $client->getResponse();
+        $response = $this->client->getResponse();
         $this->assertInstanceOf(Response::class, $response);
-        $result = json_decode($response->getContent(), true);
+        $result = json_decode($response->getContent() ?: '', true);
         $this->assertHttpStatusCode(200, $response);
 
         $this->assertArrayHasKey('id', $result);
@@ -148,11 +145,9 @@ class EventControllerTest extends SuluTestCase
 
     public function testPut(): void
     {
-        $client = $this->createAuthenticatedClient();
-
         $event = $this->createEvent('Symfony', 'de');
 
-        $client->request(
+        $this->client->request(
             'PUT',
             '/admin/api/events/' . $event->getId() . '?locale=de',
             [
@@ -165,9 +160,9 @@ class EventControllerTest extends SuluTestCase
             ]
         );
 
-        $response = $client->getResponse();
+        $response = $this->client->getResponse();
         $this->assertInstanceOf(Response::class, $response);
-        $result = json_decode($response->getContent(), true);
+        $result = json_decode($response->getContent() ?: '', true);
         $this->assertHttpStatusCode(200, $response);
 
         $this->assertArrayHasKey('id', $result);
@@ -196,11 +191,9 @@ class EventControllerTest extends SuluTestCase
 
     public function testPutNullValues(): void
     {
-        $client = $this->createAuthenticatedClient();
-
         $event = $this->createEvent('Symfony', 'de');
 
-        $client->request(
+        $this->client->request(
             'PUT',
             '/admin/api/events/' . $event->getId() . '?locale=de',
             [
@@ -208,9 +201,9 @@ class EventControllerTest extends SuluTestCase
             ]
         );
 
-        $response = $client->getResponse();
+        $response = $this->client->getResponse();
         $this->assertInstanceOf(Response::class, $response);
-        $result = json_decode($response->getContent(), true);
+        $result = json_decode($response->getContent() ?: '', true);
         $this->assertHttpStatusCode(200, $response);
 
         $this->assertArrayHasKey('id', $result);
@@ -237,15 +230,13 @@ class EventControllerTest extends SuluTestCase
 
     public function testEnable(): void
     {
-        $client = $this->createAuthenticatedClient();
-
         $event = $this->createEvent('Symfony', 'de');
 
-        $client->request('POST', '/admin/api/events/' . $event->getId() . '?locale=de&action=enable');
+        $this->client->request('POST', '/admin/api/events/' . $event->getId() . '?locale=de&action=enable');
 
-        $response = $client->getResponse();
+        $response = $this->client->getResponse();
         $this->assertInstanceOf(Response::class, $response);
-        $result = json_decode($response->getContent(), true);
+        $result = json_decode($response->getContent() ?: '', true);
         $this->assertHttpStatusCode(200, $response);
 
         $this->assertTrue($result['enabled']);
@@ -258,16 +249,14 @@ class EventControllerTest extends SuluTestCase
 
     public function testDisable(): void
     {
-        $client = $this->createAuthenticatedClient();
-
         $event = $this->createEvent('Symfony', 'de');
         $this->enableEvent($event);
 
-        $client->request('POST', '/admin/api/events/' . $event->getId() . '?locale=de&action=disable');
+        $this->client->request('POST', '/admin/api/events/' . $event->getId() . '?locale=de&action=disable');
 
-        $response = $client->getResponse();
+        $response = $this->client->getResponse();
         $this->assertInstanceOf(Response::class, $response);
-        $result = json_decode($response->getContent(), true);
+        $result = json_decode($response->getContent() ?: '', true);
         $this->assertHttpStatusCode(200, $response);
 
         $this->assertFalse($result['enabled']);
@@ -280,16 +269,14 @@ class EventControllerTest extends SuluTestCase
 
     public function testDelete(): void
     {
-        $client = $this->createAuthenticatedClient();
-
         $event = $this->createEvent('Symfony', 'de');
 
         /** @var int $eventId */
         $eventId = $event->getId();
 
-        $client->request('DELETE', '/admin/api/events/' . $event->getId() . '?locale=de');
+        $this->client->request('DELETE', '/admin/api/events/' . $event->getId() . '?locale=de');
 
-        $response = $client->getResponse();
+        $response = $this->client->getResponse();
         $this->assertInstanceOf(Response::class, $response);
         $this->assertHttpStatusCode(204, $response);
 

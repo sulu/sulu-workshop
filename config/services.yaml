@@ -10,22 +10,31 @@ services:
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
         bind:
             $listBuilderFactory: '@sulu_core.doctrine_list_builder_factory'
-
-    _instanceof:
-        Sulu\Bundle\AdminBundle\Admin\Admin:
-            tags: ['sulu.admin', {name: 'sulu.context', context: 'admin'}]
+            $pathCleanup: '@sulu.content.path_cleaner'
+            $entityManager: '@doctrine.orm.entity_manager'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     App\:
         resource: '../src/*'
-        exclude: '../src/{DependencyInjection,Entity,Migrations,DataFixtures,Tests,Kernel.php}'
+        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
     App\Controller\:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
+
+    # add controllers as services that are specific to a certain sulu context
+    # a sulu context is a different mode in the kernel allowing to have a different set of services
+    # because controllers might rely on services only existing in one of both contexts
+    App\Controller\Admin\:
+        resource: '../src/Controller/Admin'
+        tags: ['controller.service_arguments', {name: 'sulu.context', context: 'admin'}]
+
+    App\Controller\Website\:
+        resource: '../src/Controller/Website'
+        tags: ['controller.service_arguments', {name: 'sulu.context', context: 'website'}]
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
@@ -41,8 +50,4 @@ services:
     # following service definitions will be removed in the website context of sulu
     App\Admin\:
         resource: '../src/Admin'
-        tags: [{name: 'sulu.context', context: 'admin'}]
-
-    App\Controller\Admin\:
-        resource: '../src/Controller/Admin'
-        tags: [{name: 'sulu.context', context: 'admin'}]
+        tags: ['sulu.admin', {name: 'sulu.context', context: 'admin'}]

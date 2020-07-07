@@ -43,9 +43,9 @@ class EventSelectionContentType extends SimpleContentType
     }
 
     /**
-     * {@inheritdoc}
+     * @return mixed[]
      */
-    public function getViewData(PropertyInterface $property)
+    public function getViewData(PropertyInterface $property): array
     {
         return $property->getValue();
     }

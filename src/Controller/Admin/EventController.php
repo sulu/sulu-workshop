@@ -4,17 +4,19 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
-use App\Admin\DoctrineListRepresentationFactory;
+use App\Common\DoctrineListRepresentationFactory;
 use App\Entity\Event;
 use App\Repository\EventRepository;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Routing\ClassResourceInterface;
-use Sulu\Component\Rest\RestController;
+use FOS\RestBundle\View\ViewHandlerInterface;
+use Sulu\Component\Rest\AbstractRestController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-class EventController extends RestController implements ClassResourceInterface
+class EventController extends AbstractRestController implements ClassResourceInterface
 {
     /**
      * @var EventRepository
@@ -28,10 +30,14 @@ class EventController extends RestController implements ClassResourceInterface
 
     public function __construct(
         EventRepository $repository,
-        DoctrineListRepresentationFactory $doctrineListRepresentationFactory
+        DoctrineListRepresentationFactory $doctrineListRepresentationFactory,
+        ViewHandlerInterface $viewHandler,
+        ?TokenStorageInterface $tokenStorage = null
     ) {
         $this->repository = $repository;
         $this->doctrineListRepresentationFactory = $doctrineListRepresentationFactory;
+
+        parent::__construct($viewHandler, $tokenStorage);
     }
 
     public function cgetAction(Request $request): Response
@@ -72,7 +78,7 @@ class EventController extends RestController implements ClassResourceInterface
      */
     public function postTriggerAction(int $id, Request $request): Response
     {
-        $event = $this->repository->findById($id, $request->query->get('locale'));
+        $event = $this->repository->findById($id, (string) $this->getLocale($request));
         if (!$event) {
             throw new NotFoundHttpException();
         }
@@ -142,12 +148,12 @@ class EventController extends RestController implements ClassResourceInterface
 
     protected function load(int $id, Request $request): ?Event
     {
-        return $this->repository->findById($id, $request->query->get('locale'));
+        return $this->repository->findById($id, (string) $this->getLocale($request));
     }
 
     protected function create(Request $request): Event
     {
-        return $this->repository->create($request->query->get('locale'));
+        return $this->repository->create((string) $this->getLocale($request));
     }
 
     protected function save(Event $entity): void
