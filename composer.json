@@ -90,24 +90,24 @@
         "post-create-project-cmd": [
             "php -r \"file_put_contents('.gitignore', str_replace(['composer.lock' . PHP_EOL, 'symfony.lock' . PHP_EOL, 'package-lock.json' . PHP_EOL], ['', '', ''], file_get_contents('.gitignore')));\""
         ],
+        "bootstrap-test-environment": [
+            "bin/adminconsole doctrine:database:create --if-not-exists --env test",
+            "bin/adminconsole doctrine:schema:update --force --env test"
+        ],
         "lint": [
             "@phpstan",
             "@php-cs",
             "@lint-twig",
             "@lint-yaml",
+            "@lint-container",
             "@lint-composer",
-            "@schemavalidate"
+            "@lint-doctrine"
         ],
         "test": [
             "@phpunit"
         ],
-        "bootstrap-test-environment": [
-            "@php bin/adminconsole doctrine:database:create --if-not-exists --env test",
-            "@php bin/adminconsole doctrine:schema:update --force --env test"
-        ],
-        "phpunit": "bin/phpunit",
-        "schemavalidate": "bin/adminconsole doctrine:schema:validate --skip-mapping",
         "security-check": "bin/websiteconsole security:check",
+        "phpunit": "SYMFONY_PHPUNIT_VERSION=8.3 vendor/bin/simple-phpunit",
         "phpstan": [
             "bin/websiteconsole cache:warmup --env=dev",
             "@test install",
@@ -117,7 +117,21 @@
         "php-cs-fix": "vendor/bin/php-cs-fixer fix",
         "lint-composer": "@composer validate --strict",
         "lint-twig": "bin/websiteconsole lint:twig templates/",
-        "lint-yaml": "bin/websiteconsole lint:yaml config/"
+        "lint-yaml": "bin/websiteconsole lint:yaml config/",
+        "lint-container": [
+            "bin/adminconsole lint:container --env dev",
+            "bin/websiteconsole lint:container --env dev",
+            "bin/adminconsole lint:container --env test",
+            "bin/websiteconsole lint:container --env test",
+            "bin/adminconsole lint:container --env stage",
+            "bin/websiteconsole lint:container --env stage",
+            "bin/adminconsole lint:container --env prod",
+            "bin/websiteconsole lint:container --env prod"
+        ],
+        "lint-doctrine": [
+            "bin/adminconsole doctrine:ensure-production-settings --env prod",
+            "bin/adminconsole doctrine:schema:validate"
+        ]
     },
     "config": {
         "sort-packages": true,
