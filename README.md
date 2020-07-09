@@ -2,14 +2,14 @@
 
 This repository contains the **project template**, **assignments** and **example solution code** for the Sulu workshop 
 at the Symfony Live Berlin 2019. The workshop consists of 12 assignments that guide you through creating a small 
-website that integrates two simple custom entities with using Sulu content management system. 
+website that integrates two simple custom entities using the Sulu content management system. 
 The project builds upon the official [sulu/skeleton](https://github.com/sulu/skeleton) template and adds some project 
 specific libraries such as Bootstrap or Symfony Encore.
 
 The **assignments** of the workshop are located in the [assignments](/assignments) folder of the repository.
-The **example solution code** is available per assignment as separate [repository branch](https://github.com/sulu/sulu-workshop-symfony-live-berlin-2019/branches). 
-You can easily filter the changes for a single assignment by utilizing the 
-[compare feature of GitHub](https://github.com/sulu/sulu-workshop-symfony-live-berlin-2019/compare/assignment/08...assignment/09).
+Additionally, this repository includes an [open pull request](https://github.com/sulu/sulu-workshop-symfony-live-berlin-2019/pulls?q=is%3Apr+is%3Aopen+sort%3Acreated-asc) 
+that contains the **example solution code** for each assignment on this repository. Feel free to use the 
+**comment feature on these pull requests** for asking questions or providing additional context about the solution code.
 
 ## Requirements
 
