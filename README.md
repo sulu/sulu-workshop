@@ -77,8 +77,7 @@ The project already contains some unit tests and functional tests. They can be e
 
 ```bash
 # create and update test database
-bin/adminconsole doctrine:database:create -e test
-bin/adminconsole doctrine:schema:update --force -e test
+composer bootstrap-test-environment
 
 # execute all test cases
 composer test
