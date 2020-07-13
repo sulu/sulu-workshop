@@ -10,7 +10,7 @@ use App\Repository\EventRepository;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use FOS\RestBundle\View\ViewHandlerInterface;
-use Sulu\Bundle\MediaBundle\Media\Manager\MediaManagerInterface;
+use Sulu\Bundle\MediaBundle\Entity\MediaRepositoryInterface;
 use Sulu\Component\Rest\AbstractRestController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,9 +25,9 @@ class EventController extends AbstractRestController implements ClassResourceInt
     private $repository;
 
     /**
-     * @var MediaManagerInterface
+     * @var MediaRepositoryInterface
      */
-    private $mediaManager;
+    private $mediaRepository;
 
     /**
      * @var DoctrineListRepresentationFactory
@@ -36,13 +36,13 @@ class EventController extends AbstractRestController implements ClassResourceInt
 
     public function __construct(
         EventRepository $repository,
-        MediaManagerInterface $mediaManager,
+        MediaRepositoryInterface $mediaRepository,
         DoctrineListRepresentationFactory $doctrineListRepresentationFactory,
         ViewHandlerInterface $viewHandler,
         ?TokenStorageInterface $tokenStorage = null
     ) {
         $this->repository = $repository;
-        $this->mediaManager = $mediaManager;
+        $this->mediaRepository = $mediaRepository;
         $this->doctrineListRepresentationFactory = $doctrineListRepresentationFactory;
 
         parent::__construct($viewHandler, $tokenStorage);
@@ -134,7 +134,7 @@ class EventController extends AbstractRestController implements ClassResourceInt
         $entity->setTitle($data['title']);
 
         if ($imageId = ($data['image']['id'] ?? null)) {
-            $image = $this->mediaManager->getEntityById($imageId);
+            $image = $this->mediaRepository->findMediaById($imageId);
 
             $entity->setImage($image);
         }
