@@ -1,5 +1,6 @@
 {
     "app.events": "Events",
+    "app.image": "Image",
     "app.teaser": "Teaser",
     "app.start_date": "Start",
     "app.end_date": "Ende",

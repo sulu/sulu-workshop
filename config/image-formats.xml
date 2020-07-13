@@ -16,6 +16,15 @@
     </format>
     -->
 
+    <format key="1920x">
+        <meta>
+            <title lang="en">Event image</title>
+            <title lang="de">Event Bild</title>
+        </meta>
+
+        <scale x="1920"/>
+    </format>
+
     <!--
     Render an image from the media_selection in a specific format the following way:
 

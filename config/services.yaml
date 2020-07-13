@@ -12,6 +12,7 @@ services:
             $listBuilderFactory: '@sulu_core.doctrine_list_builder_factory'
             $pathCleanup: '@sulu.content.path_cleaner'
             $entityManager: '@doctrine.orm.entity_manager'
+            $storage: '@sulu_media.storage'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name

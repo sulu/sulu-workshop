@@ -6,13 +6,25 @@
     <key>event_details</key>
 
     <properties>
-        <property name="title" type="text_line" mandatory="true" colspan="9">
+        <property name="title" type="text_line" mandatory="true">
             <meta>
                 <title>sulu_admin.title</title>
             </meta>
+            <params>
+                <param name="headline" value="true"/>
+            </params>
         </property>
 
-        <property name="location" type="text_line" colspan="3">
+        <property name="image" type="single_media_selection" colspan="6">
+            <meta>
+                <title>app.image</title>
+            </meta>
+            <params>
+                <param name="types" value="image"/>
+            </params>
+        </property>
+
+        <property name="location" type="text_line" colspan="6">
             <meta>
                 <title>app.location</title>
             </meta>
