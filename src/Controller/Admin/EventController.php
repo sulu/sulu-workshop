@@ -133,11 +133,11 @@ class EventController extends AbstractRestController implements ClassResourceInt
     {
         $entity->setTitle($data['title']);
 
+        $image = null;
         if ($imageId = ($data['image']['id'] ?? null)) {
             $image = $this->mediaRepository->findMediaById($imageId);
-
-            $entity->setImage($image);
         }
+        $entity->setImage($image);
 
         if ($teaser = $data['teaser'] ?? null) {
             $entity->setTeaser($teaser);

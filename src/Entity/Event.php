@@ -72,7 +72,6 @@ class Event
      * @var MediaInterface|null
      *
      * @ORM\ManyToOne(targetEntity="Sulu\Bundle\MediaBundle\Entity\MediaInterface")
-     * @ORM\JoinColumn(nullable=true)
      *
      * @Serializer\Exclude
      */
@@ -259,7 +258,6 @@ class Event
      *
      * @Serializer\VirtualProperty
      * @Serializer\SerializedName("image")
-     * @Serializer\Groups(groups={"admin"})
      */
     public function getImageData(): array
     {

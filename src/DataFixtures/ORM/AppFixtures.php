@@ -45,13 +45,6 @@ class AppFixtures extends Fixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager): void
     {
         $collections = $this->loadCollections($manager);
-
-        if (!$collections['Content']) {
-            // Ignore as it seems fixtures where loaded before
-
-            return;
-        }
-
         $images = $this->loadImages($manager, $collections['Content']);
         $this->loadEvents($manager, $images);
 
@@ -142,6 +135,7 @@ class AppFixtures extends Fixture implements OrderedFixtureInterface
             $event = $repository->create(self::LOCALE);
 
             $event->setTitle($item['title']);
+            $event->setImage($images[$item['image']] ?? null);
             $event->setLocation($item['location']);
             $event->setTeaser($item['teaser']);
             $event->setDescription('<p>' . $item['description'] . '</p>');
@@ -149,16 +143,12 @@ class AppFixtures extends Fixture implements OrderedFixtureInterface
             $event->setEndDate(new \DateTimeImmutable($item['endDate']));
             $event->setEnabled($item['enabled']);
 
-            if ($image = ($item['image'] ?? null)) {
-                $event->setImage($images[$image]);
-            }
-
             $repository->save($event);
         }
     }
 
     /**
-     * @return array<string, CollectionInterface|null>
+     * @return array<string, CollectionInterface>
      */
     private function loadCollections(ObjectManager $manager): array
     {
@@ -184,17 +174,8 @@ class AppFixtures extends Fixture implements OrderedFixtureInterface
         return $media;
     }
 
-    private function createCollection(ObjectManager $manager, string $title): ?CollectionInterface
+    private function createCollection(ObjectManager $manager, string $title): CollectionInterface
     {
-        $collectionRepository = $manager->getRepository(CollectionInterface::class);
-        $key = 'app.' . str_replace(' ', '_', mb_strtolower($title));
-
-        $collection = $collectionRepository->findOneBy(['key' => $key]);
-
-        if ($collection) {
-            return null;
-        }
-
         $collection = new Collection();
         /** @var CollectionType|null $collectionType */
         $collectionType = $manager->getRepository(CollectionType::class)->find(1);
@@ -204,7 +185,6 @@ class AppFixtures extends Fixture implements OrderedFixtureInterface
         }
 
         $collection->setType($collectionType);
-        $collection->setKey($key);
         $meta = new CollectionMeta();
         $meta->setLocale(self::LOCALE);
         $meta->setTitle($title);
