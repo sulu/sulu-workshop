@@ -11,4 +11,11 @@
     <div class="container">
         {{ event.description|raw }}
     </div>
+
+    {% if event.image %}
+        <div class="container">
+            {% set image = sulu_resolve_media(event.image, app.request.locale) %}
+            <img class="img-fluid" src="{{ image.formats['1920x'] }}" alt="{{ image.title }}">
+        </div>
+    {% endif %}
 {% endblock %}

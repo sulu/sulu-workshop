@@ -10,6 +10,7 @@ use App\Repository\EventRepository;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use FOS\RestBundle\View\ViewHandlerInterface;
+use Sulu\Bundle\MediaBundle\Entity\MediaRepositoryInterface;
 use Sulu\Component\Rest\AbstractRestController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,17 +25,24 @@ class EventController extends AbstractRestController implements ClassResourceInt
     private $repository;
 
     /**
+     * @var MediaRepositoryInterface
+     */
+    private $mediaRepository;
+
+    /**
      * @var DoctrineListRepresentationFactory
      */
     private $doctrineListRepresentationFactory;
 
     public function __construct(
         EventRepository $repository,
+        MediaRepositoryInterface $mediaRepository,
         DoctrineListRepresentationFactory $doctrineListRepresentationFactory,
         ViewHandlerInterface $viewHandler,
         ?TokenStorageInterface $tokenStorage = null
     ) {
         $this->repository = $repository;
+        $this->mediaRepository = $mediaRepository;
         $this->doctrineListRepresentationFactory = $doctrineListRepresentationFactory;
 
         parent::__construct($viewHandler, $tokenStorage);
@@ -119,11 +127,17 @@ class EventController extends AbstractRestController implements ClassResourceInt
     }
 
     /**
-     * @param string[] $data
+     * @param array<string, mixed> $data
      */
     protected function mapDataToEntity(array $data, Event $entity): void
     {
         $entity->setTitle($data['title']);
+
+        $image = null;
+        if ($imageId = ($data['image']['id'] ?? null)) {
+            $image = $this->mediaRepository->findMediaById($imageId);
+        }
+        $entity->setImage($image);
 
         if ($teaser = $data['teaser'] ?? null) {
             $entity->setTeaser($teaser);

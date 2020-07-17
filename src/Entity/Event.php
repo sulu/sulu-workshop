@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
+use Sulu\Bundle\MediaBundle\Entity\MediaInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EventRepository")
@@ -66,6 +67,15 @@ class Event
      * @var string
      */
     private $locale;
+
+    /**
+     * @var MediaInterface|null
+     *
+     * @ORM\ManyToOne(targetEntity="Sulu\Bundle\MediaBundle\Entity\MediaInterface")
+     *
+     * @Serializer\Exclude
+     */
+    private $image = null;
 
     public function __construct()
     {
@@ -236,5 +246,30 @@ class Event
         $this->translations->set($locale, $translation);
 
         return $translation;
+    }
+
+    public function getImage(): ?MediaInterface
+    {
+        return $this->image;
+    }
+
+    /**
+     * @return array<string, mixed>
+     *
+     * @Serializer\VirtualProperty
+     * @Serializer\SerializedName("image")
+     */
+    public function getImageData(): array
+    {
+        return [
+            'id' => ($image = $this->image)
+                ? $image->getId()
+                : null,
+        ];
+    }
+
+    public function setImage(?MediaInterface $image): void
+    {
+        $this->image = $image;
     }
 }
