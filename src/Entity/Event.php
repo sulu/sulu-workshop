@@ -254,12 +254,12 @@ class Event
     }
 
     /**
-     * @return array<string, mixed>
+     * @return array<string, mixed>|null
      *
      * @Serializer\VirtualProperty
      * @Serializer\SerializedName("image")
      */
-    public function getImageData(): array
+    public function getImageData(): ?array
     {
         if (!$this->image) {
             return null;
