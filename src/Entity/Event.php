@@ -261,10 +261,12 @@ class Event
      */
     public function getImageData(): array
     {
+        if (!$this->image) {
+            return null;
+        }
+        
         return [
-            'id' => ($image = $this->image)
-                ? $image->getId()
-                : null,
+            'id' => $this->image->getId(),
         ];
     }
 
