@@ -264,7 +264,7 @@ class Event
         if (!$this->image) {
             return null;
         }
-        
+
         return [
             'id' => $this->image->getId(),
         ];
