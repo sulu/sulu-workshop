@@ -1,14 +1,13 @@
-# Symfony Live Berlin 2019 Workshop
+# Sulu Workshop
 
-This repository contains the **project template**, **assignments** and **example solution code** for the Sulu workshop 
-at the Symfony Live Berlin 2019. The workshop consists of 12 assignments that guide you through creating a small 
-website that integrates two simple custom entities using the Sulu content management system. 
-The project builds upon the official [sulu/skeleton](https://github.com/sulu/skeleton) template and adds some project 
-specific libraries such as Bootstrap or Symfony Encore.
+The Sulu workshop consists of 12 assignments that guide you through the process of creating a small website that 
+integrates two simple custom entities using the Sulu content management system. This repository contains the 
+**example project**, **assignments** and **solution code** for the workshop. 
+The included example project builds upon the official [sulu/skeleton](https://github.com/sulu/skeleton) template and 
+adds some implementation-specific libraries such as Bootstrap or Symfony Encore.
 
-The **assignments** of the workshop are located in the [assignments](/assignments) folder of the repository.
-Additionally, this repository includes an [open pull request](https://github.com/sulu/sulu-workshop-symfony-live-berlin-2019/pulls?q=is%3Apr+is%3Aopen+sort%3Acreated-asc) 
-that contains the **example solution code** for each assignment on this repository. Feel free to use the 
+The **assignments** of the workshop are available via the [pull requests area](https://github.com/sulu/sulu-workshop/pulls?q=is%3Aopen+is%3Apr+label%3Aassignment+sort%3Acreated-asc) of this repository.
+Each pull requests contains the **example solution code** for the respective assignment. Feel free to use the 
 **comment feature on these pull requests** for asking questions or providing additional context about the solution code.
 
 ## Requirements
