@@ -47,8 +47,8 @@ jobs:
 
             - name: Lint code
               run: |
-                  bin/adminconsole doctrine:database:create --if-not-exists --env prod
-                  bin/adminconsole doctrine:schema:update --force --env prod
+                  bin/adminconsole doctrine:database:create --if-not-exists
+                  bin/adminconsole doctrine:schema:update --force
                   composer lint
 
             - name: Execute test cases
@@ -57,7 +57,4 @@ jobs:
                   composer test
 
             - name: Test project initialization
-              run: |
-                  bin/adminconsole doctrine:database:create --if-not-exists --env dev
-                  bin/adminconsole doctrine:schema:update --force --env dev
-                  bin/console sulu:build dev --destroy --env dev
+              run: bin/console sulu:build dev --destroy
