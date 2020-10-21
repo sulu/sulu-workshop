@@ -43,7 +43,9 @@ jobs:
                   key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
 
             - name: Install dependencies
-              run: composer install --no-interaction --prefer-dist --no-scripts
+              run: |
+                  composer install --no-interaction --prefer-dist --no-scripts
+                  composer test install
 
             - name: Lint code
               run: |
