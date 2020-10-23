@@ -19,7 +19,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
- * @RouteResource("Event")
+ * @RouteResource("event")
  */
 class EventController extends AbstractRestController implements ClassResourceInterface
 {
