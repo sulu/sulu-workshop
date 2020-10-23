@@ -7,6 +7,7 @@ namespace App\Tests\Unit\Entity;
 use App\Entity\Event;
 use App\Entity\EventTranslation;
 use PHPUnit\Framework\TestCase;
+use Sulu\Bundle\MediaBundle\Entity\MediaInterface;
 
 class EventTest extends TestCase
 {
@@ -28,13 +29,6 @@ class EventTest extends TestCase
         $this->assertTrue($this->event->isEnabled());
     }
 
-    public function testLocale(): void
-    {
-        $this->assertSame('de', $this->event->getLocale());
-        $this->assertSame($this->event, $this->event->setLocale('en'));
-        $this->assertSame('en', $this->event->getLocale());
-    }
-
     public function testStartDate(): void
     {
         $now = new \DateTimeImmutable();
@@ -53,6 +47,25 @@ class EventTest extends TestCase
         $this->assertSame($this->event, $this->event->setEndDate($now));
         $this->assertNotNull($this->event->getEndDate());
         $this->assertSame($now, $this->event->getEndDate());
+    }
+
+    public function testLocation(): void
+    {
+        $this->assertNull($this->event->getLocation());
+        $this->assertSame($this->event, $this->event->setLocation('Amsterdam'));
+        $this->assertSame('Amsterdam', $this->event->getLocation());
+    }
+
+    public function testImage(): void
+    {
+        $image = $this->prophesize(MediaInterface::class);
+        $image->getId()->willReturn(1234);
+
+        $this->assertNull($this->event->getImage());
+        $this->assertNull($this->event->getImageData());
+        $this->assertSame($this->event, $this->event->setImage($image->reveal()));
+        $this->assertSame($image->reveal(), $this->event->getImage());
+        $this->assertSame(['id' => 1234], $this->event->getImageData());
     }
 
     public function testTitle(): void
@@ -86,5 +99,12 @@ class EventTest extends TestCase
         $this->assertInstanceOf(EventTranslation::class, $this->event->getTranslations()['de']);
         $this->assertSame('de', $this->event->getTranslations()['de']->getLocale());
         $this->assertSame('Sulu is awesome', $this->event->getTranslations()['de']->getDescription());
+    }
+
+    public function testLocale(): void
+    {
+        $this->assertSame('de', $this->event->getLocale());
+        $this->assertSame($this->event, $this->event->setLocale('en'));
+        $this->assertSame('en', $this->event->getLocale());
     }
 }
