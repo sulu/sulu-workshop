@@ -136,6 +136,35 @@ class Event
         return $this;
     }
 
+    public function getImage(): ?MediaInterface
+    {
+        return $this->image;
+    }
+
+    /**
+     * @return array<string, mixed>|null
+     *
+     * @Serializer\VirtualProperty
+     * @Serializer\SerializedName("image")
+     */
+    public function getImageData(): ?array
+    {
+        if (!$this->image) {
+            return null;
+        }
+
+        return [
+            'id' => $this->image->getId(),
+        ];
+    }
+
+    public function setImage(?MediaInterface $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
     /**
      * @Serializer\VirtualProperty(name="title")
      */
@@ -246,32 +275,5 @@ class Event
         $this->translations->set($locale, $translation);
 
         return $translation;
-    }
-
-    public function getImage(): ?MediaInterface
-    {
-        return $this->image;
-    }
-
-    /**
-     * @return array<string, mixed>|null
-     *
-     * @Serializer\VirtualProperty
-     * @Serializer\SerializedName("image")
-     */
-    public function getImageData(): ?array
-    {
-        if (!$this->image) {
-            return null;
-        }
-
-        return [
-            'id' => $this->image->getId(),
-        ];
-    }
-
-    public function setImage(?MediaInterface $image): void
-    {
-        $this->image = $image;
     }
 }
