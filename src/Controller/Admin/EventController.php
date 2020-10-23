@@ -8,6 +8,7 @@ use App\Common\DoctrineListRepresentationFactory;
 use App\Entity\Event;
 use App\Repository\EventRepository;
 use FOS\RestBundle\Controller\Annotations as Rest;
+use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use FOS\RestBundle\View\ViewHandlerInterface;
 use Sulu\Bundle\MediaBundle\Entity\MediaRepositoryInterface;
@@ -17,6 +18,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
+/**
+ * @RouteResource("Event")
+ */
 class EventController extends AbstractRestController implements ClassResourceInterface
 {
     /**
