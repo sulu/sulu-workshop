@@ -13,7 +13,7 @@
         "doctrine/doctrine-migrations-bundle": "^2.0",
         "friendsofsymfony/http-cache-bundle": "^2.8",
         "jackalope/jackalope-doctrine-dbal": "^1.3.4",
-        "sulu/sulu": "^2.1",
+        "sulu/sulu": "^2.2",
         "symfony/config": "^5.1",
         "symfony/dotenv": "^5.1",
         "symfony/flex": "^1.2",
@@ -21,7 +21,7 @@
         "symfony/monolog-bridge": "^5.1",
         "symfony/monolog-bundle": "^3.1",
         "symfony/security-bundle": "^5.1",
-        "symfony/swiftmailer-bundle": "^2.6.4 || ^3.0",
+        "symfony/swiftmailer-bundle": "^3.4",
         "symfony/twig-bundle": "^5.1",
         "symfony/webpack-encore-bundle": "^1.6",
         "handcraftedinthealps/zendsearch": "^2.0"
@@ -136,7 +136,7 @@
     "config": {
         "sort-packages": true,
         "platform": {
-            "php": "7.4.7"
+            "php": "7.4.12"
         }
     },
     "extra": {
