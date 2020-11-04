@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d461f9e9a4a58fa4ca5e404cad7e7bf5",
+    "content-hash": "8b495654f669f8a016335eda4da474c4",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -5682,16 +5682,16 @@
         },
         {
             "name": "sulu/sulu",
-            "version": "2.2.0",
+            "version": "2.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sulu/sulu.git",
-                "reference": "2dac9dd6930146186301ff9f6b5a7d84921a8dc2"
+                "reference": "3f2225e3defcc8cfc218380c2e65d65b1084bf31"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sulu/sulu/zipball/2dac9dd6930146186301ff9f6b5a7d84921a8dc2",
-                "reference": "2dac9dd6930146186301ff9f6b5a7d84921a8dc2",
+                "url": "https://api.github.com/repos/sulu/sulu/zipball/3f2225e3defcc8cfc218380c2e65d65b1084bf31",
+                "reference": "3f2225e3defcc8cfc218380c2e65d65b1084bf31",
                 "shasum": ""
             },
             "require": {
@@ -5891,7 +5891,7 @@
                 "issues": "https://github.com/sulu/skeleton/issues",
                 "source": "https://github.com/sulu/skeleton"
             },
-            "time": "2020-10-28T16:59:02+00:00"
+            "time": "2020-11-04T10:47:41+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
