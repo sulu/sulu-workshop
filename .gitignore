@@ -50,6 +50,8 @@ node_modules
 *.iml
 *~
 .web-server-pid
+.php-version
+php.ini
 
 # System files
 .DS_Store

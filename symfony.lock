@@ -1,24 +1,15 @@
 {
-    "aferrandini/urlizer": {
-        "version": "1.0.0"
-    },
-    "antishov/doctrine-extensions-bundle": {
-        "version": "1.4",
-        "recipe": {
-            "repo": "github.com/symfony/recipes-contrib",
-            "branch": "master",
-            "version": "1.4",
-            "ref": "6c1ceb662f8997085f739cd089bfbef67f245983"
-        },
-        "files": [
-            "config/packages/stof_doctrine_extensions.yaml"
-        ]
-    },
     "behat/transliterator": {
         "version": "v1.2.0"
     },
+    "brick/math": {
+        "version": "0.9.1"
+    },
     "clue/stream-filter": {
         "version": "v1.4.1"
+    },
+    "composer/package-versions-deprecated": {
+        "version": "1.11.99"
     },
     "composer/semver": {
         "version": "1.5.0"
@@ -347,6 +338,9 @@
     "ralouphie/getallheaders": {
         "version": "3.0.3"
     },
+    "ramsey/collection": {
+        "version": "1.1.1"
+    },
     "ramsey/uuid": {
         "version": "3.8.0"
     },
@@ -360,6 +354,18 @@
         },
         "files": [
             "config/packages/security_checker.yaml"
+        ]
+    },
+    "stof/doctrine-extensions-bundle": {
+        "version": "1.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "1.2",
+            "ref": "6c1ceb662f8997085f739cd089bfbef67f245983"
+        },
+        "files": [
+            "config/packages/stof_doctrine_extensions.yaml"
         ]
     },
     "sulu/sulu": {
@@ -497,9 +503,6 @@
         "version": "v4.3.3"
     },
     "symfony/http-kernel": {
-        "version": "v4.3.4"
-    },
-    "symfony/inflector": {
         "version": "v4.3.4"
     },
     "symfony/intl": {
