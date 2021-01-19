@@ -32,22 +32,8 @@ jobs:
                   coverage: none
                   tools: composer
 
-            - name: Get composer cache directory
-              id: composer-cache-dir
-              run: echo "::set-output name=dir::$(composer config cache-files-dir)"
-
-            - name: Cache dependencies
-              uses: actions/cache@v2
-              with:
-                  path: ${{ steps.composer-cache-dir.outputs.dir }}
-                  key: ${{ runner.os }}-composer-${{ hashFiles('composer.json', 'composer.lock') }}
-                  restore-keys: |
-                      ${{ runner.os }}-composer-
-
-            - name: Install dependencies
-              run: |
-                  composer install --no-interaction --prefer-dist --no-scripts
-                  composer test install
+            - name: Install composer dependencies
+              uses: ramsey/composer-install@v1
 
             - name: Lint code
               run: |
