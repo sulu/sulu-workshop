@@ -86,9 +86,24 @@ class EventRepository extends ServiceEntityRepository implements DataProviderRep
 
     protected function appendJoins(QueryBuilder $queryBuilder, string $alias, string $locale): void
     {
+        // join and select entities that are used for creating data items or resource items in the DataProvider here
+    }
+
+    /**
+     * @param mixed[] $options
+     *
+     * @return string[]
+     */
+    protected function append(QueryBuilder $queryBuilder, string $alias, string $locale, $options = []): array
+    {
+        $queryBuilder->andWhere($alias . '.enabled = true');
+
+        return [];
+    }
+
+    protected function appendSortByJoins(QueryBuilder $queryBuilder, string $alias, string $locale): void
+    {
         $queryBuilder->innerJoin($alias . '.translations', 'translation', Join::WITH, 'translation.locale = :locale');
         $queryBuilder->setParameter('locale', $locale);
-
-        $queryBuilder->andWhere($alias . '.enabled = true');
     }
 }
