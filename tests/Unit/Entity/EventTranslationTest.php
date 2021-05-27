@@ -21,7 +21,7 @@ class EventTranslationTest extends TestCase
      */
     private $translation;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->event = $this->prophesize(Event::class);
         $this->translation = new EventTranslation($this->event->reveal(), 'de');

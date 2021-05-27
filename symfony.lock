@@ -1,4 +1,16 @@
 {
+    "antishov/doctrine-extensions-bundle": {
+        "version": "1.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "1.4",
+            "ref": "6c1ceb662f8997085f739cd089bfbef67f245983"
+        },
+        "files": [
+            "config/packages/stof_doctrine_extensions.yaml"
+        ]
+    },
     "behat/transliterator": {
         "version": "v1.2.0"
     },
@@ -52,6 +64,9 @@
     },
     "doctrine/dbal": {
         "version": "v2.9.2"
+    },
+    "doctrine/deprecations": {
+        "version": "v0.5.3"
     },
     "doctrine/doctrine-bundle": {
         "version": "1.6",
@@ -137,6 +152,9 @@
         "files": [
             ".php_cs.dist"
         ]
+    },
+    "friendsofphp/proxy-manager-lts": {
+        "version": "v1.0.5"
     },
     "friendsofsymfony/http-cache": {
         "version": "2.7.0"
@@ -236,6 +254,9 @@
     "massive/search-bundle": {
         "version": "0.17.3"
     },
+    "matomo/device-detector": {
+        "version": "4.2.3"
+    },
     "monolog/monolog": {
         "version": "1.25.1"
     },
@@ -247,6 +268,18 @@
     },
     "nikic/php-parser": {
         "version": "v4.2.4"
+    },
+    "nyholm/psr7": {
+        "version": "1.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "1.0",
+            "ref": "0cd4d2d0e7f646fda75f9944f747a56e6ed13d4c"
+        },
+        "files": [
+            "config/packages/nyholm_psr7.yaml"
+        ]
     },
     "ocramius/proxy-manager": {
         "version": "2.2.3"
@@ -295,6 +328,9 @@
     },
     "phpcr/phpcr-utils": {
         "version": "1.4.0"
+    },
+    "phpstan/phpdoc-parser": {
+        "version": "0.5.4"
     },
     "phpstan/phpstan": {
         "version": "0.11.15"
@@ -743,6 +779,9 @@
     },
     "webimpress/safe-writer": {
         "version": "2.0.1"
+    },
+    "webmozart/assert": {
+        "version": "1.10.0"
     },
     "willdurand/jsonp-callback-validator": {
         "version": "v1.1.0"

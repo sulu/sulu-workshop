@@ -6,7 +6,7 @@ namespace App\Repository;
 
 use App\Entity\EventTranslation;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method EventTranslation|null find($id, $lockMode = null, $lockVersion = null)

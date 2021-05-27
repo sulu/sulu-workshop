@@ -1,13 +1,13 @@
 # Sulu Workshop
 
-The Sulu workshop consists of 12 assignments that guide you through the process of creating a small website that 
-integrates two simple custom entities using the Sulu content management system. This repository contains the 
-**example project**, **assignments** and **solution code** for the workshop. 
-The included example project builds upon the official [sulu/skeleton](https://github.com/sulu/skeleton) template and 
+The Sulu workshop consists of 12 assignments that guide you through the process of creating a small website that
+integrates two simple custom entities using the Sulu content management system. This repository contains the
+**example project**, **assignments** and **solution code** for the workshop.
+The included example project builds upon the official [sulu/skeleton](https://github.com/sulu/skeleton) template and
 adds some implementation-specific libraries such as Bootstrap or Symfony Encore.
 
 The **assignments** of the workshop are available via the [pull requests area](https://github.com/sulu/sulu-workshop/pulls?q=is%3Aopen+is%3Apr+label%3Aassignment+sort%3Acreated-asc) of this repository.
-Each pull requests contains the **example solution code** for the respective assignment. Feel free to use the 
+Each pull requests contains the **example solution code** for the respective assignment. Feel free to use the
 **comment feature on these pull requests** for asking questions or providing additional context about the solution code.
 
 ## Requirements
