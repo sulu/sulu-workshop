@@ -16,7 +16,7 @@ class EventTest extends TestCase
      */
     private $event;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->event = new Event();
         $this->event->setLocale('de');
