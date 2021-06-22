@@ -62,8 +62,8 @@ class HomepageTest extends SuluTestCase
         $this->assertStringContainsString($event2->getTitle() ?: '', $content);
     }
 
-    protected function getDocumentManager(): DocumentManagerInterface
+    protected static function getDocumentManager(): DocumentManagerInterface
     {
-        return $this->getContainer()->get('sulu_document_manager.document_manager');
+        return static::getContainer()->get('sulu_document_manager.document_manager');
     }
 }

@@ -236,9 +236,6 @@
             "config/packages/prod/jms_serializer.yaml"
         ]
     },
-    "laminas/laminas-zendframework-bridge": {
-        "version": "1.0.4"
-    },
     "layershifter/tld-database": {
         "version": "1.0.69"
     },
@@ -567,6 +564,9 @@
     "symfony/options-resolver": {
         "version": "v4.3.4"
     },
+    "symfony/password-hasher": {
+        "version": "v5.3.2"
+    },
     "symfony/phpunit-bridge": {
         "version": "4.3",
         "recipe": {
@@ -603,6 +603,9 @@
     },
     "symfony/polyfill-php80": {
         "version": "v1.17.1"
+    },
+    "symfony/polyfill-php81": {
+        "version": "v1.23.0"
     },
     "symfony/process": {
         "version": "v4.3.4"

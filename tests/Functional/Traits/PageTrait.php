@@ -19,7 +19,7 @@ trait PageTrait
         array $data,
         string $locale = 'en'
     ): PageDocument {
-        $documentManager = $this->getDocumentManager();
+        $documentManager = static::getDocumentManager();
 
         /** @var PageDocument $document */
         $document = $documentManager->create('page');
@@ -50,5 +50,5 @@ trait PageTrait
         return $document;
     }
 
-    abstract protected function getDocumentManager(): DocumentManagerInterface;
+    abstract protected static function getDocumentManager(): DocumentManagerInterface;
 }
