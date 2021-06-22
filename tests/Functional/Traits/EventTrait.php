@@ -15,8 +15,8 @@ trait EventTrait
         $event = $this->getEventRepository()->create($locale);
         $event->setTitle($title);
 
-        $this->getEntityManager()->persist($event);
-        $this->getEntityManager()->flush();
+        static::getEntityManager()->persist($event);
+        static::getEntityManager()->flush();
 
         return $event;
     }
@@ -25,7 +25,7 @@ trait EventTrait
     {
         $event->setEnabled(true);
 
-        $this->getEntityManager()->flush();
+        static::getEntityManager()->flush();
     }
 
     public function findEventById(int $id, string $locale): ?Event
@@ -35,8 +35,8 @@ trait EventTrait
 
     protected function getEventRepository(): EventRepository
     {
-        return $this->getEntityManager()->getRepository(Event::class);
+        return static::getEntityManager()->getRepository(Event::class);
     }
 
-    abstract protected function getEntityManager(): EntityManagerInterface;
+    abstract protected static function getEntityManager(): EntityManagerInterface;
 }
