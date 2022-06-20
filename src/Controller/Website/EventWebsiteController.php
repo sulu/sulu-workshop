@@ -13,35 +13,39 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class EventWebsiteController extends AbstractController
 {
+    /**
+     * @var EventRepository
+     */
+    private $eventRepository;
+
+    /**
+     * @var TemplateAttributeResolverInterface
+     */
+    private $templateAttributeResolver;
+
+    public function __construct(
+        EventRepository $repository,
+        TemplateAttributeResolverInterface $templateAttributeResolver
+    ) {
+        $this->eventRepository = $repository;
+        $this->templateAttributeResolver = $templateAttributeResolver;
+    }
+
     public function indexAction(int $id, Request $request): Response
     {
-        $event = $this->get(EventRepository::class)->findById($id, $request->getLocale());
+        $event = $this->eventRepository->findById($id, $request->getLocale());
         if (!$event) {
             throw new NotFoundHttpException();
         }
 
         return $this->render(
             'events/index.html.twig',
-            $this->get(TemplateAttributeResolverInterface::class)->resolve(
+            $this->templateAttributeResolver->resolve(
                 [
                     'event' => $event,
                     'content' => ['title' => $event->getTitle()],
                 ]
             )
-        );
-    }
-
-    /**
-     * @return mixed[]
-     */
-    public static function getSubscribedServices(): array
-    {
-        return array_merge(
-            parent::getSubscribedServices(),
-            [
-                EventRepository::class,
-                TemplateAttributeResolverInterface::class,
-            ]
         );
     }
 }

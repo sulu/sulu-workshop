@@ -24,12 +24,12 @@ class EventControllerTest extends SuluTestCase
         $this->purgeDatabase();
     }
 
-    public function testCGet(): void
+    public function testGetList(): void
     {
         $event1 = $this->createEvent('Sulu is awesome', 'de');
         $event2 = $this->createEvent('Symfony live is awesome', 'de');
 
-        $this->client->request('GET', '/admin/api/events?locale=de');
+        $this->client->jsonRequest('GET', '/admin/api/events?locale=de');
 
         $response = $this->client->getResponse();
         $this->assertInstanceOf(Response::class, $response);
@@ -51,7 +51,7 @@ class EventControllerTest extends SuluTestCase
     {
         $event = $this->createEvent('Sulu is awesome', 'de');
 
-        $this->client->request('GET', '/admin/api/events/' . $event->getId() . '?locale=de');
+        $this->client->jsonRequest('GET', '/admin/api/events/' . $event->getId() . '?locale=de');
 
         $response = $this->client->getResponse();
         $this->assertInstanceOf(Response::class, $response);
@@ -64,7 +64,7 @@ class EventControllerTest extends SuluTestCase
 
     public function testPost(): void
     {
-        $this->client->request(
+        $this->client->jsonRequest(
             'POST',
             '/admin/api/events?locale=de',
             [
@@ -80,15 +80,15 @@ class EventControllerTest extends SuluTestCase
         $response = $this->client->getResponse();
         $this->assertInstanceOf(Response::class, $response);
         $result = json_decode($response->getContent() ?: '', true);
-        $this->assertHttpStatusCode(200, $response);
+        $this->assertHttpStatusCode(201, $response);
 
         $this->assertArrayHasKey('id', $result);
         $this->assertNotNull($result['id']);
         $this->assertFalse($result['enabled']);
         $this->assertSame('Sulu', $result['title']);
         $this->assertSame('Sulu is awesome', $result['teaser']);
-        $this->assertSame('2019-01-01T12:00:00', $result['startDate']);
-        $this->assertSame('2019-01-02T12:00:00', $result['endDate']);
+        $this->assertSame('2019-01-01T12:00:00+00:00', $result['startDate']);
+        $this->assertSame('2019-01-02T12:00:00+00:00', $result['endDate']);
         $this->assertSame('Sulu is really awesome', $result['description']);
         $this->assertSame('Dornbirn', $result['location']);
 
@@ -99,36 +99,41 @@ class EventControllerTest extends SuluTestCase
         $this->assertSame('Sulu', $result->getTitle());
         $this->assertSame('Sulu is awesome', $result->getTeaser());
         $this->assertNotNull($result->getStartDate());
-        $this->assertSame('2019-01-01T12:00:00', $result->getStartDate()->format('Y-m-d\TH:i:s'));
+        $this->assertSame('2019-01-01T12:00:00+00:00', $result->getStartDate()->format('c'));
         $this->assertNotNull($result->getEndDate());
-        $this->assertSame('2019-01-02T12:00:00', $result->getEndDate()->format('Y-m-d\TH:i:s'));
+        $this->assertSame('2019-01-02T12:00:00+00:00', $result->getEndDate()->format('c'));
         $this->assertSame('Sulu is really awesome', $result->getDescription());
         $this->assertSame('Dornbirn', $result->getLocation());
     }
 
     public function testPostNullValues(): void
     {
-        $this->client->request(
+        $this->client->jsonRequest(
             'POST',
             '/admin/api/events?locale=de',
             [
                 'title' => 'Sulu',
+                'teaser' => null,
+                'startDate' => null,
+                'endDate' => null,
+                'description' => null,
+                'location' => null,
             ]
         );
 
         $response = $this->client->getResponse();
         $this->assertInstanceOf(Response::class, $response);
         $result = json_decode($response->getContent() ?: '', true);
-        $this->assertHttpStatusCode(200, $response);
+        $this->assertHttpStatusCode(201, $response);
 
         $this->assertArrayHasKey('id', $result);
         $this->assertNotNull($result['id']);
         $this->assertFalse($result['enabled']);
         $this->assertSame('Sulu', $result['title']);
-        $this->assertNull($result['teaser']);
+        $this->assertSame($result['teaser'], '');
         $this->assertNull($result['startDate']);
         $this->assertNull($result['endDate']);
-        $this->assertNull($result['description']);
+        $this->assertSame($result['description'], '');
         $this->assertNull($result['location']);
 
         $result = $this->findEventById($result['id'], 'de');
@@ -136,10 +141,10 @@ class EventControllerTest extends SuluTestCase
         $this->assertNotNull($result);
         $this->assertFalse($result->isEnabled());
         $this->assertSame('Sulu', $result->getTitle());
-        $this->assertNull($result->getTeaser());
+        $this->assertSame($result->getTeaser(), '');
         $this->assertNull($result->getStartDate());
         $this->assertNull($result->getEndDate());
-        $this->assertNull($result->getDescription());
+        $this->assertSame($result->getDescription(), '');
         $this->assertNull($result->getLocation());
     }
 
@@ -147,7 +152,7 @@ class EventControllerTest extends SuluTestCase
     {
         $event = $this->createEvent('Symfony', 'de');
 
-        $this->client->request(
+        $this->client->jsonRequest(
             'PUT',
             '/admin/api/events/' . $event->getId() . '?locale=de',
             [
@@ -170,8 +175,8 @@ class EventControllerTest extends SuluTestCase
         $this->assertFalse($result['enabled']);
         $this->assertSame('Symfony Live', $result['title']);
         $this->assertSame('Symfony Live is awesome', $result['teaser']);
-        $this->assertSame('2019-01-01T12:00:00', $result['startDate']);
-        $this->assertSame('2019-01-02T12:00:00', $result['endDate']);
+        $this->assertSame('2019-01-01T12:00:00+00:00', $result['startDate']);
+        $this->assertSame('2019-01-02T12:00:00+00:00', $result['endDate']);
         $this->assertSame('Symfony Live is really awesome', $result['description']);
         $this->assertSame('Dornbirn', $result['location']);
 
@@ -182,9 +187,9 @@ class EventControllerTest extends SuluTestCase
         $this->assertSame('Symfony Live', $result->getTitle());
         $this->assertSame('Symfony Live is awesome', $result->getTeaser());
         $this->assertNotNull($result->getStartDate());
-        $this->assertSame('2019-01-01T12:00:00', $result->getStartDate()->format('Y-m-d\TH:i:s'));
+        $this->assertSame('2019-01-01T12:00:00+00:00', $result->getStartDate()->format('c'));
         $this->assertNotNull($result->getEndDate());
-        $this->assertSame('2019-01-02T12:00:00', $result->getEndDate()->format('Y-m-d\TH:i:s'));
+        $this->assertSame('2019-01-02T12:00:00+00:00', $result->getEndDate()->format('c'));
         $this->assertSame('Symfony Live is really awesome', $result->getDescription());
         $this->assertSame('Dornbirn', $result->getLocation());
     }
@@ -193,11 +198,16 @@ class EventControllerTest extends SuluTestCase
     {
         $event = $this->createEvent('Symfony', 'de');
 
-        $this->client->request(
+        $this->client->jsonRequest(
             'PUT',
             '/admin/api/events/' . $event->getId() . '?locale=de',
             [
                 'title' => 'Symfony Live',
+                'teaser' => null,
+                'startDate' => null,
+                'endDate' => null,
+                'description' => null,
+                'location' => null,
             ]
         );
 
@@ -210,10 +220,10 @@ class EventControllerTest extends SuluTestCase
         $this->assertNotNull($result['id']);
         $this->assertFalse($result['enabled']);
         $this->assertSame('Symfony Live', $result['title']);
-        $this->assertNull($result['teaser']);
+        $this->assertSame($result['teaser'], '');
         $this->assertNull($result['startDate']);
         $this->assertNull($result['endDate']);
-        $this->assertNull($result['description']);
+        $this->assertSame($result['description'], '');
         $this->assertNull($result['location']);
 
         $result = $this->findEventById($result['id'], 'de');
@@ -221,10 +231,10 @@ class EventControllerTest extends SuluTestCase
         $this->assertNotNull($result);
         $this->assertFalse($result->isEnabled());
         $this->assertSame('Symfony Live', $result->getTitle());
-        $this->assertNull($result->getTeaser());
+        $this->assertSame($result->getTeaser(), '');
         $this->assertNull($result->getStartDate());
         $this->assertNull($result->getEndDate());
-        $this->assertNull($result->getDescription());
+        $this->assertSame($result->getDescription(), '');
         $this->assertNull($result->getLocation());
     }
 
@@ -232,7 +242,7 @@ class EventControllerTest extends SuluTestCase
     {
         $event = $this->createEvent('Symfony', 'de');
 
-        $this->client->request('POST', '/admin/api/events/' . $event->getId() . '?locale=de&action=enable');
+        $this->client->jsonRequest('POST', '/admin/api/events/' . $event->getId() . '?locale=de&action=enable');
 
         $response = $this->client->getResponse();
         $this->assertInstanceOf(Response::class, $response);
@@ -252,7 +262,7 @@ class EventControllerTest extends SuluTestCase
         $event = $this->createEvent('Symfony', 'de');
         $this->enableEvent($event);
 
-        $this->client->request('POST', '/admin/api/events/' . $event->getId() . '?locale=de&action=disable');
+        $this->client->jsonRequest('POST', '/admin/api/events/' . $event->getId() . '?locale=de&action=disable');
 
         $response = $this->client->getResponse();
         $this->assertInstanceOf(Response::class, $response);
@@ -274,7 +284,7 @@ class EventControllerTest extends SuluTestCase
         /** @var int $eventId */
         $eventId = $event->getId();
 
-        $this->client->request('DELETE', '/admin/api/events/' . $event->getId() . '?locale=de');
+        $this->client->jsonRequest('DELETE', '/admin/api/events/' . $event->getId() . '?locale=de');
 
         $response = $this->client->getResponse();
         $this->assertInstanceOf(Response::class, $response);

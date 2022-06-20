@@ -62,10 +62,8 @@ class EventTest extends TestCase
         $image->getId()->willReturn(1234);
 
         $this->assertNull($this->event->getImage());
-        $this->assertNull($this->event->getImageData());
         $this->assertSame($this->event, $this->event->setImage($image->reveal()));
         $this->assertSame($image->reveal(), $this->event->getImage());
-        $this->assertSame(['id' => 1234], $this->event->getImageData());
     }
 
     public function testTitle(): void

@@ -7,7 +7,6 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation as Serializer;
 use Sulu\Bundle\MediaBundle\Entity\MediaInterface;
 
 /**
@@ -58,8 +57,6 @@ class Event
      * @var Collection<string, EventTranslation>
      *
      * @ORM\OneToMany(targetEntity="App\Entity\EventTranslation", mappedBy="event", cascade={"ALL"}, indexBy="locale")
-     *
-     * @Serializer\Exclude
      */
     private $translations;
 
@@ -72,8 +69,6 @@ class Event
      * @var MediaInterface|null
      *
      * @ORM\ManyToOne(targetEntity="Sulu\Bundle\MediaBundle\Entity\MediaInterface")
-     *
-     * @Serializer\Exclude
      */
     private $image = null;
 
@@ -141,23 +136,6 @@ class Event
         return $this->image;
     }
 
-    /**
-     * @return array<string, mixed>|null
-     *
-     * @Serializer\VirtualProperty
-     * @Serializer\SerializedName("image")
-     */
-    public function getImageData(): ?array
-    {
-        if (!$this->image) {
-            return null;
-        }
-
-        return [
-            'id' => $this->image->getId(),
-        ];
-    }
-
     public function setImage(?MediaInterface $image): self
     {
         $this->image = $image;
@@ -165,9 +143,6 @@ class Event
         return $this;
     }
 
-    /**
-     * @Serializer\VirtualProperty(name="title")
-     */
     public function getTitle(): ?string
     {
         $translation = $this->getTranslation($this->locale);
@@ -190,9 +165,6 @@ class Event
         return $this;
     }
 
-    /**
-     * @Serializer\VirtualProperty(name="teaser")
-     */
     public function getTeaser(): ?string
     {
         $translation = $this->getTranslation($this->locale);
@@ -215,9 +187,6 @@ class Event
         return $this;
     }
 
-    /**
-     * @Serializer\VirtualProperty(name="description")
-     */
     public function getDescription(): ?string
     {
         $translation = $this->getTranslation($this->locale);
