@@ -4,73 +4,49 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Repository\EventRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Sulu\Bundle\MediaBundle\Entity\MediaInterface;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\EventRepository")
- */
+#[ORM\Entity(repositoryClass: EventRepository::class)]
 class Event
 {
     const RESOURCE_KEY = 'events';
 
-    /**
-     * @var int|null
-     *
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $id = null;
 
-    /**
-     * @var bool
-     *
-     * @ORM\Column(type="boolean", nullable=false)
-     */
-    private $enabled;
+    #[ORM\Column(type: Types::BOOLEAN, nullable: false)]
+    private bool $enabled;
 
-    /**
-     * @var \DateTimeImmutable|null
-     *
-     * @ORM\Column(type="datetime_immutable", nullable=true)
-     */
-    private $startDate;
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
+    private ?\DateTimeImmutable $startDate;
 
-    /**
-     * @var \DateTimeImmutable|null
-     *
-     * @ORM\Column(type="datetime_immutable", nullable=true)
-     */
-    private $endDate;
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
+    private ?\DateTimeImmutable $endDate;
 
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(type="string", nullable=true)
-     */
-    private $location;
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    private ?string $location;
 
     /**
      * @var Collection<string, EventTranslation>
-     *
-     * @ORM\OneToMany(targetEntity="App\Entity\EventTranslation", mappedBy="event", cascade={"ALL"}, indexBy="locale")
      */
-    private $translations;
+    #[ORM\OneToMany(targetEntity: EventTranslation::class, mappedBy: 'event', cascade: ['all'], indexBy: 'locale')]
+    private Collection $translations;
 
     /**
      * @var string
      */
     private $locale;
 
-    /**
-     * @var MediaInterface|null
-     *
-     * @ORM\ManyToOne(targetEntity="Sulu\Bundle\MediaBundle\Entity\MediaInterface")
-     */
-    private $image = null;
+    #[ORM\ManyToOne(targetEntity: MediaInterface::class)]
+    #[ORM\JoinColumn(onDelete: 'SET NULL')]
+    private ?MediaInterface $image = null;
 
     public function __construct()
     {

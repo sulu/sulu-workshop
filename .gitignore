@@ -2,18 +2,25 @@
 /.env.local
 /.env.local.php
 /.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###
-.phpunit
+.phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###
+
 ###> friendsofphp/php-cs-fixer ###
-/.php_cs
-/.php_cs.cache
+/.php-cs-fixer.php
+/.php-cs-fixer.cache
 ###< friendsofphp/php-cs-fixer ###
 
 ###> symfony/webpack-encore-bundle ###
@@ -22,36 +29,28 @@ npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
 
-# var
-/var/*
-!/var/.gitignore
-!/var/.gitkeep
-
 # web
 /public/bundles
 /public/uploads
-/public/admin/translations/*
-!/public/admin/translations/.gitkeep
 
 # composer
 /composer.phar
-/vendor
+composer.lock
+symfony.lock
 
 # npm
+package-lock.json
 node_modules
 
-# phpunit
-.phpunit
-.phpunit.result.cache
-/phpunit.xml
+# phpcs
+.php_cs.cache
+.php_cs
 
 # IDEs
 /.idea
 *.iml
 *~
 .web-server-pid
-.php-version
-php.ini
 
 # System files
 .DS_Store

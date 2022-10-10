@@ -22,10 +22,7 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 class Kernel extends SuluKernel implements HttpCacheProvider
 {
-    /**
-     * @var HttpKernelInterface|null
-     */
-    private $httpCache;
+    private ?HttpKernelInterface $httpCache = null;
 
     protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader): void
     {
@@ -34,18 +31,18 @@ class Kernel extends SuluKernel implements HttpCacheProvider
         parent::configureContainer($container, $loader);
     }
 
-    public function getHttpCache()
+    public function getHttpCache(): HttpKernelInterface
     {
-        if (!$this->httpCache) {
+        if (null === $this->httpCache) {
             $this->httpCache = new SuluHttpCache($this);
             // Activate the following for user based caching see also:
             // https://foshttpcachebundle.readthedocs.io/en/latest/features/user-context.html
             //
-            //$this->httpCache->addSubscriber(
+            // $this->httpCache->addSubscriber(
             //    new \FOS\HttpCache\SymfonyCache\UserContextListener([
             //        'session_name_prefix' => 'SULUSESSID',
             //    ])
-            //);
+            // );
         }
 
         return $this->httpCache;

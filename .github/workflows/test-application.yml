@@ -13,9 +13,9 @@ jobs:
 
         services:
             mysql:
-                image: mysql:5.7
+                image: mysql:8.0
                 env:
-                    MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+                    MYSQL_ROOT_PASSWORD: root
                 ports:
                     - 3306:3306
                 options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
@@ -27,7 +27,7 @@ jobs:
             - name: Install and configure PHP
               uses: shivammathur/setup-php@v2
               with:
-                  php-version: '8.0'
+                  php-version: '8.1'
                   extensions: ctype, iconv, mysql
                   coverage: none
                   tools: composer
@@ -36,15 +36,13 @@ jobs:
               uses: ramsey/composer-install@v1
 
             - name: Lint code
-              run: |
-                  bin/adminconsole doctrine:database:create --if-not-exists
-                  bin/adminconsole doctrine:schema:update --force
-                  composer lint
+              run: composer lint
+
+            - name: Bootstrap test environment
+              run: composer bootstrap-test-environment
 
             - name: Execute test cases
-              run: |
-                  composer bootstrap-test-environment
-                  composer test
+              run: composer test
 
             - name: Test project initialization
               run: bin/console sulu:build dev --destroy
