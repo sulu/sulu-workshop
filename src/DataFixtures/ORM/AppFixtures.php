@@ -25,7 +25,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class AppFixtures extends Fixture implements OrderedFixtureInterface
 {
-    const LOCALE = 'en';
+    public const LOCALE = 'en';
 
     /**
      * @var StorageInterface
@@ -202,7 +202,7 @@ class AppFixtures extends Fixture implements OrderedFixtureInterface
     private function createMedia(
         ObjectManager $manager,
         SplFileInfo $file,
-        CollectionInterface $collection
+        CollectionInterface $collection,
     ): MediaInterface {
         $fileName = $file->getBasename();
         $title = $file->getFilename();
@@ -210,7 +210,7 @@ class AppFixtures extends Fixture implements OrderedFixtureInterface
 
         $storageOptions = $this->storage->save(
             $uploadedFile->getPathname(),
-            $fileName
+            $fileName,
         );
 
         $mediaType = $manager->getRepository(MediaType::class)->find(2);

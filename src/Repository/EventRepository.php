@@ -15,8 +15,8 @@ use Sulu\Component\SmartContent\Orm\DataProviderRepositoryTrait;
 /**
  * @method Event|null find($id, $lockMode = null, $lockVersion = null)
  * @method Event|null findOneBy(array $criteria, array $orderBy = null)
- * @method Event[]    findAll()
- * @method Event[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Event[] findAll()
+ * @method Event[] findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  *
  * @extends ServiceEntityRepository<Event>
  */
@@ -44,7 +44,7 @@ class EventRepository extends ServiceEntityRepository implements DataProviderRep
         /** @var object $event */
         $event = $this->getEntityManager()->getReference(
             $this->getClassName(),
-            $id
+            $id,
         );
 
         $this->getEntityManager()->remove($event);
@@ -76,11 +76,11 @@ class EventRepository extends ServiceEntityRepository implements DataProviderRep
     {
         $entities = $this->parentFindByFilters($filters, $page, $pageSize, $limit, $locale, $options);
 
-        return array_map(
+        return \array_map(
             function (Event $entity) use ($locale) {
                 return $entity->setLocale($locale);
             },
-            $entities
+            $entities,
         );
     }
 

@@ -14,7 +14,7 @@ use Sulu\Bundle\MediaBundle\Entity\MediaInterface;
 #[ORM\Entity(repositoryClass: EventRepository::class)]
 class Event
 {
-    const RESOURCE_KEY = 'events';
+    public const RESOURCE_KEY = 'events';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]

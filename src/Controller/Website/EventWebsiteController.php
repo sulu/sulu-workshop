@@ -25,7 +25,7 @@ class EventWebsiteController extends AbstractController
 
     public function __construct(
         EventRepository $repository,
-        TemplateAttributeResolverInterface $templateAttributeResolver
+        TemplateAttributeResolverInterface $templateAttributeResolver,
     ) {
         $this->eventRepository = $repository;
         $this->templateAttributeResolver = $templateAttributeResolver;
@@ -44,8 +44,8 @@ class EventWebsiteController extends AbstractController
                 [
                     'event' => $event,
                     'content' => ['title' => $event->getTitle()],
-                ]
-            )
+                ],
+            ),
         );
     }
 }

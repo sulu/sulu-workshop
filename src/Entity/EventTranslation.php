@@ -4,61 +4,37 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Repository\EventTranslationRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Sulu\Component\Persistence\Model\AuditableInterface;
 use Sulu\Component\Persistence\Model\AuditableTrait;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\EventTranslationRepository")
- */
+#[ORM\Entity(repositoryClass: EventTranslationRepository::class)]
 class EventTranslation implements AuditableInterface
 {
     use AuditableTrait;
 
-    /**
-     * @var int|null
-     *
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $id = null;
 
-    /**
-     * @var Event
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Event", inversedBy="translations")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $event;
+    #[ORM\ManyToOne(targetEntity: Event::class, inversedBy: 'translations')]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'SET NULL')]
+    private Event $event;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=5)
-     */
-    private $locale;
+    #[ORM\Column(type: Types::STRING, length: 5, nullable: false)]
+    private string $locale;
 
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $title;
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $title;
 
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $teaser;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $teaser;
 
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $description;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $description;
 
     public function __construct(Event $event, string $locale)
     {

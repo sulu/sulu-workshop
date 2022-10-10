@@ -11,13 +11,13 @@ use Sulu\Component\DocumentManager\DocumentManagerInterface;
 trait PageTrait
 {
     /**
-     * @param mixed[] $data
+     * @param array{title: string, url: string, published: boolean} $data
      */
     protected function createPage(
         string $template,
         string $webspaceKey,
         array $data,
-        string $locale = 'en'
+        string $locale = 'en',
     ): PageDocument {
         $documentManager = static::getDocumentManager();
 

@@ -4,11 +4,15 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Controller\Admin;
 
+use App\Controller\Admin\EventController;
 use App\Tests\Functional\Traits\EventTrait;
 use Sulu\Bundle\TestBundle\Testing\SuluTestCase;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @phpstan-import-type EventData from EventController
+ */
 class EventControllerTest extends SuluTestCase
 {
     use EventTrait;
@@ -33,7 +37,18 @@ class EventControllerTest extends SuluTestCase
 
         $response = $this->client->getResponse();
         $this->assertInstanceOf(Response::class, $response);
-        $result = json_decode($response->getContent() ?: '', true);
+        /**
+         * @var array{
+         *     _embedded: array{
+         *         events: array<array{
+         *             id: int,
+         *             title: string,
+         *         }>
+         *     },
+         *     total: int,
+         * } $result
+         */
+        $result = \json_decode($response->getContent() ?: '', true);
         $this->assertHttpStatusCode(200, $response);
 
         $this->assertSame(2, $result['total']);
@@ -55,7 +70,8 @@ class EventControllerTest extends SuluTestCase
 
         $response = $this->client->getResponse();
         $this->assertInstanceOf(Response::class, $response);
-        $result = json_decode($response->getContent() ?: '', true);
+        /** @var EventData $result */
+        $result = \json_decode($response->getContent() ?: '', true);
         $this->assertHttpStatusCode(200, $response);
 
         $this->assertSame($event->getId(), $result['id']);
@@ -74,12 +90,13 @@ class EventControllerTest extends SuluTestCase
                 'endDate' => '2019-01-02 12:00',
                 'description' => 'Sulu is really awesome',
                 'location' => 'Dornbirn',
-            ]
+            ],
         );
 
         $response = $this->client->getResponse();
         $this->assertInstanceOf(Response::class, $response);
-        $result = json_decode($response->getContent() ?: '', true);
+        /** @var EventData $result */
+        $result = \json_decode($response->getContent() ?: '', true);
         $this->assertHttpStatusCode(201, $response);
 
         $this->assertArrayHasKey('id', $result);
@@ -118,12 +135,13 @@ class EventControllerTest extends SuluTestCase
                 'endDate' => null,
                 'description' => null,
                 'location' => null,
-            ]
+            ],
         );
 
         $response = $this->client->getResponse();
         $this->assertInstanceOf(Response::class, $response);
-        $result = json_decode($response->getContent() ?: '', true);
+        /** @var EventData $result */
+        $result = \json_decode($response->getContent() ?: '', true);
         $this->assertHttpStatusCode(201, $response);
 
         $this->assertArrayHasKey('id', $result);
@@ -162,12 +180,13 @@ class EventControllerTest extends SuluTestCase
                 'endDate' => '2019-01-02 12:00',
                 'description' => 'Symfony Live is really awesome',
                 'location' => 'Dornbirn',
-            ]
+            ],
         );
 
         $response = $this->client->getResponse();
         $this->assertInstanceOf(Response::class, $response);
-        $result = json_decode($response->getContent() ?: '', true);
+        /** @var EventData $result */
+        $result = \json_decode($response->getContent() ?: '', true);
         $this->assertHttpStatusCode(200, $response);
 
         $this->assertArrayHasKey('id', $result);
@@ -208,12 +227,13 @@ class EventControllerTest extends SuluTestCase
                 'endDate' => null,
                 'description' => null,
                 'location' => null,
-            ]
+            ],
         );
 
         $response = $this->client->getResponse();
         $this->assertInstanceOf(Response::class, $response);
-        $result = json_decode($response->getContent() ?: '', true);
+        /** @var EventData $result */
+        $result = \json_decode($response->getContent() ?: '', true);
         $this->assertHttpStatusCode(200, $response);
 
         $this->assertArrayHasKey('id', $result);
@@ -246,9 +266,11 @@ class EventControllerTest extends SuluTestCase
 
         $response = $this->client->getResponse();
         $this->assertInstanceOf(Response::class, $response);
-        $result = json_decode($response->getContent() ?: '', true);
+        /** @var EventData $result */
+        $result = \json_decode($response->getContent() ?: '', true);
         $this->assertHttpStatusCode(200, $response);
 
+        $this->assertNotNull($result['id']);
         $this->assertTrue($result['enabled']);
 
         $result = $this->findEventById($result['id'], 'de');
@@ -266,9 +288,11 @@ class EventControllerTest extends SuluTestCase
 
         $response = $this->client->getResponse();
         $this->assertInstanceOf(Response::class, $response);
-        $result = json_decode($response->getContent() ?: '', true);
+        /** @var EventData $result */
+        $result = \json_decode($response->getContent() ?: '', true);
         $this->assertHttpStatusCode(200, $response);
 
+        $this->assertNotNull($result['id']);
         $this->assertFalse($result['enabled']);
 
         $result = $this->findEventById($result['id'], 'de');

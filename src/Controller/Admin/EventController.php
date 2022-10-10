@@ -14,6 +14,19 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @phpstan-type EventData array{
+ *     id: int|null,
+ *     enabled: bool,
+ *     title: string,
+ *     image: array{id: int}|null,
+ *     teaser: string|null,
+ *     description: string|null,
+ *     startDate: string|null,
+ *     endDate: string|null,
+ *     location: string|null,
+ * }
+ */
 class EventController extends AbstractController
 {
     /**
@@ -64,7 +77,9 @@ class EventController extends AbstractController
             throw new NotFoundHttpException();
         }
 
-        $this->mapDataToEntity($request->toArray(), $event);
+        /** @var EventData $data */
+        $data = $request->toArray();
+        $this->mapDataToEntity($data, $event);
         $this->save($event);
 
         return $this->json($this->getDataForEntity($event));
@@ -77,7 +92,9 @@ class EventController extends AbstractController
     {
         $event = $this->create($request);
 
-        $this->mapDataToEntity($request->toArray(), $event);
+        /** @var EventData $data */
+        $data = $request->toArray();
+        $this->mapDataToEntity($data, $event);
         $this->save($event);
 
         return $this->json($this->getDataForEntity($event), 201);
@@ -125,14 +142,14 @@ class EventController extends AbstractController
         $listRepresentation = $this->doctrineListRepresentationFactory->createDoctrineListRepresentation(
             Event::RESOURCE_KEY,
             [],
-            ['locale' => $this->getLocale($request)]
+            ['locale' => $this->getLocale($request)],
         );
 
         return $this->json($listRepresentation->toArray());
     }
 
     /**
-     * @return array<string, mixed>
+     * @return EventData $data
      */
     protected function getDataForEntity(Event $entity): array
     {
@@ -143,7 +160,7 @@ class EventController extends AbstractController
         return [
             'id' => $entity->getId(),
             'enabled' => $entity->isEnabled(),
-            'title' => $entity->getTitle(),
+            'title' => $entity->getTitle() ?? '',
             'image' => $image
                 ? ['id' => $image->getId()]
                 : null,
@@ -156,7 +173,7 @@ class EventController extends AbstractController
     }
 
     /**
-     * @param array<string, mixed> $data
+     * @param EventData $data
      */
     protected function mapDataToEntity(array $data, Event $entity): void
     {

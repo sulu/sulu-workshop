@@ -20,7 +20,7 @@ class DoctrineListRepresentationFactory
 
     /**
      * @param array<string, string> $filters
-     * @param array<string, string|int> $parameters
+     * @param array<string, string|int|null> $parameters
      * @param string[] $includedFields
      */
     public function createDoctrineListRepresentation(

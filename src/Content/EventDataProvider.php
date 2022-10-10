@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Content;
 
+use App\Entity\Event;
 use Sulu\Component\SmartContent\Orm\BaseDataProvider;
 
 class EventDataProvider extends BaseDataProvider
@@ -17,7 +18,7 @@ class EventDataProvider extends BaseDataProvider
                 ->enableSorting(
                     [
                         ['column' => 'translation.title', 'title' => 'sulu_admin.title'],
-                    ]
+                    ],
                 )
                 ->getConfiguration();
         }
@@ -26,15 +27,15 @@ class EventDataProvider extends BaseDataProvider
     }
 
     /**
-     * @param mixed[] $data
+     * @param Event[] $data
      */
     protected function decorateDataItems(array $data): array
     {
-        return array_map(
-            function ($item) {
+        return \array_map(
+            function (Event $item) {
                 return new EventDataItem($item);
             },
-            $data
+            $data,
         );
     }
 }

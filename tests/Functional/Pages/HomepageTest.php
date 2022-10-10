@@ -47,7 +47,7 @@ class HomepageTest extends SuluTestCase
                     $event1->getId(),
                     $event2->getId(),
                 ],
-            ]
+            ],
         );
 
         $crawler = $this->client->request(Request::METHOD_GET, '/homepage');
