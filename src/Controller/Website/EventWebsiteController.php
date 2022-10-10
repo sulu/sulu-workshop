@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Website;
 
+use App\Entity\Event;
 use App\Repository\EventRepository;
 use Sulu\Bundle\WebsiteBundle\Resolver\TemplateAttributeResolverInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,28 +14,14 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class EventWebsiteController extends AbstractController
 {
-    /**
-     * @var EventRepository
-     */
-    private $eventRepository;
-
-    /**
-     * @var TemplateAttributeResolverInterface
-     */
-    private $templateAttributeResolver;
-
-    public function __construct(
-        EventRepository $repository,
-        TemplateAttributeResolverInterface $templateAttributeResolver,
-    ) {
-        $this->eventRepository = $repository;
-        $this->templateAttributeResolver = $templateAttributeResolver;
+    public function __construct(private readonly EventRepository $eventRepository, private readonly TemplateAttributeResolverInterface $templateAttributeResolver)
+    {
     }
 
     public function indexAction(int $id, Request $request): Response
     {
         $event = $this->eventRepository->findById($id, $request->getLocale());
-        if (!$event) {
+        if (!$event instanceof Event) {
             throw new NotFoundHttpException();
         }
 

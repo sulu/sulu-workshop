@@ -17,20 +17,8 @@ use Sulu\Component\PHPCR\PathCleanupInterface;
 
 class DocumentFixture implements DocumentFixtureInterface
 {
-    /**
-     * @var PathCleanupInterface
-     */
-    private $pathCleanup;
-
-    /**
-     * @var EntityManagerInterface
-     */
-    private $entityManager;
-
-    public function __construct(PathCleanupInterface $pathCleanup, EntityManagerInterface $entityManager)
+    public function __construct(private readonly PathCleanupInterface $pathCleanup, private readonly EntityManagerInterface $entityManager)
     {
-        $this->pathCleanup = $pathCleanup;
-        $this->entityManager = $entityManager;
     }
 
     public function getOrder()
@@ -96,7 +84,7 @@ class DocumentFixture implements DocumentFixtureInterface
         $eventIds = [];
         while (\count($eventIds) < $count) {
             /** @var int $id */
-            $id = $events[\rand(0, \count($events) - 1)]->getId();
+            $id = $events[\random_int(0, \max(0, \count($events) - 1))]->getId();
             $eventIds[$id] = $id;
         }
 

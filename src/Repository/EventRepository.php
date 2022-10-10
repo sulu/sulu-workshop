@@ -60,7 +60,7 @@ class EventRepository extends ServiceEntityRepository implements DataProviderRep
     public function findById(int $id, string $locale): ?Event
     {
         $event = $this->find($id);
-        if (!$event) {
+        if (!$event instanceof Event) {
             return null;
         }
 
@@ -77,9 +77,7 @@ class EventRepository extends ServiceEntityRepository implements DataProviderRep
         $entities = $this->parentFindByFilters($filters, $page, $pageSize, $limit, $locale, $options);
 
         return \array_map(
-            function (Event $entity) use ($locale) {
-                return $entity->setLocale($locale);
-            },
+            fn (Event $entity) => $entity->setLocale($locale),
             $entities,
         );
     }

@@ -17,10 +17,7 @@ class EventControllerTest extends SuluTestCase
 {
     use EventTrait;
 
-    /**
-     * @var KernelBrowser
-     */
-    private $client;
+    private KernelBrowser $client;
 
     protected function setUp(): void
     {
@@ -48,7 +45,7 @@ class EventControllerTest extends SuluTestCase
          *     total: int,
          * } $result
          */
-        $result = \json_decode($response->getContent() ?: '', true);
+        $result = \json_decode($response->getContent() ?: '', true, 512, \JSON_THROW_ON_ERROR);
         $this->assertHttpStatusCode(200, $response);
 
         $this->assertSame(2, $result['total']);
@@ -71,7 +68,7 @@ class EventControllerTest extends SuluTestCase
         $response = $this->client->getResponse();
         $this->assertInstanceOf(Response::class, $response);
         /** @var EventData $result */
-        $result = \json_decode($response->getContent() ?: '', true);
+        $result = \json_decode($response->getContent() ?: '', true, 512, \JSON_THROW_ON_ERROR);
         $this->assertHttpStatusCode(200, $response);
 
         $this->assertSame($event->getId(), $result['id']);
@@ -96,7 +93,7 @@ class EventControllerTest extends SuluTestCase
         $response = $this->client->getResponse();
         $this->assertInstanceOf(Response::class, $response);
         /** @var EventData $result */
-        $result = \json_decode($response->getContent() ?: '', true);
+        $result = \json_decode($response->getContent() ?: '', true, 512, \JSON_THROW_ON_ERROR);
         $this->assertHttpStatusCode(201, $response);
 
         $this->assertArrayHasKey('id', $result);
@@ -141,7 +138,7 @@ class EventControllerTest extends SuluTestCase
         $response = $this->client->getResponse();
         $this->assertInstanceOf(Response::class, $response);
         /** @var EventData $result */
-        $result = \json_decode($response->getContent() ?: '', true);
+        $result = \json_decode($response->getContent() ?: '', true, 512, \JSON_THROW_ON_ERROR);
         $this->assertHttpStatusCode(201, $response);
 
         $this->assertArrayHasKey('id', $result);
@@ -186,7 +183,7 @@ class EventControllerTest extends SuluTestCase
         $response = $this->client->getResponse();
         $this->assertInstanceOf(Response::class, $response);
         /** @var EventData $result */
-        $result = \json_decode($response->getContent() ?: '', true);
+        $result = \json_decode($response->getContent() ?: '', true, 512, \JSON_THROW_ON_ERROR);
         $this->assertHttpStatusCode(200, $response);
 
         $this->assertArrayHasKey('id', $result);
@@ -233,7 +230,7 @@ class EventControllerTest extends SuluTestCase
         $response = $this->client->getResponse();
         $this->assertInstanceOf(Response::class, $response);
         /** @var EventData $result */
-        $result = \json_decode($response->getContent() ?: '', true);
+        $result = \json_decode($response->getContent() ?: '', true, 512, \JSON_THROW_ON_ERROR);
         $this->assertHttpStatusCode(200, $response);
 
         $this->assertArrayHasKey('id', $result);
@@ -267,7 +264,7 @@ class EventControllerTest extends SuluTestCase
         $response = $this->client->getResponse();
         $this->assertInstanceOf(Response::class, $response);
         /** @var EventData $result */
-        $result = \json_decode($response->getContent() ?: '', true);
+        $result = \json_decode($response->getContent() ?: '', true, 512, \JSON_THROW_ON_ERROR);
         $this->assertHttpStatusCode(200, $response);
 
         $this->assertNotNull($result['id']);
@@ -289,7 +286,7 @@ class EventControllerTest extends SuluTestCase
         $response = $this->client->getResponse();
         $this->assertInstanceOf(Response::class, $response);
         /** @var EventData $result */
-        $result = \json_decode($response->getContent() ?: '', true);
+        $result = \json_decode($response->getContent() ?: '', true, 512, \JSON_THROW_ON_ERROR);
         $this->assertHttpStatusCode(200, $response);
 
         $this->assertNotNull($result['id']);

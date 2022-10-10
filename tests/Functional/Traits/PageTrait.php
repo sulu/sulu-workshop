@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Traits;
 
+use RuntimeException;
 use Sulu\Bundle\PageBundle\Document\PageDocument;
 use Sulu\Component\Content\Document\WorkflowStage;
 use Sulu\Component\DocumentManager\DocumentManagerInterface;
@@ -25,7 +26,7 @@ trait PageTrait
         $document = $documentManager->create('page');
 
         if (!$document instanceof PageDocument) {
-            throw new \RuntimeException('Invalid document');
+            throw new RuntimeException('Invalid document');
         }
 
         $document->setLocale($locale);

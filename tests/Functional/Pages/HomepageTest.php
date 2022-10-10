@@ -17,10 +17,7 @@ class HomepageTest extends SuluTestCase
     use EventTrait;
     use PageTrait;
 
-    /**
-     * @var KernelBrowser
-     */
-    private $client;
+    private KernelBrowser $client;
 
     protected function setUp(): void
     {

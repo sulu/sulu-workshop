@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Repository\EventRepository;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -14,24 +15,24 @@ use Sulu\Bundle\MediaBundle\Entity\MediaInterface;
 #[ORM\Entity(repositoryClass: EventRepository::class)]
 class Event
 {
-    public const RESOURCE_KEY = 'events';
+    final public const RESOURCE_KEY = 'events';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: Types::INTEGER)]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::BOOLEAN, nullable: false)]
-    private bool $enabled;
+    #[ORM\Column(type: Types::BOOLEAN)]
+    private bool $enabled = false;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
-    private ?\DateTimeImmutable $startDate;
+    private ?DateTimeImmutable $startDate = null;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
-    private ?\DateTimeImmutable $endDate;
+    private ?DateTimeImmutable $endDate = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
-    private ?string $location;
+    private ?string $location = null;
 
     /**
      * @var Collection<string, EventTranslation>
@@ -39,10 +40,7 @@ class Event
     #[ORM\OneToMany(targetEntity: EventTranslation::class, mappedBy: 'event', cascade: ['all'], indexBy: 'locale')]
     private Collection $translations;
 
-    /**
-     * @var string
-     */
-    private $locale;
+    private string $locale;
 
     #[ORM\ManyToOne(targetEntity: MediaInterface::class)]
     #[ORM\JoinColumn(onDelete: 'SET NULL')]
@@ -50,7 +48,6 @@ class Event
 
     public function __construct()
     {
-        $this->enabled = false;
         $this->translations = new ArrayCollection();
     }
 
@@ -71,24 +68,24 @@ class Event
         return $this;
     }
 
-    public function getStartDate(): ?\DateTimeImmutable
+    public function getStartDate(): ?DateTimeImmutable
     {
         return $this->startDate;
     }
 
-    public function setStartDate(?\DateTimeImmutable $startDate): self
+    public function setStartDate(?DateTimeImmutable $startDate): self
     {
         $this->startDate = $startDate;
 
         return $this;
     }
 
-    public function getEndDate(): ?\DateTimeImmutable
+    public function getEndDate(): ?DateTimeImmutable
     {
         return $this->endDate;
     }
 
-    public function setEndDate(?\DateTimeImmutable $endDate): self
+    public function setEndDate(?DateTimeImmutable $endDate): self
     {
         $this->endDate = $endDate;
 
@@ -122,7 +119,7 @@ class Event
     public function getTitle(): ?string
     {
         $translation = $this->getTranslation($this->locale);
-        if (!$translation) {
+        if (!$translation instanceof EventTranslation) {
             return null;
         }
 
@@ -132,7 +129,7 @@ class Event
     public function setTitle(string $title): self
     {
         $translation = $this->getTranslation($this->locale);
-        if (!$translation) {
+        if (!$translation instanceof EventTranslation) {
             $translation = $this->createTranslation($this->locale);
         }
 
@@ -144,7 +141,7 @@ class Event
     public function getTeaser(): ?string
     {
         $translation = $this->getTranslation($this->locale);
-        if (!$translation) {
+        if (!$translation instanceof EventTranslation) {
             return null;
         }
 
@@ -154,7 +151,7 @@ class Event
     public function setTeaser(string $teaser): self
     {
         $translation = $this->getTranslation($this->locale);
-        if (!$translation) {
+        if (!$translation instanceof EventTranslation) {
             $translation = $this->createTranslation($this->locale);
         }
 
@@ -166,7 +163,7 @@ class Event
     public function getDescription(): ?string
     {
         $translation = $this->getTranslation($this->locale);
-        if (!$translation) {
+        if (!$translation instanceof EventTranslation) {
             return null;
         }
 
@@ -176,7 +173,7 @@ class Event
     public function setDescription(string $description): self
     {
         $translation = $this->getTranslation($this->locale);
-        if (!$translation) {
+        if (!$translation instanceof EventTranslation) {
             $translation = $this->createTranslation($this->locale);
         }
 

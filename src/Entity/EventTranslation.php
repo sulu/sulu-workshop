@@ -20,26 +20,17 @@ class EventTranslation implements AuditableInterface
     #[ORM\Column(type: Types::INTEGER)]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(targetEntity: Event::class, inversedBy: 'translations')]
-    #[ORM\JoinColumn(nullable: false, onDelete: 'SET NULL')]
-    private Event $event;
-
-    #[ORM\Column(type: Types::STRING, length: 5, nullable: false)]
-    private string $locale;
-
     #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
-    private ?string $title;
+    private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $teaser;
+    private ?string $teaser = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $description;
+    private ?string $description = null;
 
-    public function __construct(Event $event, string $locale)
+    public function __construct(#[ORM\ManyToOne(targetEntity: Event::class, inversedBy: 'translations')] #[ORM\JoinColumn(nullable: false, onDelete: 'SET NULL')] private Event $event, #[ORM\Column(type: Types::STRING, length: 5, nullable: false)] private string $locale)
     {
-        $this->event = $event;
-        $this->locale = $locale;
     }
 
     public function getId(): ?int

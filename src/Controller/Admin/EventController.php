@@ -7,6 +7,7 @@ namespace App\Controller\Admin;
 use App\Common\DoctrineListRepresentationFactory;
 use App\Entity\Event;
 use App\Repository\EventRepository;
+use DateTimeImmutable;
 use Sulu\Bundle\MediaBundle\Entity\MediaRepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,51 +30,26 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class EventController extends AbstractController
 {
-    /**
-     * @var EventRepository
-     */
-    private $eventRepository;
-
-    /**
-     * @var MediaRepositoryInterface
-     */
-    private $mediaRepository;
-
-    /**
-     * @var DoctrineListRepresentationFactory
-     */
-    private $doctrineListRepresentationFactory;
-
-    public function __construct(
-        EventRepository $repository,
-        MediaRepositoryInterface $mediaRepository,
-        DoctrineListRepresentationFactory $doctrineListRepresentationFactory,
-    ) {
-        $this->eventRepository = $repository;
-        $this->mediaRepository = $mediaRepository;
-        $this->doctrineListRepresentationFactory = $doctrineListRepresentationFactory;
+    public function __construct(private readonly EventRepository $eventRepository, private readonly MediaRepositoryInterface $mediaRepository, private readonly DoctrineListRepresentationFactory $doctrineListRepresentationFactory)
+    {
     }
 
-    /**
-     * @Route("/admin/api/events/{id}", methods={"GET"}, name="app.get_event")
-     */
+    #[Route(path: '/admin/api/events/{id}', methods: ['GET'], name: 'app.get_event')]
     public function getAction(int $id, Request $request): Response
     {
         $event = $this->load($id, $request);
-        if (!$event) {
+        if (!$event instanceof Event) {
             throw new NotFoundHttpException();
         }
 
         return $this->json($this->getDataForEntity($event));
     }
 
-    /**
-     * @Route("/admin/api/events/{id}", methods={"PUT"}, name="app.put_event")
-     */
+    #[Route(path: '/admin/api/events/{id}', methods: ['PUT'], name: 'app.put_event')]
     public function putAction(int $id, Request $request): Response
     {
         $event = $this->load($id, $request);
-        if (!$event) {
+        if (!$event instanceof Event) {
             throw new NotFoundHttpException();
         }
 
@@ -85,9 +61,7 @@ class EventController extends AbstractController
         return $this->json($this->getDataForEntity($event));
     }
 
-    /**
-     * @Route("/admin/api/events", methods={"POST"}, name="app.post_event")
-     */
+    #[Route(path: '/admin/api/events', methods: ['POST'], name: 'app.post_event')]
     public function postAction(Request $request): Response
     {
         $event = $this->create($request);
@@ -100,13 +74,11 @@ class EventController extends AbstractController
         return $this->json($this->getDataForEntity($event), 201);
     }
 
-    /**
-     * @Route("/admin/api/events/{id}", methods={"POST"}, name="app.post_event_trigger")
-     */
+    #[Route(path: '/admin/api/events/{id}', methods: ['POST'], name: 'app.post_event_trigger')]
     public function postTriggerAction(int $id, Request $request): Response
     {
         $event = $this->eventRepository->findById($id, (string) $this->getLocale($request));
-        if (!$event) {
+        if (!$event instanceof Event) {
             throw new NotFoundHttpException();
         }
 
@@ -124,9 +96,7 @@ class EventController extends AbstractController
         return $this->json($this->getDataForEntity($event));
     }
 
-    /**
-     * @Route("/admin/api/events/{id}", methods={"DELETE"}, name="app.delete_event")
-     */
+    #[Route(path: '/admin/api/events/{id}', methods: ['DELETE'], name: 'app.delete_event')]
     public function deleteAction(int $id): Response
     {
         $this->remove($id);
@@ -134,9 +104,7 @@ class EventController extends AbstractController
         return $this->json(null, 204);
     }
 
-    /**
-     * @Route("/admin/api/events", methods={"GET"}, name="app.get_event_list")
-     */
+    #[Route(path: '/admin/api/events', methods: ['GET'], name: 'app.get_event_list')]
     public function getListAction(Request $request): Response
     {
         $listRepresentation = $this->doctrineListRepresentationFactory->createDoctrineListRepresentation(
@@ -161,13 +129,13 @@ class EventController extends AbstractController
             'id' => $entity->getId(),
             'enabled' => $entity->isEnabled(),
             'title' => $entity->getTitle() ?? '',
-            'image' => $image
+            'image' => null !== $image
                 ? ['id' => $image->getId()]
                 : null,
             'teaser' => $entity->getTeaser(),
             'description' => $entity->getDescription(),
-            'startDate' => $startDate ? $startDate->format('c') : null,
-            'endDate' => $endDate ? $endDate->format('c') : null,
+            'startDate' => null !== $startDate ? $startDate->format('c') : null,
+            'endDate' => null !== $endDate ? $endDate->format('c') : null,
             'location' => $entity->getLocation(),
         ];
     }
@@ -183,8 +151,8 @@ class EventController extends AbstractController
         $entity->setImage($imageId ? $this->mediaRepository->findMediaById($imageId) : null);
         $entity->setTeaser($data['teaser'] ?? '');
         $entity->setDescription($data['description'] ?? '');
-        $entity->setStartDate($data['startDate'] ? new \DateTimeImmutable($data['startDate']) : null);
-        $entity->setEndDate($data['endDate'] ? new \DateTimeImmutable($data['endDate']) : null);
+        $entity->setStartDate($data['startDate'] ? new DateTimeImmutable($data['startDate']) : null);
+        $entity->setEndDate($data['endDate'] ? new DateTimeImmutable($data['endDate']) : null);
         $entity->setLocation($data['location'] ?? null);
     }
 

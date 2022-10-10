@@ -6,15 +6,15 @@ namespace App\Tests\Unit\Entity;
 
 use App\Entity\Event;
 use App\Entity\EventTranslation;
+use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Sulu\Bundle\MediaBundle\Entity\MediaInterface;
 
 class EventTest extends TestCase
 {
-    /**
-     * @var Event
-     */
-    private $event;
+    use ProphecyTrait;
+    private Event $event;
 
     protected function setUp(): void
     {
@@ -31,7 +31,7 @@ class EventTest extends TestCase
 
     public function testStartDate(): void
     {
-        $now = new \DateTimeImmutable();
+        $now = new DateTimeImmutable();
 
         $this->assertNull($this->event->getStartDate());
         $this->assertSame($this->event, $this->event->setStartDate($now));
@@ -41,7 +41,7 @@ class EventTest extends TestCase
 
     public function testEndDate(): void
     {
-        $now = new \DateTimeImmutable();
+        $now = new DateTimeImmutable();
 
         $this->assertNull($this->event->getEndDate());
         $this->assertSame($this->event, $this->event->setEndDate($now));

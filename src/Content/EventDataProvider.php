@@ -32,9 +32,7 @@ class EventDataProvider extends BaseDataProvider
     protected function decorateDataItems(array $data): array
     {
         return \array_map(
-            function (Event $item) {
-                return new EventDataItem($item);
-            },
+            fn (Event $item) => new EventDataItem($item),
             $data,
         );
     }
