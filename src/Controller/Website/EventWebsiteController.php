@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Annotation\Route;
 
 class EventWebsiteController extends AbstractController
 {
@@ -18,6 +19,7 @@ class EventWebsiteController extends AbstractController
     {
     }
 
+    #[Route('/event/{id}', name: 'app.event')]
     public function indexAction(int $id, Request $request): Response
     {
         $event = $this->eventRepository->findById($id, $request->getLocale());

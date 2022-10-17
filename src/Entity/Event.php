@@ -37,7 +37,7 @@ class Event
     /**
      * @var Collection<string, EventTranslation>
      */
-    #[ORM\OneToMany(targetEntity: EventTranslation::class, mappedBy: 'event', cascade: ['all'], indexBy: 'locale')]
+    #[ORM\OneToMany(targetEntity: EventTranslation::class, mappedBy: 'event', cascade: ['persist'], indexBy: 'locale')]
     private Collection $translations;
 
     private string $locale;

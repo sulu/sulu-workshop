@@ -96,7 +96,7 @@ class DocumentFixture implements DocumentFixtureInterface
      */
     private function createPage(DocumentManager $documentManager, array $data): PageDocument
     {
-        if (!\is_string($data['url'])) {
+        if (!isset($data['url']) || !\is_string($data['url'])) {
             $url = $this->pathCleanup->cleanup('/' . $data['title']);
             if (isset($data['parent_path']) && \is_string($data['parent_path'])) {
                 $url = \mb_substr($data['parent_path'], \mb_strlen('/cmf/example/contents')) . $url;
