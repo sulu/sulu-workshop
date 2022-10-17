@@ -29,7 +29,13 @@ class EventTranslation implements AuditableInterface
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    public function __construct(#[ORM\ManyToOne(targetEntity: Event::class, inversedBy: 'translations')] #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')] private Event $event, #[ORM\Column(type: Types::STRING, length: 5, nullable: false)] private string $locale)
+    public function __construct(
+        #[ORM\ManyToOne(targetEntity: Event::class, inversedBy: 'translations')]
+        #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+        private Event $event,
+        #[ORM\Column(type: Types::STRING, length: 5, nullable: false)]
+        private string $locale
+    )
     {
     }
 
