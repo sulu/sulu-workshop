@@ -31,8 +31,9 @@ class Event
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private ?DateTimeImmutable $endDate = null;
 
-    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
-    private ?string $location = null;
+    #[ORM\ManyToOne(targetEntity: Location::class)]
+    #[ORM\JoinColumn(onDelete: 'SET NULL')]
+    private ?Location $location = null;
 
     #[ORM\ManyToOne(targetEntity: MediaInterface::class)]
     #[ORM\JoinColumn(onDelete: 'SET NULL')]
@@ -92,12 +93,12 @@ class Event
         return $this;
     }
 
-    public function getLocation(): ?string
+    public function getLocation(): ?Location
     {
         return $this->location;
     }
 
-    public function setLocation(?string $location): self
+    public function setLocation(?Location $location): self
     {
         $this->location = $location;
 

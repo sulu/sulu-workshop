@@ -7,6 +7,7 @@ namespace App\Controller\Admin;
 use App\Common\DoctrineListRepresentationFactory;
 use App\Entity\Event;
 use App\Repository\EventRepository;
+use App\Repository\LocationRepository;
 use DateTimeImmutable;
 use Sulu\Bundle\MediaBundle\Entity\MediaRepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,7 +26,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *     description: string|null,
  *     startDate: string|null,
  *     endDate: string|null,
- *     location: string|null,
+ *     locationId: number|null,
  * }
  */
 class EventController extends AbstractController
@@ -34,6 +35,7 @@ class EventController extends AbstractController
         private readonly EventRepository $eventRepository,
         private readonly MediaRepositoryInterface $mediaRepository,
         private readonly DoctrineListRepresentationFactory $doctrineListRepresentationFactory,
+        private readonly LocationRepository $locationRepository,
     ) {
     }
 
@@ -127,6 +129,7 @@ class EventController extends AbstractController
         $image = $entity->getImage();
         $startDate = $entity->getStartDate();
         $endDate = $entity->getEndDate();
+        $location = $entity->getLocation();
 
         return [
             'id' => $entity->getId(),
@@ -139,7 +142,7 @@ class EventController extends AbstractController
             'description' => $entity->getDescription(),
             'startDate' => null !== $startDate ? $startDate->format('c') : null,
             'endDate' => null !== $endDate ? $endDate->format('c') : null,
-            'location' => $entity->getLocation(),
+            'locationId' => null !== $location ? $location->getId() : null,
         ];
     }
 
@@ -156,7 +159,7 @@ class EventController extends AbstractController
         $entity->setDescription($data['description'] ?? '');
         $entity->setStartDate($data['startDate'] ? new DateTimeImmutable($data['startDate']) : null);
         $entity->setEndDate($data['endDate'] ? new DateTimeImmutable($data['endDate']) : null);
-        $entity->setLocation($data['location'] ?? null);
+        $entity->setLocation($data['locationId'] ? $this->locationRepository->findById((int) $data['locationId']) : null);
     }
 
     protected function load(int $id, Request $request): ?Event
