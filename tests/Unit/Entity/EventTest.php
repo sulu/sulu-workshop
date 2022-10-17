@@ -14,6 +14,7 @@ use Sulu\Bundle\MediaBundle\Entity\MediaInterface;
 class EventTest extends TestCase
 {
     use ProphecyTrait;
+
     private Event $event;
 
     protected function setUp(): void

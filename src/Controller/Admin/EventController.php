@@ -30,8 +30,11 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class EventController extends AbstractController
 {
-    public function __construct(private readonly EventRepository $eventRepository, private readonly MediaRepositoryInterface $mediaRepository, private readonly DoctrineListRepresentationFactory $doctrineListRepresentationFactory)
-    {
+    public function __construct(
+        private readonly EventRepository $eventRepository,
+        private readonly MediaRepositoryInterface $mediaRepository,
+        private readonly DoctrineListRepresentationFactory $doctrineListRepresentationFactory,
+    ) {
     }
 
     #[Route(path: '/admin/api/events/{id}', methods: ['GET'], name: 'app.get_event')]

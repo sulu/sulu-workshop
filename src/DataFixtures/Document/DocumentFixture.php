@@ -17,8 +17,10 @@ use Sulu\Component\PHPCR\PathCleanupInterface;
 
 class DocumentFixture implements DocumentFixtureInterface
 {
-    public function __construct(private readonly PathCleanupInterface $pathCleanup, private readonly EntityManagerInterface $entityManager)
-    {
+    public function __construct(
+        private readonly PathCleanupInterface $pathCleanup,
+        private readonly EntityManagerInterface $entityManager,
+    ) {
     }
 
     public function getOrder()

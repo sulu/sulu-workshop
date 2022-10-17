@@ -26,8 +26,10 @@ class EventAdmin extends Admin
 
     final public const EVENT_EDIT_FORM_VIEW = 'app.event_edit_form';
 
-    public function __construct(private readonly ViewBuilderFactoryInterface $viewBuilderFactory, private readonly WebspaceManagerInterface $webspaceManager)
-    {
+    public function __construct(
+        private readonly ViewBuilderFactoryInterface $viewBuilderFactory,
+        private readonly WebspaceManagerInterface $webspaceManager,
+    ) {
     }
 
     public function configureNavigationItems(NavigationItemCollection $navigationItemCollection): void

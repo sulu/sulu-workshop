@@ -14,8 +14,12 @@ use Sulu\Component\Rest\RestHelperInterface;
 
 class DoctrineListRepresentationFactory
 {
-    public function __construct(private readonly RestHelperInterface $restHelper, private readonly ListRestHelperInterface $listRestHelper, private readonly DoctrineListBuilderFactoryInterface $listBuilderFactory, private readonly FieldDescriptorFactoryInterface $fieldDescriptorFactory)
-    {
+    public function __construct(
+        private readonly RestHelperInterface $restHelper,
+        private readonly ListRestHelperInterface $listRestHelper,
+        private readonly DoctrineListBuilderFactoryInterface $listBuilderFactory,
+        private readonly FieldDescriptorFactoryInterface $fieldDescriptorFactory,
+    ) {
     }
 
     /**

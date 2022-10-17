@@ -34,6 +34,10 @@ class Event
     #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $location = null;
 
+    #[ORM\ManyToOne(targetEntity: MediaInterface::class)]
+    #[ORM\JoinColumn(onDelete: 'SET NULL')]
+    private ?MediaInterface $image = null;
+
     /**
      * @var Collection<string, EventTranslation>
      */
@@ -41,10 +45,6 @@ class Event
     private Collection $translations;
 
     private string $locale;
-
-    #[ORM\ManyToOne(targetEntity: MediaInterface::class)]
-    #[ORM\JoinColumn(onDelete: 'SET NULL')]
-    private ?MediaInterface $image = null;
 
     public function __construct()
     {

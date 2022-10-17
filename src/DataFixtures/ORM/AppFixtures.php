@@ -29,8 +29,9 @@ class AppFixtures extends Fixture implements OrderedFixtureInterface
 {
     final public const LOCALE = 'en';
 
-    public function __construct(private readonly StorageInterface $storage)
-    {
+    public function __construct(
+        private readonly StorageInterface $storage,
+    ) {
     }
 
     public function getOrder()

@@ -34,9 +34,8 @@ class EventTranslation implements AuditableInterface
         #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
         private Event $event,
         #[ORM\Column(type: Types::STRING, length: 5, nullable: false)]
-        private string $locale
-    )
-    {
+        private string $locale,
+    ) {
     }
 
     public function getId(): ?int

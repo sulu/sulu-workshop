@@ -88,7 +88,7 @@ You can can pass additional phpunit arguments by appending `-- <arguments>` to t
 composer test -- --stop-on-fail
 ```
 
-### PHP-CS-Fixer
+### PHP-CS-Fixer and Rector
 
 To keep your code consistent you can automatically reformat your code with the following command:
 

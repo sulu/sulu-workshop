@@ -15,8 +15,10 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class EventWebsiteController extends AbstractController
 {
-    public function __construct(private readonly EventRepository $eventRepository, private readonly TemplateAttributeResolverInterface $templateAttributeResolver)
-    {
+    public function __construct(
+        private readonly EventRepository $eventRepository,
+        private readonly TemplateAttributeResolverInterface $templateAttributeResolver,
+    ) {
     }
 
     #[Route('/event/{id}', name: 'app.event')]
