@@ -12,7 +12,7 @@ Each pull requests contains the **example solution code** for the respective ass
 
 ## Requirements
 
-- PHP 7.2 or higher
+- PHP 8.1 or higher
 - Relational Database like MySQL, MariaDB or PostgreSQL
 
 #### Optional requirements
@@ -41,7 +41,7 @@ DATABASE_URL=mysql://DB_USER:DB_PASSWORD@127.0.0.1:3306/DB_NAME
 Use [composer](https://getcomposer.org/) to install the dependencies of the project:
 
 ```bash
-composer install --optimize-autoloader
+composer install
 ```
 
 ### Initialize the Sulu Database
@@ -88,12 +88,12 @@ You can can pass additional phpunit arguments by appending `-- <arguments>` to t
 composer test -- --stop-on-fail
 ```
 
-### PHP-CS-Fixer
+### PHP-CS-Fixer and Rector
 
 To keep your code consistent you can automatically reformat your code with the following command:
 
 ```bash
-composer php-cs-fix
+composer fix
 ```
 
 ### PHPStan

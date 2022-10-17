@@ -13,10 +13,7 @@ class EventWebsiteControllerTest extends SuluTestCase
 {
     use EventTrait;
 
-    /**
-     * @var KernelBrowser
-     */
-    private $client;
+    private KernelBrowser $client;
 
     protected function setUp(): void
     {

@@ -17,10 +17,7 @@ class HomepageTest extends SuluTestCase
     use EventTrait;
     use PageTrait;
 
-    /**
-     * @var KernelBrowser
-     */
-    private $client;
+    private KernelBrowser $client;
 
     protected function setUp(): void
     {
@@ -47,14 +44,14 @@ class HomepageTest extends SuluTestCase
                     $event1->getId(),
                     $event2->getId(),
                 ],
-            ]
+            ],
         );
 
         $crawler = $this->client->request(Request::METHOD_GET, '/homepage');
 
         $response = $this->client->getResponse();
         $this->assertInstanceOf(Response::class, $response);
-        $this->assertSame(Response::HTTP_OK, $response->getStatusCode());
+        $this->assertResponseIsSuccessful();
         $this->assertStringContainsString('Symfony Live', $crawler->filter('h1')->html());
         $this->assertNotNull($content = $crawler->filter('.event-title')->eq(0)->html());
         $this->assertStringContainsString($event1->getTitle() ?: '', $content);

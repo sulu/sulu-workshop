@@ -10,16 +10,12 @@ use Sulu\Component\SmartContent\ItemInterface;
 
 class EventDataItem implements ItemInterface
 {
-    /**
-     * @var Event
-     *
-     * @Serializer\Exclude
-     */
-    private $entity;
-
-    public function __construct(Event $entity)
-    {
-        $this->entity = $entity;
+    public function __construct(
+        /**
+         * @Serializer\Exclude
+         */
+        private readonly Event $entity,
+    ) {
     }
 
     /**

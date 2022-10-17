@@ -16,32 +16,20 @@ use Sulu\Component\Webspace\Manager\WebspaceManagerInterface;
 
 class EventAdmin extends Admin
 {
-    const EVENT_LIST_KEY = 'events';
+    final public const EVENT_LIST_KEY = 'events';
 
-    const EVENT_FORM_KEY = 'event_details';
+    final public const EVENT_FORM_KEY = 'event_details';
 
-    const EVENT_LIST_VIEW = 'app.events_list';
+    final public const EVENT_LIST_VIEW = 'app.events_list';
 
-    const EVENT_ADD_FORM_VIEW = 'app.event_add_form';
+    final public const EVENT_ADD_FORM_VIEW = 'app.event_add_form';
 
-    const EVENT_EDIT_FORM_VIEW = 'app.event_edit_form';
-
-    /**
-     * @var ViewBuilderFactoryInterface
-     */
-    private $viewBuilderFactory;
-
-    /**
-     * @var WebspaceManagerInterface
-     */
-    private $webspaceManager;
+    final public const EVENT_EDIT_FORM_VIEW = 'app.event_edit_form';
 
     public function __construct(
-        ViewBuilderFactoryInterface $viewBuilderFactory,
-        WebspaceManagerInterface $webspaceManager
+        private readonly ViewBuilderFactoryInterface $viewBuilderFactory,
+        private readonly WebspaceManagerInterface $webspaceManager,
     ) {
-        $this->viewBuilderFactory = $viewBuilderFactory;
-        $this->webspaceManager = $webspaceManager;
     }
 
     public function configureNavigationItems(NavigationItemCollection $navigationItemCollection): void
@@ -109,7 +97,7 @@ class EventAdmin extends Admin
                 'app.enable_event',
                 'enabled',
                 'enable',
-                'disable'
+                'disable',
             ),
         ];
         $editDetailsFormView = $this->viewBuilderFactory->createFormViewBuilder(static::EVENT_EDIT_FORM_VIEW . '.details', '/details')

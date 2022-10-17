@@ -17,20 +17,10 @@ use Sulu\Component\PHPCR\PathCleanupInterface;
 
 class DocumentFixture implements DocumentFixtureInterface
 {
-    /**
-     * @var PathCleanupInterface
-     */
-    private $pathCleanup;
-
-    /**
-     * @var EntityManagerInterface
-     */
-    private $entityManager;
-
-    public function __construct(PathCleanupInterface $pathCleanup, EntityManagerInterface $entityManager)
-    {
-        $this->pathCleanup = $pathCleanup;
-        $this->entityManager = $entityManager;
+    public function __construct(
+        private readonly PathCleanupInterface $pathCleanup,
+        private readonly EntityManagerInterface $entityManager,
+    ) {
     }
 
     public function getOrder()
@@ -79,7 +69,7 @@ class DocumentFixture implements DocumentFixtureInterface
                 'url' => '/',
                 'article' => '<p>Symfony official conference events.</p>',
                 'events' => $this->getRandomEventIds($events, 3),
-            ]
+            ],
         );
 
         $documentManager->persist($homeDocument, AppFixtures::LOCALE);
@@ -96,11 +86,11 @@ class DocumentFixture implements DocumentFixtureInterface
         $eventIds = [];
         while (\count($eventIds) < $count) {
             /** @var int $id */
-            $id = $events[rand(0, \count($events) - 1)]->getId();
+            $id = $events[\random_int(0, \max(0, \count($events) - 1))]->getId();
             $eventIds[$id] = $id;
         }
 
-        return array_values($eventIds);
+        return \array_values($eventIds);
     }
 
     /**
@@ -108,10 +98,10 @@ class DocumentFixture implements DocumentFixtureInterface
      */
     private function createPage(DocumentManager $documentManager, array $data): PageDocument
     {
-        if (!isset($data['url'])) {
+        if (!isset($data['url']) || !\is_string($data['url'])) {
             $url = $this->pathCleanup->cleanup('/' . $data['title']);
-            if (isset($data['parent_path'])) {
-                $url = mb_substr($data['parent_path'], mb_strlen('/cmf/example/contents')) . $url;
+            if (isset($data['parent_path']) && \is_string($data['parent_path'])) {
+                $url = \mb_substr($data['parent_path'], \mb_strlen('/cmf/example/contents')) . $url;
             }
 
             $data['url'] = $url;
@@ -145,26 +135,26 @@ class DocumentFixture implements DocumentFixtureInterface
         $documentManager->persist(
             $pageDocument,
             AppFixtures::LOCALE,
-            ['parent_path' => $data['parent_path'] ?? '/cmf/example/contents']
+            ['parent_path' => $data['parent_path'] ?? '/cmf/example/contents'],
         );
 
         // Set dataSource to current page after persist as uuid is before not available
         if (isset($data['pages']['dataSource']) && '__CURRENT__' === $data['pages']['dataSource']) {
             $pageDocument->getStructure()->bind(
                 [
-                    'pages' => array_merge(
+                    'pages' => \array_merge(
                         $data['pages'],
                         [
                             'dataSource' => $pageDocument->getUuid(),
-                        ]
+                        ],
                     ),
-                ]
+                ],
             );
 
             $documentManager->persist(
                 $pageDocument,
                 AppFixtures::LOCALE,
-                ['parent_path' => $data['parent_path'] ?? '/cmf/example/contents']
+                ['parent_path' => $data['parent_path'] ?? '/cmf/example/contents'],
             );
         }
 

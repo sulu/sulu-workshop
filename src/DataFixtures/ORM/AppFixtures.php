@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace App\DataFixtures\ORM;
 
 use App\Entity\Event;
+use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use RuntimeException;
 use Sulu\Bundle\MediaBundle\Entity\Collection;
 use Sulu\Bundle\MediaBundle\Entity\CollectionInterface;
 use Sulu\Bundle\MediaBundle\Entity\CollectionMeta;
@@ -25,16 +27,11 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class AppFixtures extends Fixture implements OrderedFixtureInterface
 {
-    const LOCALE = 'en';
+    final public const LOCALE = 'en';
 
-    /**
-     * @var StorageInterface
-     */
-    private $storage;
-
-    public function __construct(StorageInterface $storage)
-    {
-        $this->storage = $storage;
+    public function __construct(
+        private readonly StorageInterface $storage,
+    ) {
     }
 
     public function getOrder()
@@ -139,8 +136,8 @@ class AppFixtures extends Fixture implements OrderedFixtureInterface
             $event->setLocation($item['location']);
             $event->setTeaser($item['teaser']);
             $event->setDescription('<p>' . $item['description'] . '</p>');
-            $event->setStartDate(new \DateTimeImmutable($item['startDate']));
-            $event->setEndDate(new \DateTimeImmutable($item['endDate']));
+            $event->setStartDate(new DateTimeImmutable($item['startDate']));
+            $event->setEndDate(new DateTimeImmutable($item['endDate']));
             $event->setEnabled($item['enabled']);
 
             $repository->save($event);
@@ -152,11 +149,9 @@ class AppFixtures extends Fixture implements OrderedFixtureInterface
      */
     private function loadCollections(ObjectManager $manager): array
     {
-        $collections = [
+        return [
             'Content' => $this->createCollection($manager, 'Content'),
         ];
-
-        return $collections;
     }
 
     /**
@@ -177,11 +172,10 @@ class AppFixtures extends Fixture implements OrderedFixtureInterface
     private function createCollection(ObjectManager $manager, string $title): CollectionInterface
     {
         $collection = new Collection();
-        /** @var CollectionType|null $collectionType */
         $collectionType = $manager->getRepository(CollectionType::class)->find(1);
 
-        if (!$collectionType) {
-            throw new \RuntimeException('CollectionType "1" not found. Maybe sulu fixtures missing?');
+        if (!$collectionType instanceof CollectionType) {
+            throw new RuntimeException('CollectionType "1" not found. Maybe sulu fixtures missing?');
         }
 
         $collection->setType($collectionType);
@@ -202,7 +196,7 @@ class AppFixtures extends Fixture implements OrderedFixtureInterface
     private function createMedia(
         ObjectManager $manager,
         SplFileInfo $file,
-        CollectionInterface $collection
+        CollectionInterface $collection,
     ): MediaInterface {
         $fileName = $file->getBasename();
         $title = $file->getFilename();
@@ -210,13 +204,13 @@ class AppFixtures extends Fixture implements OrderedFixtureInterface
 
         $storageOptions = $this->storage->save(
             $uploadedFile->getPathname(),
-            $fileName
+            $fileName,
         );
 
         $mediaType = $manager->getRepository(MediaType::class)->find(2);
 
         if (!$mediaType instanceof MediaType) {
-            throw new \RuntimeException('MediaType "2" not found. Maybe sulu fixtures missing?');
+            throw new RuntimeException('MediaType "2" not found. Maybe sulu fixtures missing?');
         }
 
         $media = new Media();

@@ -7,19 +7,19 @@ namespace App\Tests\Unit\Entity;
 use App\Entity\Event;
 use App\Entity\EventTranslation;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 
 class EventTranslationTest extends TestCase
 {
-    /**
-     * @var Event|ObjectProphecy
-     */
-    private $event;
+    use ProphecyTrait;
 
     /**
-     * @var EventTranslation
+     * @var ObjectProphecy<Event>
      */
-    private $translation;
+    private ObjectProphecy $event;
+
+    private EventTranslation $translation;
 
     protected function setUp(): void
     {
