@@ -1,0 +1,11 @@
+<div class="row">
+    <h3>{{ content.title }}</h3>
+</div>
+
+<div class="row">
+    <div>
+        {% for image in content.images %}
+            <img src="{{ image.formats['200x'] }}" alt="{{ image.title }}" class="img-thumbnail m-3">
+        {% endfor %}
+    </div>
+</div>
