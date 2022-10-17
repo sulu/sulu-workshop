@@ -21,7 +21,7 @@ class EventWebsiteController extends AbstractController
     ) {
     }
 
-    #[Route('/event/{id}', name: 'app.event')]
+    #[Route('/{_locale}/event/{id}', name: 'app.event')]
     public function indexAction(int $id, Request $request): Response
     {
         $event = $this->eventRepository->findById($id, $request->getLocale());
