@@ -12,6 +12,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: EventRegistrationRepository::class)]
 class EventRegistration
 {
+    final public const RESOURCE_KEY = 'event_registrations';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: Types::INTEGER)]
