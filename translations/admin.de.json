@@ -7,5 +7,6 @@
     "app.end_date": "Ende",
     "app.enable_event": "Veranstaltungen aktivieren",
     "app.enabled": "Aktiviert",
-    "app.location": "Standort"
+    "app.location": "Standort",
+    "app.locations": "Standorte"
 }
